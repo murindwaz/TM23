@@ -18,10 +18,18 @@ This is a commit for testing purposes.
 ### First build 
 	- GameEngine : tasks 
 			- initialize the game state from a flat file( JSON with GSON is fast to work with )
-			- have to moves and save another state to the same flat file 
+			- have two moves and save another state to the same flat file 
 			- has to know about all components:
 				- model ( Player, Gameboard, Cards, Characters ) 
 	- 
+
+
+### Approach TDD ( Test Driven Development ) 
+	- JUnit 4 
+	- src/test/java/GameTestSuite.java 
+	- Code coverage EclEmma Plugin for Eclipse 
+	- 
+
 
 
 ### How to contribute?
