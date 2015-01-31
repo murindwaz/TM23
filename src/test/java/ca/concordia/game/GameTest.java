@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import ca.concordia.GameState;
 import ca.concordia.game.model.*;
-import ca.concordia.game.util.GameStateWriter;
+import ca.concordia.game.util.*;
 
 public class GameTest {
 	
@@ -43,7 +43,7 @@ public class GameTest {
 	
 	@After 
 	public void tearDown(){
-		
+		//@todo remove the file 
 		
 	}
 	
@@ -58,12 +58,9 @@ public class GameTest {
 	
 	@Test 
 	public void canReadGameState(){
-
 		gameStateReader = new GameStateReader( gameStateWriter.getFilePath() );
-		
-	
-	
-	
+		GameState rgameState = gameStateReader.read();
+		assertTrue( "GameStateTest - has the same game",  rgameState.equals(gameState));
 	}
 	
 	
