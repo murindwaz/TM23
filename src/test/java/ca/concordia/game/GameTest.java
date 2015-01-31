@@ -1,53 +1,69 @@
 package ca.concordia.game;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.concordia.game.model.Area;
-import ca.concordia.game.model.Card;
-import ca.concordia.game.model.Die;
-import ca.concordia.game.model.Gameboard;
-import ca.concordia.game.model.Piece;
+import ca.concordia.GameState;
+import ca.concordia.game.model.*;
+import ca.concordia.game.util.GameStateWriter;
 
 public class GameTest {
 	
 	
 	
-	/**
-	 * 
-	 */
-	ca.concordia.game.model.Player player; 
-	ca.concordia.game.model.Die die; 
-	ca.concordia.game.model.Area area; 
-	ca.concordia.game.model.Gameboard gameboard; 
-	ca.concordia.game.model.Card card; 
-	ca.concordia.game.model.Piece piece; 
+	Die die; 
+	Area area; 
+	Card card; 
+	Piece piece; 
+	Player player; 
+	Gameboard gameboard; 
+	GameState gameState;
 	
 	
-	
-	
+	GameStateWriter gameStateWriter; 
+	GameStateReader gameStateReader; 
 	
 	@Before 
 	public void setUp(){
-		
-		
-		
-		
+		die = new Die();
+		area = new Area();
+		card = new Card(); 
+		piece = new Piece();
+		player = new Player(); 
+		gameboard = new Gameboard(); 
+		gameState = new GameState();
+		//@todo initialization of players in a game 
+		//@todo initialization of cards per player 
 	}
 	
 	@After 
-	public void tearDown(){}
+	public void tearDown(){
+		
+		
+	}
 	
 
 	@Test 
 	public void canSaveGameState(){
-		assert( false ); 
+		//@todo add some moves to the game + save the state --- 
+		gameStateWriter = new GameStateWriter(gameState); 
+		assertTrue("GameStateTest - has a filepath ", new File(gameStateWriter.getFilePath()).exists() );
+		assertTrue( "GameStateTest - has a filepath is not empty",  new File(gameStateWriter.getFilePath()).length() > 0 );
 	}
 	
 	@Test 
 	public void canReadGameState(){
-		assert( false );
+
+		gameStateReader = new GameStateReader( gameStateWriter.getFilePath() );
+		
+	
+	
+	
 	}
 	
 	
