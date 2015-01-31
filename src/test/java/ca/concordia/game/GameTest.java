@@ -3,6 +3,8 @@ package ca.concordia.game;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,16 +46,35 @@ public class GameTest {
 	@After 
 	public void tearDown(){
 		//@todo remove the file 
-		
+		new File(gameStateWriter.getFilePath()).delete();
 	}
 	
-
+	/**
+	 * @todo prior game encoding, the game engine has to encode the game
+	 */
+	@Test public void canEncodeGameState(){
+		fail("GameStateEncoding not yet implemented");
+	}
+	/**
+	 * @todo prior to re-loading a game state, the system has to decode the JSON file 
+	 */
+	@Test public void canDecodeGameState(){
+		fail( "GameStateDecoding not yet implemented");
+	}
+	
+	
+	
+	
 	@Test 
 	public void canSaveGameState(){
 		//@todo add some moves to the game + save the state --- 
 		gameStateWriter = new GameStateWriter(gameState); 
-		assertTrue("GameStateTest - has a filepath ", new File(gameStateWriter.getFilePath()).exists() );
-		assertTrue( "GameStateTest - has a filepath is not empty",  new File(gameStateWriter.getFilePath()).length() > 0 );
+		File gameFile = new File(gameStateWriter.getFilePath());
+		assertFalse("GameStateTest - file doesn't exist ", gameFile.exists() );
+		assertFalse( "GameStateTest - file is empty empty",  gameFile.length() > 0 );
+		gameStateWriter.write();
+		assertTrue("GameStateTest - file exists", gameFile.exists() );
+		assertTrue( "GameStateTest - file is not empty",  gameFile.length() > 0 );
 	}
 	
 	@Test 

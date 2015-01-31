@@ -1,5 +1,10 @@
 package ca.concordia;
 
+import java.util.Map;
+
+import ca.concordia.game.model.Gameboard;
+import ca.concordia.game.model.Player;
+
 
 
 
@@ -10,7 +15,8 @@ package ca.concordia;
 public class GameState {
 	
 	
-	
+	private Map<String, Player> players; 
+	private Gameboard gameboard;
 	
 	
 	

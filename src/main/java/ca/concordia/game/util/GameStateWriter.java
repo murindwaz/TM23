@@ -45,9 +45,7 @@ public class GameStateWriter {
 		synchronized (this) {
 			try {
 				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream( new File(filepath) , true) , "utf-8" ));
-				//for (Entry<String, Reservation> entry : reservations.entrySet()) {
-				//	writer.write(String.format( "%s%n", entry.getValue().toString() ));
-				//}
+				writer.write(String.format( "%s", new GameStateEncoder<GameState>().encode(gameState) ));
 			} catch (IOException ex) {
 				System.out.println( " IOException " + filepath );
 			} finally {
