@@ -14,6 +14,22 @@ This is a commit for testing purposes.
 	- 
 
 
+### Environment Setup 
+	- Eclipse IDE ( Luna or Mars ) 
+	- On Windows, install Git from 
+	- On Linux/Mac use the command line utility
+		```sh
+			$ sudo apt-get install git #ubuntu 
+			$ sudo yum install git 	   #centos, fedora etc.
+		```
+	- Install Maven for Eclipse (m2eclipse - luna/mars depending on version ) 
+	- 
+
+### Approach TDD ( Test Driven Development ) 
+	- JUnit 4 
+	- src/test/java/GameTestSuite.java 
+	- Code coverage EclEmma Plugin for Eclipse 
+	- 
 
 ### First build 
 	- GameEngine : tasks 
@@ -22,15 +38,6 @@ This is a commit for testing purposes.
 			- has to know about all components:
 				- model ( Player, Gameboard, Cards, Characters ) 
 	- 
-
-
-### Approach TDD ( Test Driven Development ) 
-	- JUnit 4 
-	- src/test/java/GameTestSuite.java 
-	- Code coverage EclEmma Plugin for Eclipse 
-	- 
-
-
 
 ### How to contribute?
 	- We are going to contribute to the code using ("pull-requests")[https://help.github.com/articles/using-pull-requests/]

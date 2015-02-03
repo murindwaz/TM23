@@ -7,5 +7,20 @@ public class Configuration {
 	
 	public static String GAME = "Diskworld: Ankh-Morpork"; 
 	public static String PATH = "diskworld";
+	
+	
+	/**
+	 * Character variables used in the game 
+	 */
+	/**
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; 
+	public static String CHARACTER_ = ""; **/
+	
 
 }

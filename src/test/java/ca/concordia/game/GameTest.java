@@ -17,7 +17,9 @@ import ca.concordia.game.util.*;
 public class GameTest {
 	
 	
-	
+	/**
+	 * Model Declarations 
+	 */
 	Die die; 
 	Area area; 
 	Card card; 
@@ -26,7 +28,9 @@ public class GameTest {
 	Gameboard gameboard; 
 	GameState gameState;
 	
-	
+	/**
+	 * Utility class declaration
+	 */
 	GameStateWriter gameStateWriter; 
 	GameStateReader gameStateReader; 
 	
