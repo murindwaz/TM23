@@ -14,6 +14,8 @@ import ca.concordia.Game;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
 
+import java.awt.Color;
+
 public class GameTest {
 	
 	
@@ -38,11 +40,11 @@ public class GameTest {
 	public void setUp(){
 		die = new Die();
 		area = new Area();
-		card = new Card(); 
+		card = new Card(false,false); 
 		piece = new Piece();
-		player = new Player(); 
+		player = new Player(new PersonalityCard(1),Color.RED); 
 		gameboard = new Gameboard(); 
-		gameState = new Game();
+		gameState = Game.getInstance();
 		//@todo initialization of players in a game 
 		//@todo initialization of cards per player 
 	}

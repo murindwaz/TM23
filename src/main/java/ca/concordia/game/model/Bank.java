@@ -2,9 +2,20 @@ package ca.concordia.game.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ca.concordia.Game;
+
 public class Bank {
 
+	private static Bank instance = null;
 	private AtomicInteger total;
+	
+	//Implements Bank as a singleton, as there will always be a single Bank per run.
+	public static Bank getInstance() {
+		if(instance == null) {
+			instance = new Bank();
+		}
+		return instance;
+	}
 	
 	public Bank() {
 		total = new AtomicInteger(120); // 17*$5 +  35*$1
@@ -47,5 +58,9 @@ public class Bank {
 		}
 		
 		return false;
+	}
+	
+	@Override public String toString(){
+		return "The Discworld Ankh-Morpork Bank currently has $" + total;
 	}
 }
