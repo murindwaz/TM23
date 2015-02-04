@@ -39,7 +39,7 @@ public class Bank {
 	public synchronized boolean transferFunds(Player receipient, int amount) {
 		if( this.hasEnoughFunds(amount) ) {
 			this.withdraw(amount);
-			Player.transferMoney(amount);
+			receipient.transferMoney(amount);
 			return true;
 		}
 		else {
