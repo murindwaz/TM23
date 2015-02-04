@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.concordia.GameState;
+import ca.concordia.Game;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
 
@@ -26,7 +26,7 @@ public class GameTest {
 	Piece piece; 
 	Player player; 
 	Gameboard gameboard; 
-	GameState gameState;
+	Game gameState;
 	
 	/**
 	 * Utility class declaration
@@ -42,7 +42,7 @@ public class GameTest {
 		piece = new Piece();
 		player = new Player(); 
 		gameboard = new Gameboard(); 
-		gameState = new GameState();
+		gameState = new Game();
 		//@todo initialization of players in a game 
 		//@todo initialization of cards per player 
 	}
@@ -84,7 +84,7 @@ public class GameTest {
 	@Test 
 	public void canReadGameState(){
 		gameStateReader = new GameStateReader( gameStateWriter.getFilePath() );
-		GameState rgameState = gameStateReader.read();
+		Game rgameState = gameStateReader.read();
 		assertTrue( "GameStateTest - has the same game",  rgameState.equals(gameState));
 	}
 	

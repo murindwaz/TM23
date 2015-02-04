@@ -12,7 +12,7 @@ import ca.concordia.game.model.Player;
  * This is temporal entry point. 
  * @author root
  */
-public class GameState {
+public class Game {
 	
 	
 	private Map<String, Player> players; 
@@ -20,7 +20,7 @@ public class GameState {
 	
 	
 	
-	public boolean equals(GameState gameState){
+	public boolean equals(Game gameState){
 		//@todo check the number of players
 		//@todo check occupied areas
 		//@todo check the bank

@@ -9,7 +9,7 @@ import java.io.Writer;
 import java.util.*;
 import java.util.Map.Entry;
 
-import ca.concordia.GameState;
+import ca.concordia.Game;
 import ca.concordia.game.model.*;
 
 
@@ -22,8 +22,8 @@ import ca.concordia.game.model.*;
 public class GameStateWriter {
 	
 	private String filepath;
-	private GameState gameState;
-	public GameStateWriter( GameState game ){
+	private Game gameState;
+	public GameStateWriter( Game game ){
 		gameState = game;
 		Calendar now = Calendar.getInstance(); 
 		now.setTime(new Date());
@@ -38,14 +38,14 @@ public class GameStateWriter {
 	
 	/**
 	 * 
-	 * @param GameState
+	 * @param Game
 	 */
 	public void write(){
 		Writer writer =  null;
 		synchronized (this) {
 			try {
 				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream( new File(filepath) , true) , "utf-8" ));
-				writer.write(String.format( "%s", new GameStateEncoder<GameState>().encode(gameState) ));
+				writer.write(String.format( "%s", new GameStateEncoder<Game>().encode(gameState) ));
 			} catch (IOException ex) {
 				System.out.println( " IOException " + filepath );
 			} finally {
