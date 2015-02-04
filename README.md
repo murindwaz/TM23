@@ -39,6 +39,15 @@ This is a commit for testing purposes.
 				- model ( Player, Gameboard, Cards, Characters ) 
 	- 
 
+
+### Eclipse tips 
+	- how to uppercase/lowercase (link)[http://www.daveoncode.com/2009/08/25/eclipse-shortcut-switch-convert-uppercase-text-cod-lowercase/]
+		- Lower case: CTRL+SHIFT+Y (CMD+SHIFT+Y on Mac OS X)
+		- Upper case: CTRL+SHIFT+X (CMD+SHIFT+X on Mac OS X)
+		- Format source code: CTRL+SHIFT+F (CMD+SHIFT+F on Mac OS X)
+	- 
+
+
 ### How to contribute?
 	- We are going to contribute to the code using ("pull-requests")[https://help.github.com/articles/using-pull-requests/]
 	- The good way to do it was yo use all group members as contributors( having access to the repo ) but free version of github looks not to support that feature. 
