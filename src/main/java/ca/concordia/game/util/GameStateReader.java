@@ -3,7 +3,7 @@ package ca.concordia.game.util;
 import java.io.BufferedReader;
 import java.io.File;
 
-import ca.concordia.GameState;
+import ca.concordia.Game;
 
 
 
@@ -27,10 +27,10 @@ public class GameStateReader {
 	 * @todo - do the read, and re-initialize the game 
 	 * @return
 	 */
-	public GameState read(){
+	public Game read(){
 		//read the content of filePath, and parse the content using GameStateParser
 		//BufferedString buffer = new BufferedReader( new File(filePath) );
-		return new GameState();
+		return new Game();
 	}
 
 }

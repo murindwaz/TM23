@@ -66,6 +66,13 @@ public class GameTest {
 		fail( "GameStateDecoding not yet implemented");
 	}
 	
+	/**
+	 * Each player should select a set of playing pieces of the same color
+	 */
+	@Test 
+	public void playerChoosesOnlyOneTypeOfColor(){
+		fail( "Each player should select a set of playing pieces of the same color" );
+	}
 	
 	
 	
