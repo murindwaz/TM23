@@ -9,7 +9,7 @@ public class Player {
 	public Color color;
 	
 	private ArrayList<Card> playerCards;
-	private ArrayList<CityCard> playerCityCard;
+	private ArrayList<CityCard> playerCityCards;
 	private int minionsOnHand;
 	private int buildingOnHand;
 	
@@ -40,6 +40,6 @@ public class Player {
 	}
 	//Add card to player's city Cards(Player put building in board.)
 	public void receiveCityCard(CityCard card){
-		this.playerCityCard.add(card);
+		this.playerCityCards.add(card);
 	}
 }

@@ -18,6 +18,7 @@ public class Card {
 	public void setName(String aName) {
 		this.name = aName;
 	}
+	
 	public ImageIcon getIcon() {
 		return this.icon;
 	}
