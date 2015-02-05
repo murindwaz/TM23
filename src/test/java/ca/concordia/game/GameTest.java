@@ -39,10 +39,10 @@ public class GameTest {
 	@Before 
 	public void setUp(){
 		die = new Die();
-		area = new Area();
+		area = new Area(null);
 		card = new Card(false,false); 
-		piece = new Piece();
-		player = new Player(new PersonalityCard(1),Color.RED); 
+		piece = new Piece(null);
+		player = new Player(new PersonalityCard(1),Color.RED, 0, 0); 
 		gameboard = new Gameboard(); 
 		gameState = Game.getInstance();
 		//@todo initialization of players in a game 
