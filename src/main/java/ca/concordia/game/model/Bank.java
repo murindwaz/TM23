@@ -2,6 +2,11 @@ package ca.concordia.game.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * @todo --- Pascal --- Static/Singleton instance with "this" is error prone! 
+ * @author root
+ */
 public class Bank {
 
 	private static Bank instance = null;
@@ -19,9 +24,6 @@ public class Bank {
 		return instance;
 	}
 	
-	/**
-	 * 
-	 */
 	public Bank() {
 		total = new AtomicInteger(120); // 17*$5 +  35*$1
 	}
@@ -36,19 +38,20 @@ public class Bank {
 	
 	public synchronized boolean hasEnoughFunds(int amount) {
 		if(total.intValue() >= amount) return true;
-		
 		return false;
 	}
 	
+	/**
+	 * @todo add throw instead of printing 
+	 * @param amount
+	 * @return
+	 */
 	public synchronized boolean withdraw(int amount) {
 		if( this.hasEnoughFunds(amount) ) {
 			total.getAndAdd(-1*amount);
 			return true;
-		}
-		else {
-			System.out.println("Not enough money in bank to withdraw!");
-		}
-		
+		}	
+		System.out.println("Not enough money in bank to withdraw!");
 		return false;
 	}
 	
