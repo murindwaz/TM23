@@ -1,0 +1,16 @@
+Dolly Sisters,true,false,0,1,RED,GREEN
+Unreal Estate,false,true,1,0
+Dragon's Landing,false,false,0,1
+Small Gods,false,true,0,0,GREEN
+The Scours,false,false,0,1
+The Hippo,true,true,0,0
+The Shades,false,false,0,0,RED,GREEN
+Dimwell,false,false,0,0
+Longwall,true,false,0,0,GREEN
+Isle of Gods,false,false,0,0
+Seven Sleepers,true,true,0,0,RED,GREEN
+Nap Hill,false,false,0,0
+2
+Lord Selachii,RED,5,4,15,5,12,16,18,30,50,2,11,6
+Lord Rust,GREEN,3,4,15,5,55,2,3,64,88,2,4,3
+90
