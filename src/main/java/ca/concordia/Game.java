@@ -62,6 +62,7 @@ public class Game {
 		
 		for(int i=0; i<numberOfPlayers; i++) {
 			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),Color.RED,8,8);
+			//this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),Color.RED);
 			//Deal 5 green cards to each player:
 			decks.get("green").dealCardsToPlayer(players[i],5);
 			//Give $10 to each player:

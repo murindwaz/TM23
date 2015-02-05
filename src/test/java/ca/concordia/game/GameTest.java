@@ -10,9 +10,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.concordia.GameState;
+import ca.concordia.Game;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
+
+import java.awt.Color;
 
 public class GameTest {
 	
@@ -26,7 +28,7 @@ public class GameTest {
 	Piece piece; 
 	Player player; 
 	Gameboard gameboard; 
-	GameState gameState;
+	Game gameState;
 	
 	/**
 	 * Utility class declaration
@@ -38,11 +40,11 @@ public class GameTest {
 	public void setUp(){
 		die = new Die();
 		area = new Area();
-		card = new Card(); 
+		card = new Card(false,false); 
 		piece = new Piece();
-		player = new Player(); 
+		player = new Player(new PersonalityCard(1),Color.RED); 
 		gameboard = new Gameboard(); 
-		gameState = new GameState();
+		gameState = Game.getInstance();
 		//@todo initialization of players in a game 
 		//@todo initialization of cards per player 
 	}
@@ -91,7 +93,7 @@ public class GameTest {
 	@Test 
 	public void canReadGameState(){
 		gameStateReader = new GameStateReader( gameStateWriter.getFilePath() );
-		GameState rgameState = gameStateReader.read();
+		Game rgameState = gameStateReader.read();
 		assertTrue( "GameStateTest - has the same game",  rgameState.equals(gameState));
 	}
 	
