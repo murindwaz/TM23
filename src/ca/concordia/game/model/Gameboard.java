@@ -110,6 +110,26 @@ public class Gameboard {
 		
 		return numberOfMinionsInAreas;
 	}
+	
+	/**
+	 * Returns the areas that currently contain a trouble marker on it.
+	 * @return ArrayList<String>
+	 */
+	public ArrayList<String> troubleMarkers()
+	{
+		ArrayList<String> troubleMarkersAreas=new ArrayList<String>();
+		Area tempArea;
+		for(int i=0; i< this.areas.size();i++)
+		{
+			tempArea=this.areas.get(i);
+			if(tempArea.getTroubleMarker())
+			{
+				troubleMarkersAreas.add(tempArea.getCityCard().getName());
+			}
+		}
+		
+		return troubleMarkersAreas;
+	}
 
 	/**
 	 * toString method for Gameboard

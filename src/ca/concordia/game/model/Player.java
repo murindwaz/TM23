@@ -12,6 +12,8 @@ public class Player {
 	private int money;
 	private PersonalityCard personality;
 	public String color;
+	private int netWorth;
+	private int loans;
 	
 	private ArrayList<Card> playerCards;
 	private ArrayList<CityCard> playerCityCard;
@@ -29,7 +31,8 @@ public class Player {
 	 */
 	public Player(PersonalityCard aPersonality, String aColor,int minionOnHand, int buildingOnHand){
 		this.controledAreas=0;
-		this.money = 0;		
+		this.money = 0;	
+		this.loans=0;
 		this.personality = aPersonality;
 		this.color = aColor;
 		this.minionsOnHand=minionOnHand;
@@ -56,6 +59,7 @@ public class Player {
 	 * @param money
 	 */
 	public Player(PersonalityCard aPersonality, String aColor,int minionOnHand, int buildingOnHand,int money){
+		//this.loans=loans;  to do
 		this.money = money;
 		this.personality = aPersonality;
 		this.color = aColor;
@@ -67,70 +71,41 @@ public class Player {
 	}
 	
 	/**
-	 * Getter money
-	 * @return
+	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the
+	 * player may have.
+	 * @return int
 	 */
-	public int getMoney() {
-		return this.money;
-	}	
-	/**
-	 * Getter color
-	 * @return
-	 */
-	public String getColor()
+	public int calculateNetWorth()
 	{
-		return this.color;
-	}
-	/**
-	 * Getter minons currently on Players hand.
-	 * @return
-	 */
-	public int getMinionsOnHand()
-	{
-		return this.minionsOnHand;
-	}
-	/**
-	 * Getter building currently on players hand
-	 * @return
-	 */
-	public int getBuildingOnHand()
-	{
-		return this.buildingOnHand;
-	}
-	/**
-	 * Getter player Cards(Brown or Green Cards)
-	 * @return
-	 */
-	public ArrayList<Card> getPlayerCards()
-	{
-		return this.playerCards;
-	}
-	/**
-	 * Getter City Cards Currently hold by a player.
-	 * @return
-	 */
-	public ArrayList<CityCard> getPlayerCityCard()
-	{
-		return this.playerCityCard;
+		this.netWorth= this.money;
+		//calculate the money invested in buildings so far, and add it to the networth.
+		for(int i=0;i<this.playerCityCard.size();i++)
+		{
+			this.netWorth=this.netWorth+this.playerCityCard.get(i).getBuldingCost();
+		}
+		//If the player has any loans substract that amount to networth
+		this.netWorth=this.netWorth-loans;
+		
+		return netWorth;
 	}
 	
 	/**
-	 * Getter get Player's Personality Card.
-	 * @return
+	 * Add a loan if the player takes one.
+	 * @param amountLoan(int)
 	 */
-	public Card getPersonality() {
-		return this.personality;
-	}	
-	
-	/**
-	 * Getter: array of minions per area.
-	 * @return int[]
-	 */
-	public int[] getMinionsOnArea()
+	public void takeLoan(int amountLoan)
 	{
-		return this.minionsOnAreas;
+		this.loans=this.loans-amountLoan;
 	}
 	
+	/**
+	 * If player paid a loan update the loan variable.
+	 * @param amountPaid(int)
+	 */
+	public void payLoan(int amountPaid)
+	{
+		this.loans=this.loans+amountPaid;
+	}
 
 	/**
 	 * Transfer Money into players account.
@@ -153,8 +128,32 @@ public class Player {
 	 * Add card to player's city Cards(Player put building in board.)
 	 * @param card
 	 */
-	public void receiveCityCard(CityCard card){
+	public boolean receiveCityCard(CityCard card){
+		int oldSize=this.playerCityCard.size();
 		this.playerCityCard.add(card);
+		int newSize=this.playerCityCard.size();
+		
+		if(newSize == oldSize+1)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Remove card from player's city Cards(Player removed or moved a building to another area.)
+	 * @param card
+	 * @return
+	 */
+	public boolean returnCityCard(CityCard card)
+	{
+		int oldSize=this.playerCityCard.size();
+		this.playerCityCard.remove(card);
+		int newSize=this.playerCityCard.size();
+		
+		if(oldSize == newSize-1)
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -228,4 +227,70 @@ public class Player {
 		return info+info2+info3+info4;
 		
 	}
+	
+	/**
+	 * Getter money
+	 * @return
+	 */
+	public int getMoney() {
+		return this.money;
+	}	
+	/**
+	 * Getter color
+	 * @return
+	 */
+	public String getColor()
+	{
+		return this.color;
+	}
+	/**
+	 * Getter minons currently on Players hand.
+	 * @return
+	 */
+	public int getMinionsOnHand()
+	{
+		return this.minionsOnHand;
+	}
+	/**
+	 * Getter building currently on players hand
+	 * @return
+	 */
+	public int getBuildingOnHand()
+	{
+		return this.buildingOnHand;
+	}
+	/**
+	 * Getter player Cards(Brown or Green Cards)
+	 * @return
+	 */
+	public ArrayList<Card> getPlayerCards()
+	{
+		return this.playerCards;
+	}
+	/**
+	 * Getter City Cards Currently hold by a player.
+	 * @return
+	 */
+	public ArrayList<CityCard> getPlayerCityCard()
+	{
+		return this.playerCityCard;
+	}
+	
+	/**
+	 * Getter get Player's Personality Card.
+	 * @return
+	 */
+	public Card getPersonality() {
+		return this.personality;
+	}	
+	
+	/**
+	 * Getter: array of minions per area.
+	 * @return int[]
+	 */
+	public int[] getMinionsOnArea()
+	{
+		return this.minionsOnAreas;
+	}
+	
 }

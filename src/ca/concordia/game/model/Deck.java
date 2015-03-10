@@ -100,11 +100,14 @@ public class Deck {
 	}
 	
 	/**
-	 * Get first card of a deck
-	 * @return
+	 * Get first card of a deck; if the deck still has cards otherwise it will return null.
+	 * @return Card
 	 */
 	public Card getCard() {
-		return cards.pop();
+		if(cards.size()>0)
+			return cards.pop();
+		else 
+			return null;
 	}
 	/**
 	 * put Card in a deck.
