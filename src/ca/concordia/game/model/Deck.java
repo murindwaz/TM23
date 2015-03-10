@@ -2,6 +2,9 @@ package ca.concordia.game.model;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
+import java.util.Random;
+
+import ca.concordia.game.model.Card;
 
 /**
  * Class Deck Creates the decks of cards.
@@ -72,7 +75,30 @@ public class Deck {
 	 * Suffle Deck
 	 */
 	public void shuffle() {
-		//Shuffles the cards in this deck (Reorder queue)
+		//Shuffles the cards in this deck
+		int max = this.cards.size();
+
+		Card[] tmp = new Card[max];
+		//Fill in the array:
+		for(int i = 0; i < max; i++) {
+			tmp[i] = this.cards.getFirst();
+		}
+		
+		//Fisher-Yates shuffle:
+		Random rnd = new Random();
+		for(int i = max-1; i>0; i++) {
+			int idx = rnd.nextInt(i+1);
+	
+			//Perform swap:
+			Card a = tmp[idx];
+			tmp[idx] = tmp[i];
+			tmp[i] = a;
+		}
+		
+		//Put back the cards:
+		for(int i = 0; i < max; i++) {
+			this.cards.add(tmp[i]);
+		}
 	}
 	
 	/**
