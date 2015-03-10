@@ -1,12 +1,19 @@
 package ca.concordia.game.model;
 
 /**
- * 
- * Personality card is a type card which contains the seven possible personality cards that Players could get; as well as the
- * winning condition for each personality card.
- *@author Pascal,Gustavo,bhavik,Esteban,Diego
+ *PersonalityCard is a card that contains seven possible personalities that players could get. 
+ *Each PersonalityCard has a specific winning condition for each personality it represents.
+ *
+ *
+ *@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
  */
+
 public class PersonalityCard extends Card {
+	
 	public String winningCondition = null;
 	
 	/**
