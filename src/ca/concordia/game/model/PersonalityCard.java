@@ -18,7 +18,7 @@ public class PersonalityCard extends Card {
 	
 	/**
 	 * Constructor deending on the integer sent it creates one of the seven different personality cards.
-	 * @param i
+	 * @param int i - Lord Identifier 
 	 */
 	public PersonalityCard(int i) {
 		//Personality Cards are not Playable or Visible!
