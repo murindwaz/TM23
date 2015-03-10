@@ -19,7 +19,7 @@ public class Deck {
 	 * Constructor: Creates an Array of cards depending on the type of the card which is specified as an argument.
 	 * @param type
 	 */
-	public Deck(String type){
+	public Deck(String type,int numPlayers){
 		switch(type) {
 			case "D":
 				//The discard deck is empty to start with
@@ -29,7 +29,7 @@ public class Deck {
 				//The personality deck has 7 cards:
 				this.cards = new ArrayDeque<Card>();
 				for (int i = 0; i < 7; i++) {
-					this.cards.add(new PersonalityCard(i));
+					this.cards.add(new PersonalityCard(i,numPlayers));
 				}
 				break;
 			case "C":
@@ -115,6 +115,15 @@ public class Deck {
 	 */
 	public void putCard(Card aCard) {
 		cards.addLast(aCard);
+	}
+	
+	/**
+	 * return the size of the Deck.
+	 * @return int
+	 */
+	public int getSizeDeck()
+	{
+		return this.cards.size();
 	}
 	
 	/**

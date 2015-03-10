@@ -3,6 +3,8 @@ package ca.concordia.game.model;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import ca.concordia.game.main.Game;
+
 /**
  * Class PLayer handles and contains the different players on the current game.
  * @author Pascal,Gustavo,bhavik,Esteban,Diego
@@ -188,6 +190,71 @@ public class Player {
 		}else
 			return false;
 	}
+	
+	/**
+	 * Checks if player has reached a winning condition. Called at the beginning of each player's turn
+	 * with the exception if the player possesses Commander Vimes; in which case it has to be checked every time a 
+	 * player draws a card from the drawpile.
+	 * @param gameBoard
+	 * @return boolean
+	 */
+	public boolean checkWinningCondition(Gameboard gameBoard)
+	{
+		//Get card ID to check which condition need to be fulfilled.
+		int cardId=this.personality.getCardId();
+		
+		//Check if winning condition has been reached depending on the personality card.
+		if(cardId == 1)//Lord Vetinari
+		{
+			int numMinWinCond=gameBoard.numberMinionsAreas(this);
+			if(numMinWinCond>=this.personality.getNumMinionsOnAreas())//If player has minions in a number of areas which contain no demons.
+				return true;
+			else return
+					false;
+		}
+		else if(cardId== 2 || cardId == 4 || cardId == 6)//Lord Selachii, Lord Rust, Lord Worde.
+		{
+			//Check if player has the amount of controlled areas to win the game.
+			ArrayList<String> controlledAreas= new ArrayList<String>();
+			controlledAreas=gameBoard.controlledAreas(this); //Get a list of the areas controlled by the player.
+			if(controlledAreas.size()>= this.personality.getControlledAreas())
+				return true;
+			else
+				return false;
+		}
+		else if(cardId==3)// Dragon King of Arms.
+		{
+			//Check if the board has the required number of touble markes for player to win.
+			ArrayList<String> troubleMarkersArea= new ArrayList<String>();
+			troubleMarkersArea= gameBoard.troubleMarkers();//Get a list of the areas which contain a trouble marker.
+			if(troubleMarkersArea.size() >= this.personality.getNumTroubleMarkers())
+				return true;
+			else
+				return false;
+		}
+		else if(cardId==5)//Commander Vimes
+		{
+			//Check if the draw deck is empty by chequin the size of the brown deck since it's the one at the bottom.
+			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
+			if(game.getSizeDrawDeck()==0)//Draw deck is empty
+				return true;
+			else
+				return false; //else
+		}
+		else if (cardId==7)//Chrysoprase
+		{
+			int playerNetWorth=this.calculateNetWorth();
+			if(playerNetWorth>=50)
+				return true;
+			else
+				return false;
+		}
+		else{
+			System.out.println("The card being chequed doesn't contain a valid ID(function 'checkWinningCondition').");
+			return false;
+		}
+				
+	}
 
 	/**
 	 * ToString Method for class Player.
@@ -227,6 +294,7 @@ public class Player {
 		return info+info2+info3+info4;
 		
 	}
+	
 	
 	/**
 	 * Getter money
