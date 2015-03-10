@@ -17,20 +17,29 @@ public class Player {
 	private ArrayList<CityCard> playerCityCard;
 	private int minionsOnHand;
 	private int buildingOnHand;
-	
+	private boolean winningCondition;
+	private int controledAreas;
+	private int [] minionsOnAreas;
 	/**
-	 * Constructor
+	 * Constructor for initializing a game.
 	 * @param aPersonality
 	 * @param aColor
 	 * @param minionOnHand
 	 * @param buildingOnHand
 	 */
 	public Player(PersonalityCard aPersonality, String aColor,int minionOnHand, int buildingOnHand){
-		this.money = 0;
+		this.controledAreas=0;
+		this.money = 0;		
 		this.personality = aPersonality;
 		this.color = aColor;
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
+		
+		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
+		//set one minion on the three initial areas as required by the game(Areas:Dolly Sisters(1),The Scours(5),The Shades(7))
+		this.minionsOnAreas[0]=this.minionsOnAreas[0]+1;
+		this.minionsOnAreas[4]=this.minionsOnAreas[4]+1;
+		this.minionsOnAreas[6]=this.minionsOnAreas[6]+1;
 		
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
@@ -138,6 +147,38 @@ public class Player {
 		this.playerCityCard.add(card);
 	}
 	
+	/**
+	 * Add a minion that was on hand to an area. Reduces by one the number of minion on hand and adds one minion to the respective area.
+	 * @param areaCode
+	 * @return boolean
+	 */
+	public boolean putNewMinionOnBoard(int areaCode)
+	{
+		if(this.minionsOnHand>=1)
+		{
+			this.minionsOnHand--;
+			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]+1;
+			return true;
+		}else
+			return false;
+	}
+	
+	/**
+	 * Move a minion from one area to another.
+	 * @param oldAreaCode
+	 * @param newAreaCode
+	 * @return boolean
+	 */
+	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode)
+	{
+		if(this.minionsOnAreas[oldAreaCode-1] >0)
+		{
+			this.minionsOnAreas[oldAreaCode-1]=this.minionsOnAreas[oldAreaCode-1]-1;
+			this.minionsOnAreas[newAreaCode-1]=this.minionsOnAreas[newAreaCode-1]+1;
+			return true;
+		}else
+			return false;
+	}
 
 	/**
 	 * ToString Method for class Player.

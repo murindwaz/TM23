@@ -8,7 +8,6 @@ package ca.concordia.game.model;
  */
 public class PersonalityCard extends Card {
 	public String winningCondition = null;
-	
 	/**
 	 * Constructor deending on the integer sent it creates one of the seven different personality cards.
 	 * @param i
@@ -58,6 +57,11 @@ public class PersonalityCard extends Card {
 		super(false,false);
 		
 		this.setName(name);
+	}
+	
+	private void setwinnningConditions()
+	{
+		
 	}
 	
 	

@@ -3,6 +3,7 @@ package ca.concordia.game.model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 /**
  * Class Area contains the possible object that could be available to an area.
@@ -16,8 +17,10 @@ public class Area {
 	private ArrayList<Piece> minions;
 	private boolean troubleMarker;
 	private boolean building;
+	private String buildingColor;
 	private int demon;
 	private int troll;
+	
 	
 
 	/**
@@ -29,6 +32,7 @@ public class Area {
 		this.cityCard=cityCard;
 		this.troubleMarker=false;
 		this.building=false;
+		this.buildingColor="";
 		this.demon=0;
 		this.troll=0;
 		minions= new ArrayList<Piece>();
@@ -44,11 +48,12 @@ public class Area {
 	 * @param demon
 	 * @param troll
 	 */
-	public Area(CityCard cityCard,boolean troubleMarker,boolean building,int demon,int troll)
+	public Area(CityCard cityCard,boolean troubleMarker,boolean building,String buildingColor,int demon,int troll)
 	{
 		this.cityCard=cityCard;
 		this.troubleMarker=troubleMarker;
 		this.building=building;
+		this.buildingColor=buildingColor;
 		this.demon=demon;
 		this.troll=troll;
 		
@@ -57,10 +62,65 @@ public class Area {
 		
 	}
 	
+	/**
+	 * Checks if the color of a player controls the area.Returns true if it does otherwise it returns false.
+	 * @param color(String)
+	 * @return boolean
+	 */
+	public boolean controlsArea(String color)
+	{
+		//Map will contain the number of minions from each player currently on this area.
+		Map<String,Integer> playerMinions=new HashMap<String,Integer>();
+		//All possible players.
+		playerMinions.put("RED", 0);
+		playerMinions.put("BLUE", 0);
+		playerMinions.put("YELLOW", 0);
+		playerMinions.put("GREEN", 0);
+		
+		String currentColor="";
+		for(int i=0;i<this.minions.size();i++)
+		{
+			currentColor=this.minions.get(i).getColor();
+			playerMinions.put(currentColor,playerMinions.get(currentColor)+1);
+		}
+		
+		if(this.building)//if true:a building exists
+			playerMinions.put(buildingColor, playerMinions.get(buildingColor)+1);
+		
+		//Get the entry with the maxim value in the HashMap.				
+		Entry<String,Integer> maxEntry = null;
+		for(Entry<String,Integer> entry : playerMinions.entrySet()) {
+		    if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+		        maxEntry = entry;
+		    }
+		}
+		
+		//check if there's a player with the same number of playing pieces.
+		playerMinions.remove(maxEntry.getKey());
+		
+		Entry<String,Integer> maxEntry2 = null;
+		for(Entry<String,Integer> entry : playerMinions.entrySet()) {
+		    if (maxEntry2 == null || entry.getValue() > maxEntry2.getValue()) {
+		        maxEntry2 = entry;
+		    }
+		}
+		
+		if(maxEntry == maxEntry2) //If two or more players have the same number of playing pieces then no one controls the area.
+		{
+			return false;
+		}
+		//Check if the color of the player being checked is the same as the one that has the most playing cards on the area.
+		if(maxEntry.getKey()==color)
+			return true;
+		else
+			return false;
+		
+	}
+	
 
 	/**
 	 * Getter
-	 * @return
+	 * @return CityCard
 	 */
 	public CityCard getCityCard()
 	{
@@ -68,7 +128,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-	 * @return
+	 * @return boolean
 	 */
 	public boolean getTroubleMarker()
 	{
@@ -76,7 +136,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-	 * @return
+	 * @return boolean
 	 */
 	public boolean getBuilding()
 	{
@@ -84,7 +144,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-	 * @return
+	 * @return int
 	 */
 	public int getDemon()
 	{
@@ -92,7 +152,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-	 * @return
+	 * @return int
 	 */
 	public int getTroll()
 	{
@@ -100,13 +160,20 @@ public class Area {
 	}
 	/**
 	 * Getter
-	 * @return
+	 * @return ArrayList<Piece>
 	 */
 	public ArrayList<Piece> getMinions()
 	{
 		return this.minions;
 	}
-	
+	/**
+	 * Getter
+	 * @return String
+	 */
+	public String getBuildingColor()
+	{
+		return this.buildingColor;
+	}
 
 	/**
 	 * 

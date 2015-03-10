@@ -86,7 +86,7 @@ public class Game {
 		
 		
 		for(int i=0; i<numberOfPlayers; i++) {
-			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],8,8);
+			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],12,6);
 			//Deal 5 green cards to each player:
 			decks.get("green").dealCardsToPlayer(players[i],5);
 			//Give $10 to each player:
@@ -265,6 +265,7 @@ public class Game {
 			String areaName = null;
 			boolean troubleMarker = false;
 			boolean building = false;
+			String buildingColor="";
 			int demon = 0;
 			int troll = 0;
 			
@@ -282,8 +283,10 @@ public class Game {
 					else if(j==2)
 						building=Boolean.valueOf(parts[j]);
 					else if(j==3)
-						demon=Integer.parseInt(parts[j]);
+						buildingColor= parts[j];
 					else if(j==4)
+						demon=Integer.parseInt(parts[j]);
+					else if(j==5)
 						troll=Integer.parseInt(parts[j]);
 					else 
 						minions.add(parts[j]);
@@ -292,7 +295,7 @@ public class Game {
 				//Create new city card with the name extracted.
 				CityCard cityCard=new CityCard(areaName);
 				//Create Area and add to gameboard.
-				Area area=new Area(cityCard,troubleMarker,building,demon,troll);
+				Area area=new Area(cityCard,troubleMarker,building,buildingColor,demon,troll);
 				this.gameboard.addArea(area);//(cityCard,troubleMarker,building,demon,troll) ==> Constructor parameters.
 				//Add the minions that where in the current area.
 				for(int j=0 ; j<minions.size();j++)
@@ -387,6 +390,7 @@ public class Game {
 		
 		return "Load Was Successfull";
 	}
+	
 	
 	/**
 	 * Prints Information about current game.

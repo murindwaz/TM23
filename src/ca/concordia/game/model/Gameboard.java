@@ -61,6 +61,30 @@ public class Gameboard {
 		this.areas=new ArrayList<Area>();
 	}
 	
+	/**
+	 * Returns the names of the areas being control by a player.
+	 * @param currentPlayer
+	 * @return ArrayList<String>
+	 */
+	public ArrayList<String> controlledAreas(Player currentPlayer)
+	{
+		ArrayList<String> controlledAreasPlayer=new ArrayList<String>();
+		Area tempArea;
+		boolean controls=false;
+		for(int i=0;i< this.areas.size();i++)
+		{
+			//Check if the are any demons in the current area.If there is 1 or more demons the area is not controlled.
+			tempArea= this.areas.get(i);
+			if(tempArea.getDemon()>0)
+				continue;
+			//Check if the player has control of the area being processed.
+			controls=tempArea.controlsArea(currentPlayer.getColor());
+			
+			if(controls)
+				controlledAreasPlayer.add(tempArea.getCityCard().getName());
+		}
+		return controlledAreasPlayer;
+	}
 
 	/**
 	 * toString method for Gameboard
