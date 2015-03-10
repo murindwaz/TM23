@@ -62,6 +62,9 @@ public class Area {
 		
 	}
 	
+	
+	
+	
 	/**
 	 * Checks if the color of a player controls the area.Returns true if it does otherwise it returns false.
 	 * @param color(String)
@@ -104,8 +107,9 @@ public class Area {
 		        maxEntry2 = entry;
 		    }
 		}
-		
-		if(maxEntry == maxEntry2) //If two or more players have the same number of playing pieces then no one controls the area.
+		//If two or more players have the same number of playing pieces then no one controls the area. Or if there is an equal or greater number of trolls 
+		//than player pieces in the current area then there's no control of the area.
+		if(maxEntry.getValue() == maxEntry2.getValue() || maxEntry.getValue()< this.demon) 
 		{
 			return false;
 		}

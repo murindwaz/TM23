@@ -45,6 +45,7 @@ public class Player {
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
 	
+	
 
 	/**
 	 * Constructor for loading a game State.
@@ -120,6 +121,15 @@ public class Player {
 	public Card getPersonality() {
 		return this.personality;
 	}	
+	
+	/**
+	 * Getter: array of minions per area.
+	 * @return int[]
+	 */
+	public int[] getMinionsOnArea()
+	{
+		return this.minionsOnAreas;
+	}
 	
 
 	/**

@@ -62,7 +62,8 @@ public class Gameboard {
 	}
 	
 	/**
-	 * Returns the names of the areas being control by a player.
+	 * Returns the names of the areas being control by a player.Called each time a player starts his/her turn.
+	 * It's also used to check winning condition for Lord Selachii,Lord Rust and Lord Worde
 	 * @param currentPlayer
 	 * @return ArrayList<String>
 	 */
@@ -84,6 +85,30 @@ public class Gameboard {
 				controlledAreasPlayer.add(tempArea.getCityCard().getName());
 		}
 		return controlledAreasPlayer;
+	}
+	
+	/**
+	 * For Lord Vetani winnning Condition: It checks how many areas the player has minions on.
+	 * @param currentPlayer(Player)
+	 * @return int
+	 */
+	public int numberMinionsAreas(Player currentPlayer)
+	{
+		int [] minionsInArea=new int [12];
+		int numberOfMinionsInAreas=0;
+		
+		minionsInArea= currentPlayer.getMinionsOnArea();
+		
+		for(int i=0;i<minionsInArea.length;i++)
+		{
+			if(this.areas.get(i).getDemon()>0)//If there are demoan in the area then the area doesn't count for winning condition.
+				continue;
+			//the player possess at least one minion on the current Area.
+			if(minionsInArea[i]>0)
+				numberOfMinionsInAreas++;
+		}
+		
+		return numberOfMinionsInAreas;
 	}
 
 	/**
