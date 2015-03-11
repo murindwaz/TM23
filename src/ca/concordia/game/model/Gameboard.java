@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-//Packages
-import ca.concordia.game.main.Game;
-import ca.concordia.game.common.common;
 
 
 /**
@@ -27,8 +24,7 @@ public class Gameboard {
 	/**
 	 * Contructor for new game
 	 */
-	public Gameboard()
-	{
+	public Gameboard(){
 		this.areas = new ArrayList<Area>();
 		for(int i=0;i<12;i++)//Populate the gameboard with the twelve areas.
 		{
