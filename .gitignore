@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings
+.settings/
+*.class
+.settings/org.eclipse.jdt.core.prefs
+.ecpproperties
+.classpath
+*.txt
