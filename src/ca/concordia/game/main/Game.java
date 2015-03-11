@@ -1,22 +1,24 @@
 package ca.concordia.game.main;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.Color;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ca.concordia.game.model.*;
-import ca.concordia.game.util.Loader;
-import ca.concordia.game.util.Saver;
+import ca.concordia.game.util.*;
 
 
 /**
  * Game class creates a new game, loads and saves a game state. 
- *  @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  */
 public class Game {
 	

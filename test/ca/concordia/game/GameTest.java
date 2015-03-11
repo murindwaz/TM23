@@ -1,19 +1,28 @@
 package ca.concordia.game;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.concordia.game.model.*;
-import ca.concordia.game.util.*;
+import ca.concordia.game.main.Game;
+import ca.concordia.game.model.Area;
+import ca.concordia.game.model.Card;
+import ca.concordia.game.model.Die;
+import ca.concordia.game.model.Gameboard;
+import ca.concordia.game.model.Piece;
+import ca.concordia.game.model.Player;
+import ca.concordia.game.util.GameStateReader;
+import ca.concordia.game.util.GameStateWriter;
 
-import java.awt.Color;
+
+
 
 public class GameTest {
 	
@@ -41,7 +50,7 @@ public class GameTest {
 		area = new Area(null);
 		card = new Card(false,false); 
 		piece = new Piece(null);
-		player = new Player(new PersonalityCard(1),Color.RED, 0, 0); 
+		//player = new Player(new PersonalityCard(1),Color.RED, 0, 0); 
 		gameboard = new Gameboard(); 
 		gameState = Game.getInstance();
 		//@todo initialization of players in a game 
@@ -57,13 +66,15 @@ public class GameTest {
 	/**
 	 * @todo prior game encoding, the game engine has to encode the game
 	 */
-	@Test public void canEncodeGameState(){
+	@Test 
+	public void canEncodeGameState(){
 		fail("GameStateEncoding not yet implemented");
 	}
 	/**
 	 * @todo prior to re-loading a game state, the system has to decode the JSON file 
 	 */
-	@Test public void canDecodeGameState(){
+	@Test 
+	public void canDecodeGameState(){
 		fail( "GameStateDecoding not yet implemented");
 	}
 	
@@ -96,15 +107,11 @@ public class GameTest {
 		assertTrue( "GameStateTest - has the same game",  rgameState.equals(gameState));
 	}
 	
-	
 	@Test
-	public void testNewGame()
-	{
+	public void testNewGame(){
 		Game test = new Game(); 
-		String result= test.init();
+		String result = test.init();
 		assertEquals("Run was Successfull",result);
 		test.printCurrentState();
 	}
-	
-	
 }

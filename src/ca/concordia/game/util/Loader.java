@@ -16,7 +16,12 @@ import ca.concordia.game.model.*;
 
 /**
  * Class Loader is in charge of Loading and coping the contents of a file into an array.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 public final class Loader {

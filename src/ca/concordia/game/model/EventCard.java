@@ -3,7 +3,12 @@ package ca.concordia.game.model;
 /**
  * 
  * Event Card is a type of card it contains the Twelve different types of possible events the game offers.
- *@author Pascal,Gustavo,bhavik,Esteban,Diego
+ * *@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  */
 public class EventCard extends Card {
 	public String instruction = null;

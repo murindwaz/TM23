@@ -8,7 +8,12 @@ import ca.concordia.game.model.Card;
 
 /**
  * Class Deck Creates the decks of cards.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 

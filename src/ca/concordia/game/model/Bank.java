@@ -5,7 +5,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Class Bank handles the balance of the current instance of a bank, Further, it handles any deposits and withdraws made by Players as long as
  * there are sufficient resources.
  * There can only be one instance of Bank at any time.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 public class Bank {

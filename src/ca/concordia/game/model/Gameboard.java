@@ -10,7 +10,12 @@ import ca.concordia.game.main.Game;
 
 /**
  * Class Gameboard handles and contains the twelve game areas of the game.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 public class Gameboard {

@@ -6,7 +6,12 @@ import java.util.ArrayList;
 
 /**
  * Class Area contains the possible object that could be available to an area.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 
@@ -246,25 +251,21 @@ public class Area {
 	 * @param addRemove
 	 * @return
 	 */
-	public String addRemoveTroll(int addRemove)
-	{
-		if(addRemove==1)//add troll
-		{
+	public String addRemoveTroll(int addRemove){
+		if( addRemove == 1 ){
+			//add troll
 			this.troll++;
 			return "success";
-		}else if (addRemove==2)//remove troll if possible
-		{
-			if(this.troll >0)
-			{
+			//remove troll if possible
+		}else if ( addRemove == 2 ){
+			if( this.troll > 0 ){
 				this.troll++;
 				return "success";
-			}else
+			}else{
 				return "failed";
+			} 
 		}
 		return "error";
 	}
-
-	
-	
 
 }

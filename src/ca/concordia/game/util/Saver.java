@@ -11,7 +11,12 @@ import java.util.Scanner;
 
 /**
  * Class Saver is in charge of Saving the contents of an array list into a file whose name is chosen by the user.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 public final class Saver {

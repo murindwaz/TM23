@@ -2,7 +2,12 @@ package ca.concordia.game.model;
 
 /**
  * Calss City card is a type of Card. It contains the 12 different Area Cards a unique card number and it's ability.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 

@@ -2,7 +2,12 @@ package ca.concordia.game.model;
 
 /**
  * Green card is a type of Card. for this version of the system it contains a unique number and the color Green for all cards of this type.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 public class GreenCard extends Card {
