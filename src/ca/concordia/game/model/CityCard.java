@@ -5,18 +5,12 @@ import java.util.Arrays;
 
 
 /**
-<<<<<<< HEAD
  * Calss City card is a type of Card. It contains the 12 different Area Cards a unique card number and it's ability.
 *@author Pascal Maniraho 
  *@author Gustavo Pereira
  *@author Bhavik Desai 
  *@author Jesus Esteban Garro Matamoros 
  *@author Diego Pizarro
-
-=======
- * Calss City card is a type of Card. It contains the 12 different Area Cards a unique card number, the adjacent areas to the city card and it's ability.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
->>>>>>> origin/master2
  *
  */
 

@@ -13,11 +13,8 @@ package ca.concordia.game.model;
  */
 
 public class PersonalityCard extends Card {
-<<<<<<< HEAD
 	
 	public String winningCondition = null;
-	
-=======
 	public String winningConditionDescription = null;
 	private int cardId;
 	private int numberOfPlayers;
@@ -27,7 +24,6 @@ public class PersonalityCard extends Card {
 	private int numTroubleMarkers;
 	private int netWorth;
 	private int drawPile;
->>>>>>> origin/master2
 	/**
 	 * Constructor deending on the integer sent it creates one of the seven different personality cards.
 	 * @param int i - Lord Identifier 
