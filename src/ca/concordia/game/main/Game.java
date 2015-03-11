@@ -409,6 +409,15 @@ public class Game {
 		Deck brownDeck=this.decks.get("Brown");//Get the size of the brown deck since it's on the bottom and can give us the status of the draw deck is empty.
 		return brownDeck.getSizeDeck();
 	}
+	
+	/**
+	 * Returns the game's current GameBoard.
+	 * @return Gameboard
+	 */
+	public Gameboard getGameBoard()
+	{
+		return this.gameboard;
+	}
 	/**
 	 * Prints Information about current game.
 	 */

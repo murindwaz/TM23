@@ -144,6 +144,8 @@ public class CityCard extends Card {
 		return this.cardNumber;
 	}
 	
+	
+	
 	/**
 	 * getter cost of putting a building.
 	 * @return int
@@ -161,6 +163,15 @@ public class CityCard extends Card {
 	public boolean isAdjacent(int areaCode)
 	{
 		return this.adjacentAreas.contains(areaCode);
+	}
+	
+	/**
+	 * Return all adjacent areas to the one being called.
+	 * @return ArrayList<Integer>
+	 */
+	public ArrayList<Integer> getAdjacentAreas()
+	{
+		return this.adjacentAreas;
 	}
 
 }

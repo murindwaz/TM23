@@ -46,6 +46,8 @@ public class Player {
 		this.minionsOnAreas[4]=this.minionsOnAreas[4]+1;
 		this.minionsOnAreas[6]=this.minionsOnAreas[6]+1;
 		
+		//Todo update GameBoard when adding minnions.
+		
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
