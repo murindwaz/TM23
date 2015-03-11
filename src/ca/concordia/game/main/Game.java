@@ -50,45 +50,45 @@ public class Game {
 		AtomicInteger aNewBalance= new AtomicInteger(newBalance);
 		bank.setBankMoney(aNewBalance);
 		
-		this.decks = new HashMap<String,Deck>();
-		//There is exactly 5 decks per game + a Discard Deck
-		for(int i = 0 ; i <= 5 ; i++) {
-			switch(i) {
-				case 0:
-					this.decks.put("discard", new Deck("D"));
-					break;
-				case 1:
-					this.decks.put("personalities", new Deck("P"));
-					break;
-				case 2:
-					this.decks.put("cities", new Deck("C"));
-					break;
-				case 3:
-					this.decks.put("events", new Deck("E"));
-					break;
-				case 4:
-					this.decks.put("green", new Deck("G"));
-					break;
-				case 5:
-					this.decks.put("brown", new Deck("B"));
-					break;
-			}
-		}
 		
-		//Select number of players and their colors.
-		//For now we use four players of fixed colors:
+		//Select number of players
 		Scanner keyIn=new Scanner(System.in);
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
 		//Close Scanner object
 		//keyIn.close();//Don't close until done using in whole proyect.
 		
+		this.decks = new HashMap<String,Deck>();
+		//There is exactly 5 decks per game + a Discard Deck
+		for(int i = 0 ; i <= 5 ; i++) {
+			switch(i) {
+				case 0:
+					this.decks.put("discard", new Deck("D",numberOfPlayers));
+					break;
+				case 1:
+					this.decks.put("personalities", new Deck("P",numberOfPlayers));
+					break;
+				case 2:
+					this.decks.put("cities", new Deck("C",numberOfPlayers));
+					break;
+				case 3:
+					this.decks.put("events", new Deck("E",numberOfPlayers));
+					break;
+				case 4:
+					this.decks.put("green", new Deck("G",numberOfPlayers));
+					break;
+				case 5:
+					this.decks.put("brown", new Deck("B",numberOfPlayers));
+					break;
+			}
+		}
+		
+		//Select  players colors.
+		//For now we use four players of fixed colors:
 		this.players = new Player[numberOfPlayers];
 		
-		
-		
 		for(int i=0; i<numberOfPlayers; i++) {
-			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],8,8);
+			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],12,6);
 			//Deal 5 green cards to each player:
 			decks.get("green").dealCardsToPlayer(players[i],5);
 			//Give $10 to each player:
@@ -267,6 +267,7 @@ public class Game {
 			String areaName = null;
 			boolean troubleMarker = false;
 			boolean building = false;
+			String buildingColor="";
 			int demon = 0;
 			int troll = 0;
 			
@@ -284,8 +285,10 @@ public class Game {
 					else if(j==2)
 						building=Boolean.valueOf(parts[j]);
 					else if(j==3)
-						demon=Integer.parseInt(parts[j]);
+						buildingColor= parts[j];
 					else if(j==4)
+						demon=Integer.parseInt(parts[j]);
+					else if(j==5)
 						troll=Integer.parseInt(parts[j]);
 					else 
 						minions.add(parts[j]);
@@ -294,7 +297,7 @@ public class Game {
 				//Create new city card with the name extracted.
 				CityCard cityCard=new CityCard(areaName);
 				//Create Area and add to gameboard.
-				Area area=new Area(cityCard,troubleMarker,building,demon,troll);
+				Area area=new Area(cityCard,troubleMarker,building,buildingColor,demon,troll);
 				this.gameboard.addArea(area);//(cityCard,troubleMarker,building,demon,troll) ==> Constructor parameters.
 				//Add the minions that where in the current area.
 				for(int j=0 ; j<minions.size();j++)
@@ -390,6 +393,33 @@ public class Game {
 		return "Load Was Successfull";
 	}
 	
+	/**
+	 * Getter: Returns number of players
+	 * @return int
+	 */
+	public int getNumberOfPlayers()
+	{
+		return this.numberOfPlayers;
+	}
+	
+	/**
+	 * returns the size of the brown deck.
+	 * @return int
+	 */
+	public int getSizeDrawDeck()
+	{
+		Deck brownDeck=this.decks.get("Brown");//Get the size of the brown deck since it's on the bottom and can give us the status of the draw deck is empty.
+		return brownDeck.getSizeDeck();
+	}
+	
+	/**
+	 * Returns the game's current GameBoard.
+	 * @return Gameboard
+	 */
+	public Gameboard getGameBoard()
+	{
+		return this.gameboard;
+	}
 	/**
 	 * Prints Information about current game.
 	 */

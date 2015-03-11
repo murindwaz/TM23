@@ -3,8 +3,11 @@ package ca.concordia.game.model;
 import java.util.Deque;
 import java.util.ArrayDeque;
 import java.util.Random;
+<<<<<<< HEAD
 
 import ca.concordia.game.model.Card;
+=======
+>>>>>>> origin/master2
 
 /**
  * Class Deck Creates the decks of cards.
@@ -26,7 +29,7 @@ public class Deck {
 	 * Constructor: Creates an Array of cards depending on the type of the card which is specified as an argument.
 	 * @param type
 	 */
-	public Deck(String type){
+	public Deck(String type,int numPlayers){
 		switch(type) {
 			case "D":
 				//The discard deck is empty to start with
@@ -36,7 +39,7 @@ public class Deck {
 				//The personality deck has 7 cards:
 				this.cards = new ArrayDeque<Card>();
 				for (int i = 0; i < 7; i++) {
-					this.cards.add(new PersonalityCard(i));
+					this.cards.add(new PersonalityCard(i,numPlayers));
 				}
 				break;
 			case "C":
@@ -80,6 +83,10 @@ public class Deck {
 	 * Suffle Deck
 	 */
 	public void shuffle() {
+<<<<<<< HEAD
+=======
+		
+>>>>>>> origin/master2
 		//Shuffles the cards in this deck
 		int max = this.cards.size();
 
@@ -88,18 +95,30 @@ public class Deck {
 		for(int i = 0; i < max; i++) {
 			tmp[i] = this.cards.getFirst();
 		}
+<<<<<<< HEAD
 		
 		//Fisher-Yates shuffle:
 		Random rnd = new Random();
 		for(int i = max-1; i>0; i++) {
 			int idx = rnd.nextInt(i+1);
 	
+=======
+				
+		//Fisher-Yates shuffle:
+		Random rnd = new Random();
+		for(int i = max-1; i>0; i++) {
+			int idx = rnd.nextInt(i+1);	
+>>>>>>> origin/master2
 			//Perform swap:
 			Card a = tmp[idx];
 			tmp[idx] = tmp[i];
 			tmp[i] = a;
 		}
+<<<<<<< HEAD
 		
+=======
+				
+>>>>>>> origin/master2
 		//Put back the cards:
 		for(int i = 0; i < max; i++) {
 			this.cards.add(tmp[i]);
@@ -107,11 +126,14 @@ public class Deck {
 	}
 	
 	/**
-	 * Get first card of a deck
-	 * @return
+	 * Get first card of a deck; if the deck still has cards otherwise it will return null.
+	 * @return Card
 	 */
 	public Card getCard() {
-		return cards.pop();
+		if(cards.size()>0)
+			return cards.pop();
+		else 
+			return null;
 	}
 	/**
 	 * put Card in a deck.
@@ -119,6 +141,15 @@ public class Deck {
 	 */
 	public void putCard(Card aCard) {
 		cards.addLast(aCard);
+	}
+	
+	/**
+	 * return the size of the Deck.
+	 * @return int
+	 */
+	public int getSizeDeck()
+	{
+		return this.cards.size();
 	}
 	
 	/**
