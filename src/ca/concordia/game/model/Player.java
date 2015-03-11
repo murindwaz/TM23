@@ -3,8 +3,11 @@ package ca.concordia.game.model;
 import java.awt.Color;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import ca.concordia.game.main.Game;
 
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 /**
  * Class PLayer handles and contains the different players on the current game.
  * @author Pascal,Gustavo,bhavik,Esteban,Diego
@@ -14,43 +17,62 @@ public class Player {
 	private int money;
 	private PersonalityCard personality;
 	public String color;
+<<<<<<< HEAD
 	private int netWorth;
 	private int loans;
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	
 	private ArrayList<Card> playerCards;
 	private ArrayList<CityCard> playerCityCard;
 	private int minionsOnHand;
 	private int buildingOnHand;
+<<<<<<< HEAD
 	private boolean winningCondition;
 	private int controledAreas;
 	private int [] minionsOnAreas;
 	/**
 	 * Constructor for initializing a game.
+=======
+	
+	/**
+	 * Constructor
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 * @param aPersonality
 	 * @param aColor
 	 * @param minionOnHand
 	 * @param buildingOnHand
 	 */
 	public Player(PersonalityCard aPersonality, String aColor,int minionOnHand, int buildingOnHand){
+<<<<<<< HEAD
 		this.controledAreas=0;
 		this.money = 0;	
 		this.loans=0;
+=======
+		this.money = 0;
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		this.personality = aPersonality;
 		this.color = aColor;
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
 		
+<<<<<<< HEAD
 		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
 		//set one minion on the three initial areas as required by the game(Areas:Dolly Sisters(1),The Scours(5),The Shades(7))
 		this.minionsOnAreas[0]=this.minionsOnAreas[0]+1;
 		this.minionsOnAreas[4]=this.minionsOnAreas[4]+1;
 		this.minionsOnAreas[6]=this.minionsOnAreas[6]+1;
 		
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * Constructor for loading a game State.
@@ -61,7 +83,10 @@ public class Player {
 	 * @param money
 	 */
 	public Player(PersonalityCard aPersonality, String aColor,int minionOnHand, int buildingOnHand,int money){
+<<<<<<< HEAD
 		//this.loans=loans;  to do
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		this.money = money;
 		this.personality = aPersonality;
 		this.color = aColor;
@@ -73,6 +98,7 @@ public class Player {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * 
 	 * @param index
 	 * @return
@@ -127,6 +153,63 @@ public class Player {
 	{
 		this.loans=this.loans+amountPaid;
 	}
+=======
+	 * Getter money
+	 * @return
+	 */
+	public int getMoney() {
+		return this.money;
+	}	
+	/**
+	 * Getter color
+	 * @return
+	 */
+	public String getColor()
+	{
+		return this.color;
+	}
+	/**
+	 * Getter minons currently on Players hand.
+	 * @return
+	 */
+	public int getMinionsOnHand()
+	{
+		return this.minionsOnHand;
+	}
+	/**
+	 * Getter building currently on players hand
+	 * @return
+	 */
+	public int getBuildingOnHand()
+	{
+		return this.buildingOnHand;
+	}
+	/**
+	 * Getter player Cards(Brown or Green Cards)
+	 * @return
+	 */
+	public ArrayList<Card> getPlayerCards()
+	{
+		return this.playerCards;
+	}
+	/**
+	 * Getter City Cards Currently hold by a player.
+	 * @return
+	 */
+	public ArrayList<CityCard> getPlayerCityCard()
+	{
+		return this.playerCityCard;
+	}
+	
+	/**
+	 * Getter get Player's Personality Card.
+	 * @return
+	 */
+	public Card getPersonality() {
+		return this.personality;
+	}	
+	
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * Transfer Money into players account.
@@ -149,6 +232,7 @@ public class Player {
 	 * Add card to player's city Cards(Player put building in board.)
 	 * @param card
 	 */
+<<<<<<< HEAD
 	public boolean receiveCityCard(CityCard card){
 		int oldSize=this.playerCityCard.size();
 		this.playerCityCard.add(card);
@@ -274,6 +358,12 @@ public class Player {
 		}
 				
 	}
+=======
+	public void receiveCityCard(CityCard card){
+		this.playerCityCard.add(card);
+	}
+	
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * ToString Method for class Player.
@@ -313,6 +403,7 @@ public class Player {
 		return info+info2+info3+info4;
 		
 	}
+<<<<<<< HEAD
 	
 	
 	/**
@@ -380,4 +471,6 @@ public class Player {
 		return this.minionsOnAreas;
 	}
 	
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 }

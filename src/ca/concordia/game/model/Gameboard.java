@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 //Packages
 import ca.concordia.game.main.Game;
+<<<<<<< HEAD
 import ca.concordia.game.common.common;
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 
 /**
@@ -61,6 +64,7 @@ public class Gameboard {
 		this.areas=new ArrayList<Area>();
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Returns the names of the areas being control by a player.Called each time a player starts his/her turn.
 	 * It's also used to check winning condition for Lord Selachii,Lord Rust and Lord Worde
@@ -132,6 +136,8 @@ public class Gameboard {
 		
 		return troubleMarkersAreas;
 	}
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * toString method for Gameboard

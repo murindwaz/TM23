@@ -15,6 +15,7 @@ public class GameTest4 {
 	public void testSaveGame2()
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Game test = new Game(); //Game Object(Main Functions init(),loadGame(),saveGame())
 		//Initialialize all structures.
 		String resultInit= test.init();
@@ -27,6 +28,8 @@ public class GameTest4 {
 		assertEquals("Save Was Successfull",resultSave);
 		
 =======
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		Game test = new Game(); 
 		String resultInit= test.init();
 		assertEquals("Initialialize all structures - Run was Successfull",resultInit);
@@ -34,7 +37,10 @@ public class GameTest4 {
 		assertEquals("Load Game - Loading the game passed",resultLoad);
 		String resultSave = test.saveGame();
 		assertEquals("Save Game - Saving the game passed",resultSave);
+<<<<<<< HEAD
 >>>>>>> origin/master
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		test.printCurrentState();
 	}
 

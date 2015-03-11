@@ -48,6 +48,7 @@ public class Game {
 		AtomicInteger aNewBalance= new AtomicInteger(newBalance);
 		bank.setBankMoney(aNewBalance);
 		
+<<<<<<< HEAD
 		
 		//Select number of players
 		Scanner keyIn=new Scanner(System.in);
@@ -56,11 +57,14 @@ public class Game {
 		//Close Scanner object
 		//keyIn.close();//Don't close until done using in whole proyect.
 		
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		this.decks = new HashMap<String,Deck>();
 		//There is exactly 5 decks per game + a Discard Deck
 		for(int i = 0 ; i <= 5 ; i++) {
 			switch(i) {
 				case 0:
+<<<<<<< HEAD
 					this.decks.put("discard", new Deck("D",numberOfPlayers));
 					break;
 				case 1:
@@ -77,16 +81,51 @@ public class Game {
 					break;
 				case 5:
 					this.decks.put("brown", new Deck("B",numberOfPlayers));
+=======
+					this.decks.put("discard", new Deck("D"));
+					break;
+				case 1:
+					this.decks.put("personalities", new Deck("P"));
+					break;
+				case 2:
+					this.decks.put("cities", new Deck("C"));
+					break;
+				case 3:
+					this.decks.put("events", new Deck("E"));
+					break;
+				case 4:
+					this.decks.put("green", new Deck("G"));
+					break;
+				case 5:
+					this.decks.put("brown", new Deck("B"));
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 					break;
 			}
 		}
 		
+<<<<<<< HEAD
 		//Select  players colors.
 		//For now we use four players of fixed colors:
 		this.players = new Player[numberOfPlayers];
 		
 		for(int i=0; i<numberOfPlayers; i++) {
 			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],12,6);
+=======
+		//Select number of players and their colors.
+		//For now we use four players of fixed colors:
+		Scanner keyIn=new Scanner(System.in);
+		System.out.println("Please select number of players(Maximun => 4):");
+		numberOfPlayers = keyIn.nextInt();
+		//Close Scanner object
+		//keyIn.close();//Don't close until done using in whole proyect.
+		
+		this.players = new Player[numberOfPlayers];
+		
+		
+		
+		for(int i=0; i<numberOfPlayers; i++) {
+			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],8,8);
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 			//Deal 5 green cards to each player:
 			decks.get("green").dealCardsToPlayer(players[i],5);
 			//Give $10 to each player:
@@ -265,7 +304,10 @@ public class Game {
 			String areaName = null;
 			boolean troubleMarker = false;
 			boolean building = false;
+<<<<<<< HEAD
 			String buildingColor="";
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 			int demon = 0;
 			int troll = 0;
 			
@@ -283,10 +325,15 @@ public class Game {
 					else if(j==2)
 						building=Boolean.valueOf(parts[j]);
 					else if(j==3)
+<<<<<<< HEAD
 						buildingColor= parts[j];
 					else if(j==4)
 						demon=Integer.parseInt(parts[j]);
 					else if(j==5)
+=======
+						demon=Integer.parseInt(parts[j]);
+					else if(j==4)
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 						troll=Integer.parseInt(parts[j]);
 					else 
 						minions.add(parts[j]);
@@ -295,7 +342,11 @@ public class Game {
 				//Create new city card with the name extracted.
 				CityCard cityCard=new CityCard(areaName);
 				//Create Area and add to gameboard.
+<<<<<<< HEAD
 				Area area=new Area(cityCard,troubleMarker,building,buildingColor,demon,troll);
+=======
+				Area area=new Area(cityCard,troubleMarker,building,demon,troll);
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 				this.gameboard.addArea(area);//(cityCard,troubleMarker,building,demon,troll) ==> Constructor parameters.
 				//Add the minions that where in the current area.
 				for(int j=0 ; j<minions.size();j++)
@@ -392,6 +443,7 @@ public class Game {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Getter: Returns number of players
 	 * @return int
 	 */
@@ -410,6 +462,8 @@ public class Game {
 		return brownDeck.getSizeDeck();
 	}
 	/**
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 * Prints Information about current game.
 	 */
 	public void printCurrentState()

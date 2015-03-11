@@ -3,7 +3,10 @@ package ca.concordia.game.model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Map.Entry;
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 /**
  * Class Area contains the possible object that could be available to an area.
@@ -17,11 +20,17 @@ public class Area {
 	private ArrayList<Piece> minions;
 	private boolean troubleMarker;
 	private boolean building;
+<<<<<<< HEAD
 	private String buildingColor;
 	private int demon;
 	private int troll;
 	
 	
+=======
+	private int demon;
+	private int troll;
+	
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * Constructor for new game.
@@ -32,7 +41,10 @@ public class Area {
 		this.cityCard=cityCard;
 		this.troubleMarker=false;
 		this.building=false;
+<<<<<<< HEAD
 		this.buildingColor="";
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		this.demon=0;
 		this.troll=0;
 		minions= new ArrayList<Piece>();
@@ -48,12 +60,19 @@ public class Area {
 	 * @param demon
 	 * @param troll
 	 */
+<<<<<<< HEAD
 	public Area(CityCard cityCard,boolean troubleMarker,boolean building,String buildingColor,int demon,int troll)
+=======
+	public Area(CityCard cityCard,boolean troubleMarker,boolean building,int demon,int troll)
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	{
 		this.cityCard=cityCard;
 		this.troubleMarker=troubleMarker;
 		this.building=building;
+<<<<<<< HEAD
 		this.buildingColor=buildingColor;
+=======
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		this.demon=demon;
 		this.troll=troll;
 		
@@ -62,6 +81,7 @@ public class Area {
 		
 	}
 	
+<<<<<<< HEAD
 	
 	
 	
@@ -125,6 +145,12 @@ public class Area {
 	/**
 	 * Getter
 	 * @return CityCard
+=======
+
+	/**
+	 * Getter
+	 * @return
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public CityCard getCityCard()
 	{
@@ -132,7 +158,11 @@ public class Area {
 	}
 	/**
 	 * Getter
+<<<<<<< HEAD
 	 * @return boolean
+=======
+	 * @return
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public boolean getTroubleMarker()
 	{
@@ -140,7 +170,11 @@ public class Area {
 	}
 	/**
 	 * Getter
+<<<<<<< HEAD
 	 * @return boolean
+=======
+	 * @return
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public boolean getBuilding()
 	{
@@ -148,7 +182,11 @@ public class Area {
 	}
 	/**
 	 * Getter
+<<<<<<< HEAD
 	 * @return int
+=======
+	 * @return
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public int getDemon()
 	{
@@ -156,7 +194,11 @@ public class Area {
 	}
 	/**
 	 * Getter
+<<<<<<< HEAD
 	 * @return int
+=======
+	 * @return
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public int getTroll()
 	{
@@ -164,12 +206,17 @@ public class Area {
 	}
 	/**
 	 * Getter
+<<<<<<< HEAD
 	 * @return ArrayList<Piece>
+=======
+	 * @return
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public ArrayList<Piece> getMinions()
 	{
 		return this.minions;
 	}
+<<<<<<< HEAD
 	/**
 	 * Getter
 	 * @return String
@@ -178,6 +225,9 @@ public class Area {
 	{
 		return this.buildingColor;
 	}
+=======
+	
+>>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * 
