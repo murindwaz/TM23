@@ -4,8 +4,6 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 import java.util.Random;
 
-import ca.concordia.game.model.Card;
-
 //A deck is a double-ended queue of cards: We can take from the front and put in the back 
 public class Deck {
 	
