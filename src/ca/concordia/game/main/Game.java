@@ -242,7 +242,7 @@ public class Game {
 		ArrayList<String> content = new ArrayList<String>();
 		
 		//First set the game instance to null since there could already be another game running.
-		this.instance=null;
+		Game.instance=null;
 		
 		//Load SavedGame
 		//Create Scanner Object

@@ -1,7 +1,5 @@
 package ca.concordia.game.model;
 
-import java.awt.Color;
-
 /**
  * This class will only contain the color of the Piece.
  * @author Pascal,Gustavo,bhavik,Esteban,Diego

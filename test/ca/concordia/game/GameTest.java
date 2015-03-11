@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.concordia.Game;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
 
