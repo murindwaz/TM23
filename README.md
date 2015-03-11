@@ -57,13 +57,20 @@ This is a commit for testing purposes.
 	
 ### Build-2 game take 
 	
-	1	B	Sergeant Cheery Littlebottom	2	64	Take two cards from the draw deck.
-	3	B	The Clacks	3	6M28	Take two cards from the draw deck.
-	36	B	Moist von Lipwig 	4	1M368	Take two cards from the draw deck.
-	42	B	Professor of Recent Runes	3	768	Take two cards from the draw deck.
-	87	G	Librarian	1	6	Take four cards from the draw deck.
-	88	G	Leonard of Quirm	1	6	Take four cards from the draw deck.
-	77	G	Hex	2	62	Take three cards from the draw deck.
+	1	B	Sergeant Cheery Littlebottom	
+	2	64	Take two cards from the draw deck.
+	3	B	The Clacks	
+	3	6M28	Take two cards from the draw deck.
+	36	B	Moist von Lipwig 	
+	4	1M368	Take two cards from the draw deck.
+	42	B	Professor of Recent Runes	
+	3	768	Take two cards from the draw deck.
+	87	G	Librarian	
+	1	6	Take four cards from the draw deck.
+	88	G	Leonard of Quirm	
+	1	6	Take four cards from the draw deck.
+	77	G	Hex	
+	2	62	Take three cards from the draw deck.
 	
 	
 	
