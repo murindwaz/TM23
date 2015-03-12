@@ -25,6 +25,8 @@ public class GreenCard extends Card {
 	public GreenCard(int i) {
 		//City Cards are always Visible!
 		super(false,false);
+		actionSymbols =new ArrayList<Symbol>();
+		
 		
 		this.color="GREEN";
 		this.number=i;

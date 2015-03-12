@@ -33,12 +33,12 @@ public class StatePlay  implements StateLike{
 		System.out.println(player.toString());
 		
 		//Play one of the cards, ask user for input.
-		Scanner keyIn=new Scanner(System.in);
+		
 		int cardNumberInPlayerHand;
 		while(true)
 		{
 			System.out.println("Please enter the card number you wish to play(Select the number for 'Position in Player Hand'):");
-			cardNumberInPlayerHand = keyIn.nextInt();
+			cardNumberInPlayerHand = game.keyIn.nextInt();
 			if(cardNumberInPlayerHand > player.getPlayerCards().size()-1)
 				System.out.println("Incorrect input please select a number between 0 and "+(player.getPlayerCards().size()-1));
 			else
@@ -49,7 +49,24 @@ public class StatePlay  implements StateLike{
 		GreenCard chosenCard=(GreenCard)player.getPlayerCards().get(cardNumberInPlayerHand);
 		//Get the actions for the chosen card.
 		ArrayList<Symbol> actionSymbols= chosenCard.getActionsSymbols();
+		
+		
+		/*
+		 * For testing purposes 
+		 */
+		Symbol placeMinion=new Symbol(1);
+		Symbol placeBulding=new Symbol(2);
+		Symbol removeMinion=new Symbol(3);
+		Symbol removeTroubleMarker=new Symbol(4);
+		Symbol takeMoneyFromBank=new Symbol(6);
+		actionSymbols.add(placeMinion);
+		actionSymbols.add(placeBulding);
+		actionSymbols.add(removeMinion);
+		actionSymbols.add(removeTroubleMarker);
+		actionSymbols.add(takeMoneyFromBank);
+		
 		//Execute each Symbol action sequentially.
+		String userAwnser;
 		for(int i=0;i<actionSymbols.size();i++)
 		{
 			//If symbol is mandatory don't ask Player if he want's to use the symbol.
@@ -61,12 +78,14 @@ public class StatePlay  implements StateLike{
 				
 			}else
 			{
-				String userAwnser;
+				
 				System.out.println("Would you like to use this action(yes/no)?");
-				userAwnser = keyIn.next();
+				userAwnser = game.keyIn.next();
 				if(userAwnser.contains("y"))
 				{
 					actionSymbols.get(i).useSymbol(player, game);
+					//Display board status.
+					System.out.println(gameBoard.toString());
 				}else
 				{
 					System.out.println("Action Skipped.");
@@ -74,8 +93,15 @@ public class StatePlay  implements StateLike{
 				
 			}
 		}
+		//Display board status.
+		System.out.println(gameBoard.toString());
 		
-		keyIn.close();
+		System.out.println();
+		
+		//Display the players hand.
+		System.out.println(player.toString());
+		
+		
 		context.setState(new StateDrawCard());
 	}
 	

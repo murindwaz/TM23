@@ -33,6 +33,7 @@ public class Game {
 	private Bank bank;
 	private Die die;
 	private ArrayList<Symbol> symbols;
+	public Scanner keyIn;
 	
 	public int currentPlayer;
 	public int numberOfPlayers;
@@ -57,7 +58,7 @@ public class Game {
 		
 		
 		//Select number of players
-		Scanner keyIn=new Scanner(System.in);
+		keyIn=new Scanner(System.in);
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
 		
@@ -160,15 +161,30 @@ public class Game {
 			}
 		}
 		
-		while(true)//Keep goind until a player wins the game.
+		while(true)//Keep going until a player wins the game.
 		{
 			System.out.println("Game has begun!!!!!!");
 			//Start Playing select the player who's turn it is.
 			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
-			//Display players info
+			System.out.println("Player:"+players[currentPlayer].getColor()+ " Current State:"+playerStatus.get(currentPlayer).getState());
+			//Draw Cards State
+			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
 			
-			break;
+			System.out.println("Player:"+players[currentPlayer].getColor()+ " Current State:"+playerStatus.get(currentPlayer).getState());
+			
+			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
+			System.out.println("Player:"+players[currentPlayer].getColor()+ " Current State:"+playerStatus.get(currentPlayer).getState());
+			
+			currentPlayer=nextPlayer();
+			
+			System.out.println("Do you wish to exit?? Enter -1, otherwise enter 1.");
+			int exit =this.keyIn.nextInt();
+			if(exit < 1)
+				break;
+			//break;
 		}
+		
+		this.keyIn.close();
 		
 	}
 	
@@ -510,17 +526,18 @@ public class Game {
 	 */
 	public Player getPlayerByColor(String color)
 	{
-		Player player = null;
+		
 		//Select player with passed color.
 		for(int i=0;i<this.players.length;i++)
 		{
-			if(players[i].getColor()== color)
+			if(players[i].getColor().equals(color))
 			{
-				player=players[i];
-				break;
+				return players[i];
+				
 			}
 		}
-		return player;
+		return null;
+		
 	}
 	/**
 	 * Prints Information about current game.
