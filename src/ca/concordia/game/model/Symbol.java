@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
 
 public class Symbol {
@@ -211,8 +212,8 @@ public class Symbol {
 		if(type==1)//Remove a minion 
 		{
 			System.out.println("Select the color of minion you wish to remove:" );
-			String color = input.next();
-			color=color.toUpperCase();
+			String tmpColor = input.next();
+			Colors color = Colors.colorForString(tmpColor);
 			//Remove a minion of the color specified by the player.
 			gameBoard.getAreas().get(selectedCardNumber).removeMinion(new Piece(color));
 			//Update the status of the player to whom the minion belonged to.

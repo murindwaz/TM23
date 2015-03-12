@@ -119,7 +119,7 @@ public class Game {
 	//Start playing game instance.
 	public void play()
 	{
-		Map<Integer,String> playerDieRollMap=new HashMap<Integer,String>();//Will store the value rolled depending on the player's color.
+		Map<Integer,Colors> playerDieRollMap=new HashMap<Integer,Colors>();//Will store the value rolled depending on the player's color.
 		ArrayList<Integer> playerDieRoll=new ArrayList<Integer>();
 		int rollValue=-1;
 		//roll dice for each player to pick first player.
@@ -132,7 +132,7 @@ public class Game {
 		}
 		
 		int highestRoll=highestValue(playerDieRoll);
-		String startingColor=playerDieRollMap.get(highestRoll);
+		Colors startingColor=playerDieRollMap.get(highestRoll);
 		
 		System.out.println("The player with the color:"+startingColor+" starts the game.");
 		//Set the pointer to the starting player in the array.
@@ -491,7 +491,7 @@ public class Game {
 	 * @param color(String)
 	 * @return Player
 	 */
-	public Player getPlayerByColor(String color)
+	public Player getPlayerByColor(Colors color)
 	{
 		Player player = null;
 		//Select player with passed color.

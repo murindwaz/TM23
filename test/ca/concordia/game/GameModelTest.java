@@ -3,6 +3,7 @@ package ca.concordia.game;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import ca.concordia.game.common.common.Colors;
 
 import org.junit.Test;
 
@@ -33,16 +34,16 @@ public class GameModelTest {
 		assertNotNull("Can Create a deck", new Deck(new String("D"), 4));
 		assertNotNull("Can create browncard", new BrownCard( 1 ) );
 		assertNotNull("Can create city card", new CityCard( 1 ) );
-		assertNotNull("Have deamons", new Demon( new Color(255) ) );
+		assertNotNull("Have deamons", new Demon( Colors.YELLOW ) );
 		assertNotNull("Have a die", new Die( ) );
 		assertNotNull("Can create event card", new EventCard( 0 ) );
 		assertNotNull("Can create a gameboard", new Gameboard() );
 		assertNotNull("Can Create a green card", new GreenCard( 1 ) );
-		assertNotNull("Can create a minion", new Minion( new Color(222) ) );
+		assertNotNull("Can create a minion", new Minion( Colors.GREEN ) );
 		assertNotNull("Can create personalities", new PersonalityCard( "A" ) );
-		assertNotNull("Can create a piece", new Piece( "A" ) );
-		assertNotNull("Can create a player", new Player( new PersonalityCard("N"), "Blue", 4, 2 ) );
-		assertNotNull("Can create a trouble marker", new TroubleMarker(new Color(0)) );
+		assertNotNull("Can create a piece", new Piece( Colors.RED ) );
+		assertNotNull("Can create a player", new Player( new PersonalityCard("N"), Colors.BLUE, 4, 2 ) );
+
 	}
 
 }

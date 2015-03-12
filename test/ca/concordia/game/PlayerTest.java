@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.*;
 import ca.concordia.game.model.*;
 
@@ -60,7 +61,7 @@ public class PlayerTest {
 		 * Initiaalization of areas
 		 */
 		int demon = 0;
-		String buildingColor = "Blue";
+		Colors buildingColor = Colors.BLUE;
 		boolean building = false; 
 		boolean troubleMarker = true; 
 		//creating the areas
@@ -70,8 +71,8 @@ public class PlayerTest {
 		//creating cards
 		PersonalityCard lordVetinari = new PersonalityCard(0, 2);
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
-		dpizar = new Player( lordVetinari,  "Green",  MINIONS, BUILDINGS); 
-		gamest = new Player( lordSelachii, "Green",  MINIONS, BUILDINGS);
+		dpizar = new Player( lordVetinari,  Colors.GREEN,  MINIONS, BUILDINGS); 
+		gamest = new Player( lordSelachii, Colors.GREEN,  MINIONS, BUILDINGS);
 	}
 	
 	
