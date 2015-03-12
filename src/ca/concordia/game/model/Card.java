@@ -5,7 +5,12 @@ import javax.swing.ImageIcon;
 /**
  * Cards are immutable: In the game, there are exactly 132 cards, each one of them different and immutable
  * Each card belongs to a specific Deck:
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 

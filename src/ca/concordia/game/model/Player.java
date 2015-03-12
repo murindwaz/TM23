@@ -7,7 +7,12 @@ import ca.concordia.game.main.Game;
 
 /**
  * Class PLayer handles and contains the different players on the current game.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 public class Player {
@@ -38,12 +43,16 @@ public class Player {
 		this.personality = aPersonality;
 		this.color = aColor;
 		this.minionsOnHand=minionOnHand;
-		this.buildingOnHand=buildingOnHand;		
+		this.buildingOnHand=buildingOnHand;
+		
 		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
 		//set one minion on the three initial areas as required by the game(Areas:Dolly Sisters(1),The Scours(5),The Shades(7))
 		this.minionsOnAreas[0]=this.minionsOnAreas[0]+1;
 		this.minionsOnAreas[4]=this.minionsOnAreas[4]+1;
 		this.minionsOnAreas[6]=this.minionsOnAreas[6]+1;
+		
+		//Todo update GameBoard when adding minnions.
+		
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
@@ -69,30 +78,18 @@ public class Player {
 	}
 	
 	/**
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public void playCard(int index,Gameboard gameBoard)
-	{
-		Card playingCard;
-		BrownCard temp=new BrownCard(0);
-		playingCard= this.playerCards.get(index);
-		if(playingCard.getClass().equals(playingCard.getClass()))
-		{
-			temp=(BrownCard)playingCard;
-		}
-		
-		
-		
-	}
-	
-	/**
 	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the
 	 * player may have.
 	 * @return int
 	 */
-	public int calculateNetWorth()
+	public int getMoney() {
+		return this.money;
+	}	
+	/**
+	 * Getter color
+	 * @return
+	 */
+	public String getColor()
 	{
 		this.netWorth= this.money;
 		//calculate the money invested in buildings so far, and add it to the networth.
@@ -123,7 +120,16 @@ public class Player {
 	{
 		this.loans=this.loans+amountPaid;
 	}
-		
+
+	/**
+	 * Getter get Player's Personality Card.
+	 * @return
+	 */
+	public Card getPersonality() {
+		return this.personality;
+	}	
+	
+
 	/**
 	 * Transfer Money into players account.
 	 * @param amount
@@ -239,7 +245,7 @@ public class Player {
 		}
 		else if(cardId==3)// Dragon King of Arms.
 		{
-			//Check if the board has the required number of trouble markers for player to win.
+			//Check if the board has the required number of touble markes for player to win.
 			ArrayList<String> troubleMarkersArea= new ArrayList<String>();
 			troubleMarkersArea= gameBoard.troubleMarkers();//Get a list of the areas which contain a trouble marker.
 			if(troubleMarkersArea.size() >= this.personality.getNumTroubleMarkers())
@@ -249,7 +255,7 @@ public class Player {
 		}
 		else if(cardId==5)//Commander Vimes
 		{
-			//Check if the draw deck is empty by checking the size of the brown deck since it's the one at the bottom.
+			//Check if the draw deck is empty by chequin the size of the brown deck since it's the one at the bottom.
 			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
 			if(game.getSizeDrawDeck()==0)//Draw deck is empty
 				return true;
@@ -274,6 +280,7 @@ public class Player {
 	/**
 	 * ToString Method for class Player.
 	 */
+	@Override
 	public String toString()
 	{
 		String info="Money: "+this.money+ " Playing as: "+ this.personality.getName()+ " Using Color:"+this.color +"." +"\n";

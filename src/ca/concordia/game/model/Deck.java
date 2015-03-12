@@ -4,12 +4,15 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 import java.util.Random;
 
-import ca.concordia.game.model.Card;
-
 /**
  * Class Deck Creates the decks of cards.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
- *
+ * A deck is a double-ended queue of cards: We can take from the front and put in the back 
+ * 
+ * @author Pascal Maniraho 
+ * @author Gustavo Pereira
+ * @author Bhavik Desai 
+ * @author Jesus Esteban Garro Matamoros 
+ * @author Diego Pizarro
  */
 
 //A deck is a double-ended queue of cards: We can take from the front and put in the back 
@@ -75,9 +78,10 @@ public class Deck {
 	}
 	
 	/**
-	 * Suffle Deck
+	 * Shuffle Deck
 	 */
 	public void shuffle() {
+		
 		//Shuffles the cards in this deck
 		int max = this.cards.size();
 
@@ -109,10 +113,11 @@ public class Deck {
 	 * @return Card
 	 */
 	public Card getCard() {
-		if(cards.size()>0)
-			return cards.pop();
-		else 
+		if( this.cards.size() > 0 ){
+			return this.cards.pop();
+		}else{ 
 			return null;
+		}
 	}
 	/**
 	 * put Card in a deck.

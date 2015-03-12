@@ -5,8 +5,12 @@ import java.util.Arrays;
 
 
 /**
- * Calss City card is a type of Card. It contains the 12 different Area Cards a unique card number, the adjacent areas to the city card and it's ability.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+ * Calss City card is a type of Card. It contains the 12 different Area Cards a unique card number and it's ability.
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
  *
  */
 
@@ -153,6 +157,8 @@ public class CityCard extends Card {
 		return this.cardNumber;
 	}
 	
+	
+	
 	/**
 	 * getter cost of putting a building.
 	 * @return int
@@ -170,6 +176,15 @@ public class CityCard extends Card {
 	public boolean isAdjacent(int areaCode)
 	{
 		return this.adjacentAreas.contains(areaCode);
+	}
+	
+	/**
+	 * Return all adjacent areas to the one being called.
+	 * @return ArrayList<Integer>
+	 */
+	public ArrayList<Integer> getAdjacentAreas()
+	{
+		return this.adjacentAreas;
 	}
 
 }

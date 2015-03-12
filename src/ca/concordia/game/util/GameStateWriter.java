@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.*;
-import java.util.Map.Entry;
-
-import ca.concordia.game.model.*;
+import ca.concordia.game.main.Game;
 
 
 

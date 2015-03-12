@@ -1,6 +1,6 @@
 package ca.concordia.game.model;
 
-
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,19 +11,21 @@ import ca.concordia.game.common.common.*;
 
 /**
  * Class Gameboard handles and contains the twelve game areas of the game.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
- *
+ * 
+ * @author Pascal Maniraho 
+ * @author Gustavo Pereira
+ * @author Bhavik Desai 
+ * @author Jesus Esteban Garro Matamoros 
+ * @author Diego Pizarro
  */
 public class Gameboard {
 	
-	private String gameName;
 	private ArrayList<Area> areas;
 	
 	/**
 	 * Contructor for new game
 	 */
-	public Gameboard()
-	{
+	public Gameboard(){
 		this.areas = new ArrayList<Area>();
 		for(int i=0;i<12;i++)//Populate the gameboard with the twelve areas.
 		{
@@ -111,33 +113,27 @@ public class Gameboard {
 		return numberOfMinionsInAreas;
 	}
 	
-	
-	
 	/**
 	 * Returns the areas that currently contain a trouble marker on it.
 	 * @return ArrayList<String>
 	 */
-	public ArrayList<String> troubleMarkers()
-	{
+	public ArrayList<String> troubleMarkers(){
 		ArrayList<String> troubleMarkersAreas=new ArrayList<String>();
 		Area tempArea;
-		for(int i=0; i< this.areas.size();i++)
-		{
+		for(int i=0; i< this.areas.size();i++){
 			tempArea=this.areas.get(i);
-			if(tempArea.getTroubleMarker())
-			{
+			if(tempArea.getTroubleMarker()) {
 				troubleMarkersAreas.add(tempArea.getCityCard().getName());
 			}
 		}
-		
 		return troubleMarkersAreas;
 	}
 
 	/**
 	 * toString method for Gameboard
 	 */
-	public String toString()
-	{
+	@Override
+	public String toString(){
 		String info = "";
 		for(int i=0;i<areas.size();i++)
 		{
@@ -147,6 +143,5 @@ public class Gameboard {
 		return info;
 	}
 	
-	//public getArea()
 
 }

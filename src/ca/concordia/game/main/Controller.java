@@ -2,7 +2,12 @@ package ca.concordia.game.main;
 
 /**
  * Run Test Cases. Controls The game activities.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  *
  */
 

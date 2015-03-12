@@ -1,22 +1,24 @@
 package ca.concordia.game.main;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.Color;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ca.concordia.game.model.*;
-import ca.concordia.game.util.Loader;
-import ca.concordia.game.util.Saver;
+import ca.concordia.game.util.*;
 
 
 /**
  * Game class creates a new game, loads and saves a game state. 
- *  @author Pascal,Gustavo,bhavik,Esteban,Diego
+*@author Pascal Maniraho 
+ *@author Gustavo Pereira
+ *@author Bhavik Desai 
+ *@author Jesus Esteban Garro Matamoros 
+ *@author Diego Pizarro
+
  */
 public class Game {
 	
@@ -61,26 +63,27 @@ public class Game {
 		for(int i = 0 ; i <= 5 ; i++) {
 			switch(i) {
 				case 0:
-					this.decks.put("discard", new Deck("D"));
+					this.decks.put("discard", new Deck("D",numberOfPlayers));
 					break;
 				case 1:
-					this.decks.put("personalities", new Deck("P"));
+					this.decks.put("personalities", new Deck("P",numberOfPlayers));
 					break;
 				case 2:
-					this.decks.put("cities", new Deck("C"));
+					this.decks.put("cities", new Deck("C",numberOfPlayers));
 					break;
 				case 3:
-					this.decks.put("events", new Deck("E"));
+					this.decks.put("events", new Deck("E",numberOfPlayers));
 					break;
 				case 4:
-					this.decks.put("green", new Deck("G"));
+					this.decks.put("green", new Deck("G",numberOfPlayers));
 					break;
 				case 5:
-					this.decks.put("brown", new Deck("B"));
+					this.decks.put("brown", new Deck("B",numberOfPlayers));
 					break;
 			}
 		}
-		//Select  players colors.
+		
+		//Select number of players and their colors.
 		//For now we use four players of fixed colors:
 		this.players = new Player[numberOfPlayers];
 		
@@ -392,7 +395,6 @@ public class Game {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Getter: Returns number of players
 	 * @return int
 	 */
@@ -410,9 +412,16 @@ public class Game {
 		Deck brownDeck=this.decks.get("Brown");//Get the size of the brown deck since it's on the bottom and can give us the status of the draw deck is empty.
 		return brownDeck.getSizeDeck();
 	}
+	
 	/**
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+	 * Returns the game's current GameBoard.
+	 * @return Gameboard
+	 */
+	public Gameboard getGameBoard()
+	{
+		return this.gameboard;
+	}
+	/**
 	 * Prints Information about current game.
 	 */
 	public void printCurrentState()
