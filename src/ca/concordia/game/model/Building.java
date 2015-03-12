@@ -1,9 +1,9 @@
 package ca.concordia.game.model;
 
-import java.awt.Color;
+import ca.concordia.game.common.common.Colors;
 
 public class Building extends Piece {
-	public Building(Color aColor) {
+	public Building(Colors aColor) {
 		super(aColor);
 	}
 }

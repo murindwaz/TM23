@@ -47,7 +47,7 @@ public class Symbol {
 				this.inTurn=false;
 				break;
 			default:
-				System.out.println("The symbol Id is incorrect.")
+				System.out.println("The symbol Id is incorrect.");
 				break;
 		}
 		return true;

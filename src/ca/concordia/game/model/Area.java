@@ -3,10 +3,9 @@ package ca.concordia.game.model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Map.Entry;
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+
+import ca.concordia.game.common.common.Colors;
 
 /**
  * Class Area contains the possible object that could be available to an area.
@@ -20,17 +19,11 @@ public class Area {
 	private ArrayList<Piece> minions;
 	private boolean troubleMarker;
 	private boolean building;
-<<<<<<< HEAD
-	private String buildingColor;
+	private Colors buildingColor;
 	private int demon;
 	private int troll;
 	
 	
-=======
-	private int demon;
-	private int troll;
-	
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * Constructor for new game.
@@ -41,10 +34,7 @@ public class Area {
 		this.cityCard=cityCard;
 		this.troubleMarker=false;
 		this.building=false;
-<<<<<<< HEAD
-		this.buildingColor="";
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+		this.buildingColor=Colors.NONE;
 		this.demon=0;
 		this.troll=0;
 		minions= new ArrayList<Piece>();
@@ -60,19 +50,13 @@ public class Area {
 	 * @param demon
 	 * @param troll
 	 */
-<<<<<<< HEAD
-	public Area(CityCard cityCard,boolean troubleMarker,boolean building,String buildingColor,int demon,int troll)
-=======
-	public Area(CityCard cityCard,boolean troubleMarker,boolean building,int demon,int troll)
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+	public Area(CityCard cityCard,boolean troubleMarker,boolean building,Colors buildingColor,int demon,int troll)
 	{
 		this.cityCard=cityCard;
 		this.troubleMarker=troubleMarker;
 		this.building=building;
-<<<<<<< HEAD
 		this.buildingColor=buildingColor;
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+
 		this.demon=demon;
 		this.troll=troll;
 		
@@ -81,26 +65,23 @@ public class Area {
 		
 	}
 	
-<<<<<<< HEAD
-	
-	
 	
 	/**
 	 * Checks if the color of a player controls the area.Returns true if it does otherwise it returns false.
-	 * @param color(String)
+	 * @param color(Colors)
 	 * @return boolean
 	 */
-	public boolean controlsArea(String color)
+	public boolean controlsArea(Colors color)
 	{
 		//Map will contain the number of minions from each player currently on this area.
-		Map<String,Integer> playerMinions=new HashMap<String,Integer>();
+		Map<Colors,Integer> playerMinions=new HashMap<Colors,Integer>();
 		//All possible players.
-		playerMinions.put("RED", 0);
-		playerMinions.put("BLUE", 0);
-		playerMinions.put("YELLOW", 0);
-		playerMinions.put("GREEN", 0);
+		playerMinions.put(Colors.RED, 0);
+		playerMinions.put(Colors.BLUE, 0);
+		playerMinions.put(Colors.YELLOW, 0);
+		playerMinions.put(Colors.GREEN, 0);
 		
-		String currentColor="";
+		Colors currentColor= Colors.NONE;
 		for(int i=0;i<this.minions.size();i++)
 		{
 			currentColor=this.minions.get(i).getColor();
@@ -110,9 +91,9 @@ public class Area {
 		if(this.building)//if true:a building exists
 			playerMinions.put(buildingColor, playerMinions.get(buildingColor)+1);
 		
-		//Get the entry with the maxim value in the HashMap.				
-		Entry<String,Integer> maxEntry = null;
-		for(Entry<String,Integer> entry : playerMinions.entrySet()) {
+		//Get the entry with the maximum value in the HashMap.				
+		Entry<Colors,Integer> maxEntry = null;
+		for(Entry<Colors,Integer> entry : playerMinions.entrySet()) {
 		    if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
 		        maxEntry = entry;
 		    }
@@ -121,8 +102,8 @@ public class Area {
 		//check if there's a player with the same number of playing pieces.
 		playerMinions.remove(maxEntry.getKey());
 		
-		Entry<String,Integer> maxEntry2 = null;
-		for(Entry<String,Integer> entry : playerMinions.entrySet()) {
+		Entry<Colors,Integer> maxEntry2 = null;
+		for(Entry<Colors,Integer> entry : playerMinions.entrySet()) {
 		    if (maxEntry2 == null || entry.getValue() > maxEntry2.getValue()) {
 		        maxEntry2 = entry;
 		    }
@@ -145,12 +126,6 @@ public class Area {
 	/**
 	 * Getter
 	 * @return CityCard
-=======
-
-	/**
-	 * Getter
-	 * @return
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public CityCard getCityCard()
 	{
@@ -158,11 +133,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-<<<<<<< HEAD
 	 * @return boolean
-=======
-	 * @return
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public boolean getTroubleMarker()
 	{
@@ -170,11 +141,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-<<<<<<< HEAD
 	 * @return boolean
-=======
-	 * @return
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public boolean getBuilding()
 	{
@@ -182,11 +149,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-<<<<<<< HEAD
 	 * @return int
-=======
-	 * @return
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public int getDemon()
 	{
@@ -194,11 +157,7 @@ public class Area {
 	}
 	/**
 	 * Getter
-<<<<<<< HEAD
 	 * @return int
-=======
-	 * @return
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public int getTroll()
 	{
@@ -206,28 +165,21 @@ public class Area {
 	}
 	/**
 	 * Getter
-<<<<<<< HEAD
 	 * @return ArrayList<Piece>
-=======
-	 * @return
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 */
 	public ArrayList<Piece> getMinions()
 	{
 		return this.minions;
 	}
-<<<<<<< HEAD
+
 	/**
 	 * Getter
-	 * @return String
+	 * @return Colors
 	 */
-	public String getBuildingColor()
+	public Colors getBuildingColor()
 	{
 		return this.buildingColor;
 	}
-=======
-	
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 	/**
 	 * 

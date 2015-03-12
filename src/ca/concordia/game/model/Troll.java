@@ -1,9 +1,9 @@
 package ca.concordia.game.model;
 
-import java.awt.Color;
+import ca.concordia.game.common.common.Colors;
 
 public class Troll extends Piece {
-	public Troll(Color aColor) {
+	public Troll(Colors aColor) {
 		super(aColor);
 	}
 }

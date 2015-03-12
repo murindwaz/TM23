@@ -1,5 +1,9 @@
 package ca.concordia.game.model;
 
+import java.awt.Color;
+
+import ca.concordia.game.common.common.Colors;
+
 /**
  * This class will only contain the color of the Piece.
  * @author Pascal,Gustavo,bhavik,Esteban,Diego
@@ -8,14 +12,14 @@ package ca.concordia.game.model;
 
 public class Piece {
 	
-	private String color;
+	private Colors color;
 	
 
 	/**
 	 * Contructor
 	 * @param color
 	 */
-	public Piece(String color)
+	public Piece(Colors color)
 	{
 		this.color=color;
 		
@@ -26,7 +30,7 @@ public class Piece {
 	 * Getter color of current piece(Minion).
 	 * @return
 	 */
-	public String getColor()
+	public Colors getColor()
 	{
 		return this.color;
 	}
@@ -37,7 +41,7 @@ public class Piece {
 	 */
 	public String toString()
 	{
-		return "Color: "+ this.color;
+		return "Color: " + this.color.toString();
 	}
 
 }

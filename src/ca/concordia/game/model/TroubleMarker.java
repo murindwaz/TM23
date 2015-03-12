@@ -1,9 +1,9 @@
 package ca.concordia.game.model;
 
-import java.awt.Color;
+import ca.concordia.game.common.common.Colors;
 
 public class TroubleMarker extends Piece {
-	public TroubleMarker(Color aColor) {
+	public TroubleMarker(Colors aColor) {
 		super(aColor);
 	}
 }

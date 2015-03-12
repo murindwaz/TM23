@@ -13,7 +13,7 @@ import org.junit.Test;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
 
-import java.awt.Color;
+import ca.concordia.game.common.common.Colors;
 
 public class GameTest {
 	
@@ -41,7 +41,7 @@ public class GameTest {
 		area = new Area(null);
 		card = new Card(false,false); 
 		piece = new Piece(null);
-		player = new Player(new PersonalityCard(1),Color.RED, 0, 0); 
+		player = new Player(new PersonalityCard(1,4),Colors.RED, 0, 0); 
 		gameboard = new Gameboard(); 
 		gameState = Game.getInstance();
 		//@todo initialization of players in a game 

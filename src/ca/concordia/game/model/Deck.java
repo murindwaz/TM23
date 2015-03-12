@@ -3,16 +3,8 @@ package ca.concordia.game.model;
 import java.util.Deque;
 import java.util.ArrayDeque;
 import java.util.Random;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 import ca.concordia.game.model.Card;
->>>>>>> origin/master
-=======
-
-import ca.concordia.game.model.Card;
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 
 /**
  * Class Deck Creates the decks of cards.
@@ -23,17 +15,16 @@ import ca.concordia.game.model.Card;
 //A deck is a double-ended queue of cards: We can take from the front and put in the back 
 public class Deck {
 	
+	private int numPlayers;
 	private Deque<Card> cards;
 	
 	/**
 	 * Constructor: Creates an Array of cards depending on the type of the card which is specified as an argument.
 	 * @param type
 	 */
-<<<<<<< HEAD
-	public Deck(String type,int numPlayers){
-=======
-	public Deck(String type){
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+	public Deck(String type, int numberOfPlayers){
+		this.numPlayers = numberOfPlayers;
+		
 		switch(type) {
 			case "D":
 				//The discard deck is empty to start with
@@ -43,11 +34,7 @@ public class Deck {
 				//The personality deck has 7 cards:
 				this.cards = new ArrayDeque<Card>();
 				for (int i = 0; i < 7; i++) {
-<<<<<<< HEAD
-					this.cards.add(new PersonalityCard(i,numPlayers));
-=======
-					this.cards.add(new PersonalityCard(i));
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
+					this.cards.add(new PersonalityCard(i, numberOfPlayers));
 				}
 				break;
 			case "C":
@@ -91,13 +78,6 @@ public class Deck {
 	 * Suffle Deck
 	 */
 	public void shuffle() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		
-=======
->>>>>>> origin/master
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		//Shuffles the cards in this deck
 		int max = this.cards.size();
 
@@ -106,40 +86,18 @@ public class Deck {
 		for(int i = 0; i < max; i++) {
 			tmp[i] = this.cards.getFirst();
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
 				
-		//Fisher-Yates shuffle:
-		Random rnd = new Random();
-		for(int i = max-1; i>0; i++) {
-			int idx = rnd.nextInt(i+1);	
-=======
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
-		
 		//Fisher-Yates shuffle:
 		Random rnd = new Random();
 		for(int i = max-1; i>0; i++) {
 			int idx = rnd.nextInt(i+1);
 	
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 			//Perform swap:
 			Card a = tmp[idx];
 			tmp[idx] = tmp[i];
 			tmp[i] = a;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-				
-=======
 		
->>>>>>> origin/master
-=======
-		
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 		//Put back the cards:
 		for(int i = 0; i < max; i++) {
 			this.cards.add(tmp[i]);
@@ -147,7 +105,6 @@ public class Deck {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Get first card of a deck; if the deck still has cards otherwise it will return null.
 	 * @return Card
 	 */
@@ -156,13 +113,6 @@ public class Deck {
 			return cards.pop();
 		else 
 			return null;
-=======
-	 * Get first card of a deck
-	 * @return
-	 */
-	public Card getCard() {
-		return cards.pop();
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	}
 	/**
 	 * put Card in a deck.
@@ -173,7 +123,6 @@ public class Deck {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * return the size of the Deck.
 	 * @return int
 	 */
@@ -183,8 +132,6 @@ public class Deck {
 	}
 	
 	/**
-=======
->>>>>>> 199818afe8100991ffae794dbcebaff5513bca99
 	 * deal card to players.
 	 * @param aPlayer
 	 * @param num
