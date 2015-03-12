@@ -50,6 +50,8 @@ public class Player {
 		this.minionsOnAreas[0]=this.minionsOnAreas[0]+1;
 		this.minionsOnAreas[4]=this.minionsOnAreas[4]+1;
 		this.minionsOnAreas[6]=this.minionsOnAreas[6]+1;
+		//Update number of minions on hand
+		this.setMinionsOnHand(this.minionsOnHand-3);
 		
 		//Todo update GameBoard when adding minnions.
 		
@@ -316,7 +318,7 @@ public class Player {
 			}else//The card is of type GreenCard, convert to green card.
 			{
 				gCard=(GreenCard) card;
-				info3=info3+ "Green-"+gCard.getNumber()+" ";
+				info3=info3+ "Green-"+gCard.getNumber()+" "+"Position in Player Hand:"+"("+i+")"+"\n";
 			}
 				
 		}
@@ -328,7 +330,7 @@ public class Player {
 			CityCard card = playerCityCard.get(i);
 			info4=info4+ " "+card.getName()+" ";
 		}
-		info4=info4+"\n\n";
+		info4=info4+"\n";
 		
 		return info+info2+info3+info4;
 		

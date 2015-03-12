@@ -26,10 +26,11 @@ public class Gameboard {
 	private ArrayList<CityCard> cityCards;//Initially all city cards belong to the Deck.
 	
 	/**
-	 * Contructor for new game
+	 * Contructor for new game; set's gameboard initial conditions.
+	 * set one minion on the three initial areas as required by the game(Areas:Dolly Sisters(1),The Scours(5),The Shades(7))
 	 */
 
-	public Gameboard()
+	public Gameboard(Player [] players)
 	{
 		//Initialize instance ArrayLists.
 
@@ -43,6 +44,18 @@ public class Gameboard {
 			this.cityCards.add(temp);
 			this.areas.add(new Area(temp)); //Initialize new cityAreas
 		}
+		
+		//Add one minion to the three required areas. One minion per player.
+		for(int i=0;i<players.length;i++)
+		{
+			//add to Dolly Sisters one minion per player.
+			this.areas.get(0).addMinion(new Piece(players[i].getColor()));
+			//add to The Scours one minion per player.
+			this.areas.get(4).addMinion(new Piece(players[i].getColor()));
+			//add to The Shades one minion per player.
+			this.areas.get(6).addMinion(new Piece(players[i].getColor()));
+		}
+
 	}
 	
 	

@@ -30,6 +30,15 @@ public class StateContext {
     public void setState(final StateLike newState) {
         playerState = newState;
     }
+    
+    /**
+     * 
+     * @return String
+     */
+    public String getState()
+    {
+    	return playerState.getStatus();
+    }
  
     public void performAction(Player player, Game game) {
     	playerState.performAction(this, player, game);

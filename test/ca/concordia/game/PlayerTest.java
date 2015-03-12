@@ -51,6 +51,7 @@ public class PlayerTest {
 	
 	@Before 
 	public void starts(){ 
+		Player [] players=null;
 		game = Game.getInstance();
 		/**
 		 * @todo - load game players by assigning them via a function rather than a console on terminal

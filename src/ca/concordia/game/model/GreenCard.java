@@ -30,6 +30,8 @@ public class GreenCard extends Card {
 	public GreenCard(int i) {
 		//City Cards are always Visible!
 		super(false,false);
+		this.symbols = new ArrayList<Symbol>();
+		
 		
 		this.color="GREEN";
 		this.number=i;
@@ -39,8 +41,17 @@ public class GreenCard extends Card {
 	}	
 	
 	/**
+	 * Getter: Returns the array of symbols which represent the different actions the card can perform sequentially.
+	 * @return ArrayList<Symbol>
+	 */
+	public ArrayList<Symbol> getActionsSymbols()
+	{
+		return this.symbols;
+	}
+	
+	/**
 	 * Getter unique Number
-	 * @return
+	 * @return int
 	 */
 	public int getNumber()
 	{

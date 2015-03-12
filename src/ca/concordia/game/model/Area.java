@@ -200,18 +200,22 @@ public class Area {
 		{
 			info2=info2+ this.minions.get(i).toString()+", ";
 		}
-		info2=info2+"\n\n";
+		info2=info2+"\n";
 		return info+info2;
 	}
 	
 
 	/**
-	 * Add a minion to area
+	 * Add a minion to area; if the area already contains one or more minions add a trouble marker.
 	 * @param minion
 	 */
 	public void addMinion(Piece minion)
 	{
+		if(this.getMinions().size()>=1 || this.getDemon()>=1 || this.getTroll()>=1)//There is already at least one minion in the area or at least one demon or at least one troll.
+			this.troubleMarker=true;//add a trouble marker.
+		
 		this.minions.add(minion);
+		
 	}
 	
 
@@ -219,9 +223,14 @@ public class Area {
 	 * Add a minion to area
 	 * @param minion
 	 */
-	public void removeMinion(Piece minion)
+	public void removeMinion(String color)
 	{
-		this.minions.remove(minion);
+		//this.minions.remove(minion);
+		for(int i=0;i<minions.size();i++)
+		{
+			if(minions.get(i).getColor().equals(color))
+				this.minions.remove(i);
+		}
 	}
 	
 	/**

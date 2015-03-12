@@ -28,6 +28,8 @@ public class GameModelTest {
 	
 	@Test
 	public void canInitializeModels(){
+		Player[] players=null;
+		
 		assertNotNull("Can create area", new Area(null) ); 
 		assertNotNull("Can create a bank", new Bank());
 		assertNotNull("Can create a card", new Card(false, false) ); 
@@ -37,7 +39,7 @@ public class GameModelTest {
 		assertNotNull("Have deamons", new Demon( Colors.YELLOW ) );
 		assertNotNull("Have a die", new Die( ) );
 		assertNotNull("Can create event card", new EventCard( 0 ) );
-		assertNotNull("Can create a gameboard", new Gameboard() );
+		assertNotNull("Can create a gameboard", new Gameboard(players) );
 		assertNotNull("Can Create a green card", new GreenCard( 1 ) );
 		assertNotNull("Can create a minion", new Minion( Colors.GREEN ) );
 		assertNotNull("Can create personalities", new PersonalityCard( "A" ) );

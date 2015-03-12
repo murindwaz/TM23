@@ -95,7 +95,7 @@ public class Deck {
 		Card[] tmp = new Card[max];
 		//Fill in the array:
 		for(int i = 0; i < max; i++) {
-			tmp[i] = this.cards.getFirst();
+			tmp[i] = this.cards.pop();
 		}
 				
 		//Fisher-Yates shuffle:
