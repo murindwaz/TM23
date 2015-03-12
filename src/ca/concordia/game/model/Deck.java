@@ -82,7 +82,7 @@ public class Deck {
 		/**
 		 * @warning increased by +1, and failed at the second warning ....
 		 */
-		Card[] tmp = new Card[ max + 1];
+		Card[] tmp = new Card[ max ];
 		//Fill in the array:
 		for(int i = 0; i < max; i++) {
 			tmp[i] = this.cards.getFirst();
@@ -97,14 +97,23 @@ public class Deck {
 			tmp[idx] = tmp[i];
 			tmp[i] = a;
 		}
-				
-		//Put back the cards:
-		for(int i = 0; i < max; i++) {
-			/**
-			 * @warning this section is subject to ArrayIndexOutOfBoundException 
-			 */
-			this.cards.add(tmp[i]);
+		
+		/**
+		 * @todo remove this try/catch after investigation 
+		 */
+		try{
+			//Put back the cards:
+			for(int i = 0; i < max; i++) {
+				/**
+				 * @warning this section is subject to ArrayIndexOutOfBoundException 
+				 */
+				this.cards.add(tmp[i]);
+			}
+		}catch( ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
+			arrayIndexOutOfBoundsException.printStackTrace();
 		}
+		
+		
 	}
 	
 	/**
@@ -130,8 +139,7 @@ public class Deck {
 	 * return the size of the Deck.
 	 * @return int
 	 */
-	public int getSizeDeck()
-	{
+	public int getSizeDeck(){
 		return this.cards.size();
 	}
 	
