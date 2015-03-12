@@ -2,6 +2,7 @@ package ca.concordia.game.main;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -65,12 +66,15 @@ public class Game {
 				case 0:
 					this.decks.put("discard", new Deck("D",numberOfPlayers));
 					break;
+					
 				case 1:
 					this.decks.put("personalities", new Deck("P",numberOfPlayers));
 					break;
+					/*
 				case 2:
 					this.decks.put("cities", new Deck("C",numberOfPlayers));
 					break;
+					*/
 				case 3:
 					this.decks.put("events", new Deck("E",numberOfPlayers));
 					break;
@@ -97,12 +101,56 @@ public class Game {
 		
 		//Initialize Gameboard:
 		this.gameboard = new Gameboard();
+		Die die=new Die();
+		Map<Integer,String> playerDieRollMap=new HashMap<Integer,String>();//Will store the value rolled depending on the player's color.
+		ArrayList<Integer> playerDieRoll=new ArrayList<Integer>();
+		int rollValue=-1;
+		//roll dice for each player to pick first player.
+		for(int i=0;i<this.numberOfPlayers;i++)
+		{
+			rollValue=die.roll();//roll dice for player.
+			System.out.println("Player with color: "+this.players[i].getColor()+" rolled:"+rollValue);
+			playerDieRoll.add(rollValue);//store value gotten by player.
+			playerDieRollMap.put(rollValue, this.players[i].getColor());//Store  Player color,roll value pair.
+		}
 		
-		//Prompt each player to roll dice to pick first player.
-		//For now:
-		currentPlayer = 0;
+		int highestRoll=highestValue(playerDieRoll);
+		String startingColor=playerDieRollMap.get(highestRoll);
 		
-		return "Run was Successfull";
+		System.out.println("The player with the color:"+startingColor+" starts the game.");
+		//Set the pointer to the starting player in the array.
+		int currentPlayer=-1;
+		for(int i=0;i<this.numberOfPlayers;i++)
+		{
+			if(this.players[i].getColor().equals(startingColor))//Found a match
+			{
+				currentPlayer=i;
+				break;
+			}
+		}
+		
+		while(true)//Keep goind until a player wins the game.
+		{
+			System.out.println("Game has begun!!!!!!");
+			
+			
+			return "jojojojojo";//Remove later.
+		}
+		
+		//return "Run was Successfull";
+	}
+	
+	/**
+	 * Return the highest value in an Arraylist of integers.
+	 * @param arrayList(ArrayList<Integer>)
+	 * @return int
+	 */
+	public int highestValue(ArrayList<Integer> arrayList)
+	{
+		Collections.sort(arrayList); // Sort the arraylist
+		int highest=arrayList.get(arrayList.size() - 1); //gets the last item, largest for an ascending sort
+		
+		return highest;
 	}
 	/**
 	 * Implements Game as a singleton, as there will always be a single game per run.

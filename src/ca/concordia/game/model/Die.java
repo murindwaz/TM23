@@ -27,6 +27,6 @@ public class Die {
 	 * @return
 	 */
 	public int roll() {
-		return randomGenerator.nextInt(11)+1;
+		return randomGenerator.nextInt(12)+1;
 	}
 }

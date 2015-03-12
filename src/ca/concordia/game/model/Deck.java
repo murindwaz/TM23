@@ -37,11 +37,14 @@ public class Deck {
 			case "P":
 				//The personality deck has 7 cards:
 				this.cards = new ArrayDeque<Card>();
+				PersonalityCard temp;
 				for (int i = 0; i < 7; i++) {
-					this.cards.add(new PersonalityCard(i,numPlayers));
-					this.arrayCards.add(new PersonalityCard(i,numPlayers));
+					temp=new PersonalityCard(i,numPlayers);
+					this.cards.add(temp);
+					//this.arrayCards.add(temp);
 				}
 				break;
+				/*
 			case "C":
 				//The city deck has 12 cards:
 				this.cards = new ArrayDeque<Card>();
@@ -50,6 +53,7 @@ public class Deck {
 					this.arrayCards.add(new CityCard(i));
 				}
 				break;
+				*/
 			case "E":
 				//The event deck has 12 cards:
 				this.cards = new ArrayDeque<Card>();
@@ -115,12 +119,13 @@ public class Deck {
 	 * @param card(Card)
 	 * @return Card
 	 */
+	/*
 	public Card deleteCardFromDeck(Card card)
 	{
 		int index=this.arrayCards.indexOf(card);
 		this.cards.remove(card);
 		return this.arrayCards.remove(index);
-	}
+	}*/
 	
 	/**
 	 * Get first card of a deck; if the deck still has cards otherwise it will return null.

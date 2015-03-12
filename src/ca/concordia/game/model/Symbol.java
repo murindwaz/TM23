@@ -184,7 +184,7 @@ public class Symbol {
 			System.out.print("Minions on area:");
 			for(int j=0;j<possibleVictims.size();j++)
 			{
-				if(possibleVictims.get(i).getColor() != currentPlayer.getColor())//Only display minions that belong to a different player.
+				if(!possibleVictims.get(i).getColor().equals(currentPlayer.getColor()) )//Only display minions that belong to a different player.
 					if(j==possibleVictims.size()-1)//last item
 						System.out.print(possibleVictims.get(i).getColor()+"\n");
 					else

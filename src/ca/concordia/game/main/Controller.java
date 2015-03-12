@@ -17,10 +17,10 @@ public class Controller {
 		game= Game.getInstance();
 		
 		game.init();
-		game.loadGame();
-		game.printCurrentState();
+		//game.loadGame();
+		//game.printCurrentState();
 		
-		game.saveGame();
+		//game.saveGame();
 	}
 
 }

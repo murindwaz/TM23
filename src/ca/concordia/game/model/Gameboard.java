@@ -32,10 +32,11 @@ public class Gameboard {
 	{
 
 		this.areas = new ArrayList<Area>();
+		CityCard temp;
 		for(int i=0;i<12;i++)//Populate the gameboard with the twelve areas.
 		{
 			//Initialize city Cards.
-			CityCard temp = new CityCard(i);
+			 temp= new CityCard(i);
 			this.cityCards.add(temp);
 			this.areas.add(new Area(temp)); //Initialize new cityAreas
 		}
