@@ -31,6 +31,13 @@ public class PlayerTest {
 	Player dpizar;
 	Player gamest;
 	
+	/**
+	 * Adding areas to play against
+	 */
+	Area dollySisters; 
+	Area theScours; 
+	Area theShades; 
+	
 	int MINIONS = 12; 
 	int MONEY	= 10; 
 	int BUILDINGS = 6; 
@@ -44,7 +51,23 @@ public class PlayerTest {
 	@Before 
 	public void starts(){ 
 		game = Game.getInstance();
+		/**
+		 * @todo - load game players by assigning them via a function rather than a console on terminal
+		 * game.init();
+		 */
 		gameboard = new Gameboard();
+		/**
+		 * Initiaalization of areas
+		 */
+		int demon = 0;
+		String buildingColor = "Blue";
+		boolean building = false; 
+		boolean troubleMarker = true; 
+		//creating the areas
+		dollySisters = new Area(new CityCard(1), troubleMarker, building, buildingColor, demon, 0); 
+		theScours = new Area(new CityCard(5), troubleMarker, building, buildingColor, demon, 0); 
+		theShades = new Area(new CityCard(7), troubleMarker, building, buildingColor, demon, 0); 
+		//creating cards
 		PersonalityCard lordVetinari = new PersonalityCard(0, 2);
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
 		dpizar = new Player( lordVetinari,  "Green",  MINIONS, BUILDINGS); 
@@ -60,14 +83,22 @@ public class PlayerTest {
 		assertTrue( gamest.getMoney() == MONEY ); 
 		dpizar.transferMoney(MONEY);
 		assertTrue( dpizar.getMoney() == MONEY ); 
-		assertTrue("Player has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1) ); 
-		assertTrue("Player has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5) ); 
-		assertTrue("Player has minion in The Shades(7)",  dpizar.putNewMinionOnBoard(7) ); 
-		assertTrue("Player2 has minion in Dolly Sisters(1)",  gamest.putNewMinionOnBoard(1) ); 
-		assertTrue("Player has minion in The Scours(5)",  gamest.putNewMinionOnBoard(5) ); 
-		assertTrue("Player has minion in The Shades(7)",  gamest.putNewMinionOnBoard(7) ); 
+		assertTrue("Player dpizar has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1) ); 
+		assertTrue("Player dpizar has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5) ); 
+		assertTrue("Player dpizar has minion in The Shades(7)",  dpizar.putNewMinionOnBoard(7) ); 
+		assertTrue("Player gamest has minion in Dolly Sisters(1)",  gamest.putNewMinionOnBoard(1) ); 
+		assertTrue("Player gamest has minion in The Scours(5)",  gamest.putNewMinionOnBoard(5) ); 
+		assertTrue("Player gamest has minion in The Shades(7)",  gamest.putNewMinionOnBoard(7) ); 
+		//three regions have to have a trouble marker
+		assertTrue("Dolly Sisters has a trouble marker",  dollySisters.getTroubleMarker()); 
+		assertTrue("The Scours has a trouble marker",  theScours.getTroubleMarker()); 
+		assertTrue("The Shades has a trouble marker",  theShades.getTroubleMarker()); 
+		//
 		assertTrue( gamest.toString().length() > 0 ); 
 		assertTrue( dpizar.toString().length() > 0 ); 
+		assertTrue( dollySisters.toString().length() > 0 ); 
+		assertTrue( theScours.toString().length() > 0 ); 
+		assertTrue( theShades.toString().length() > 0 ); 
 	}
 	
 	

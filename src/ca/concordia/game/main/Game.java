@@ -46,7 +46,7 @@ public class Game {
 		this.bank = Bank.getInstance();
 		
 		//Set bank to full since it's a new game.
-		int newBalance=120;
+		int newBalance = 120;
 		AtomicInteger aNewBalance= new AtomicInteger(newBalance);
 		bank.setBankMoney(aNewBalance);
 		

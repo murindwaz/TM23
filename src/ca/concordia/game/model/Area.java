@@ -227,14 +227,13 @@ public class Area {
 	 * Add troubleMarker to area if possible(Only one trouble marker is allowed per area). Return true if successful else return false.
 	 * @return
 	 */
-	public boolean addTroubleMarker()
-	{
-		if(this.troubleMarker==false )//There's no trouble marker on this area.
-		{
+	public boolean addTroubleMarker(){
+		if(this.troubleMarker==false ){
+			//There's no trouble marker on this area.
 			this.troubleMarker=true;
 			return true;
-		}else
-		{//A trouble marker already exists on this area.
+		}else{
+			//A trouble marker already exists on this area.
 			return false;
 		}
 	}
