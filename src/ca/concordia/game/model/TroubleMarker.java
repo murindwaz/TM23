@@ -9,7 +9,7 @@ import ca.concordia.game.common.common.Colors;
  */
 @Deprecated
 public class TroubleMarker extends Piece {
-	public TroubleMarker(Color aColor) {
+	public TroubleMarker(Colors aColor) {
 		super(aColor);
 	}
 }

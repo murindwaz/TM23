@@ -93,7 +93,7 @@ public class Deck {
 				
 		//Fisher-Yates shuffle:
 		Random rnd = new Random();
-		for(int i = max-1; i>0; i++) {
+		for(int i = max-1; i>0; i--) {
 			int idx = rnd.nextInt(i+1);
 	
 			//Perform swap:

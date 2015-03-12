@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
 
+import ca.concordia.game.common.common.Colors;
 
 /**
  * Game class creates a new game, loads and saves a game state. 
@@ -40,9 +41,7 @@ public class Game {
 	 * Start New Game
 	 */
 	public String init() {
-		
-		String colors[] = new String[] {"RED","BLUE","YELLOW","GREEN"};
-		
+				
 		this.bank = Bank.getInstance();
 		
 		//Set bank to full since it's a new game.
@@ -88,7 +87,7 @@ public class Game {
 		this.players = new Player[numberOfPlayers];
 		
 		for(int i=0; i<numberOfPlayers; i++) {
-			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),colors[i],12,6);
+			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),Colors.colorForIndex(i),12,6);
 			//Deal 5 green cards to each player:
 			decks.get("green").dealCardsToPlayer(players[i],5);
 			//Give $10 to each player:
@@ -268,14 +267,14 @@ public class Game {
 			boolean troubleMarker = false;
 			boolean building = false;
 
-			String buildingColor="";
+			Colors buildingColor=Colors.NONE;
 			int demon = 0;
 			int troll = 0;
 			
 			
 			for(int i=0;i<12;i++)
 			{
-				ArrayList<String> minions = new ArrayList<String>();//Array that will contain the color of the minions on a certain area.
+				ArrayList<Colors> minions = new ArrayList<Colors>();//Array that will contain the color of the minions on a certain area.
 				String[] parts = content.get(i).split(",");
 				for(int j=0;j<parts.length;j++)
 				{
@@ -286,13 +285,13 @@ public class Game {
 					else if(j==2)
 						building=Boolean.valueOf(parts[j]);
 					else if(j==3)
-						buildingColor= parts[j];
+						buildingColor= Colors.colorForString(parts[j]);
 					else if(j==4)
 						demon=Integer.parseInt(parts[j]);
 					else if(j==5)
 						troll=Integer.parseInt(parts[j]);
 					else 
-						minions.add(parts[j]);
+						minions.add(Colors.colorForString(parts[j]));
 							
 				}
 				//Create new city card with the name extracted.
@@ -315,7 +314,7 @@ public class Game {
 			this.players = new Player[numberPlayers];//Set new number players.
 			
 			PersonalityCard perCard = null;
-			String color = null;
+			Colors color = null;
 			int minionOnHand = 0;
 			int buildingOnHand = 0;
 			int money = 0;
@@ -332,7 +331,7 @@ public class Game {
 					if(j==0)
 						perCard=new PersonalityCard(parts[j]);
 					else if(j==1)
-						color=parts[j];
+						color=Colors.colorForString(parts[j]);
 					else if(j==2)
 						minionOnHand=Integer.parseInt(parts[j]);
 					else if(j==3)

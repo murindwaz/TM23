@@ -2,8 +2,8 @@ package ca.concordia.game.model;
 
 import java.util.ArrayList;
 
-import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
+import ca.concordia.game.common.common.Colors;
 
 /**
  * Class PLayer handles and contains the different players on the current game.
@@ -57,6 +57,8 @@ public class Player {
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
 	
+	
+
 	/**
 	 * Constructor for loading a game State.
 	 * @param aPersonality
@@ -82,14 +84,7 @@ public class Player {
 	 * player may have.
 	 * @return int
 	 */
-	public int getMoney() {
-		return this.money;
-	}	
-	/**
-	 * Getter color
-	 * @return
-	 */
-	public String getColor()
+	public int calculateNetWorth()
 	{
 		this.netWorth= this.money;
 		//calculate the money invested in buildings so far, and add it to the networth.
@@ -120,15 +115,6 @@ public class Player {
 	{
 		this.loans=this.loans+amountPaid;
 	}
-
-	/**
-	 * Getter get Player's Personality Card.
-	 * @return
-	 */
-	public Card getPersonality() {
-		return this.personality;
-	}	
-	
 
 	/**
 	 * Transfer Money into players account.

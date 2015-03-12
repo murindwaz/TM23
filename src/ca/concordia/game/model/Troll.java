@@ -9,7 +9,7 @@ import ca.concordia.game.common.common.Colors;
  */
 @Deprecated
 public class Troll extends Piece {
-	public Troll(Color aColor) {
+	public Troll(Colors aColor) {
 		super(aColor);
 	}
 }

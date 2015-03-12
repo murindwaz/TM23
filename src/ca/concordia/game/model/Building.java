@@ -8,7 +8,7 @@ import ca.concordia.game.common.common.Colors;
  */
 @Deprecated
 public class Building extends Piece {
-	public Building(Color aColor) {
+	public Building(Colors aColor) {
 		super(aColor);
 	}
 }

@@ -11,7 +11,7 @@ import ca.concordia.game.common.common.Colors;
  */
 @Deprecated
 public class Demon extends Piece {
-	public Demon(Color aColor) {
+	public Demon(Colors aColor) {
 		super(aColor);
 	}
 }

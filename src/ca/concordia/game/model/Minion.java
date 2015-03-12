@@ -8,7 +8,7 @@ import ca.concordia.game.common.common.Colors;
  */
 @Deprecated
 public class Minion extends Piece {
-	public Minion(Color aColor) {
+	public Minion(Colors aColor) {
 		super(aColor);
 	}
 }

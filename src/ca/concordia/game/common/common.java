@@ -1,6 +1,5 @@
 package ca.concordia.game.common;
 
-<<<<<<< HEAD
 import java.awt.Color;
 
 public class common {
@@ -31,6 +30,38 @@ public class common {
 			return stringValue;
 		}
 		
+		//Return the Colors based on an index.
+		public static Colors colorForIndex(int i) {
+			switch(i%4) {
+				case 0:
+					return Colors.BLUE;
+				case 1:
+					return Colors.GREEN;
+				case 2:
+					return Colors.YELLOW;
+				case 3:
+					return Colors.RED;
+			}
+			
+			return Colors.NONE;
+		}
+		
+		//Returns the Colors based on a string.
+		public static Colors colorForString(String s) {
+			switch(s.toUpperCase()) {
+			case "RED":
+				return Colors.RED;
+			case "BLUE":
+				return Colors.BLUE;
+			case "YELLOW":
+				return Colors.YELLOW;
+			case "GREEN":
+				return Colors.GREEN;
+			default:
+				return Colors.NONE;
+			}
+		}
+								
 		//Returns the actual color represented by the color enum.
 		public Color color() {
 			Color resp = new Color(1f,1f,1f,0f);
@@ -53,11 +84,6 @@ public class common {
 	}
 	
 	public enum CityAreas {
-=======
-public  class common {
-	
-	public enum CityAreas{
->>>>>>> bc68bf4fe0066b214b6dcf3f27c90677c5459619
 		DOLLYSISTERS(1), UNREALESTATE(2), DRAGONSLANDING(3), SMALLGODS(4),
 		THESCOURS(5), THEHIPPO(6), THESHADES(7), DIMWELL(8), LONGWALL(9), ISLEOFGODS(10),
 		SEVENSLEEPERS(11), NAPHILL(12);
@@ -69,7 +95,7 @@ public  class common {
 		}
 		
 		//return integer value which represents the area.
-<<<<<<< HEAD
+
 		public int intValue() {
 			return intValue;
 		}
@@ -120,14 +146,5 @@ public  class common {
 			return resp;
 		}
 	}
-=======
-		public int intValue()
-		{
-			return intValue();
-		}
-	}
-	
-	
->>>>>>> bc68bf4fe0066b214b6dcf3f27c90677c5459619
 
 }
