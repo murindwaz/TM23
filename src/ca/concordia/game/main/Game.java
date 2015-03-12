@@ -48,6 +48,8 @@ public class Game {
 		
 		this.bank = Bank.getInstance();
 		
+		
+		currentPlayer=-1;//current player has not been determined yet.
 		//Set bank to full since it's a new game.
 		int newBalance=120;
 		AtomicInteger aNewBalance= new AtomicInteger(newBalance);
@@ -58,14 +60,6 @@ public class Game {
 		Scanner keyIn=new Scanner(System.in);
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
-		
-		//Depending on the number of players initialize their States(to wait).
-		playerStatus=new ArrayList<StateContext> ();//put on heap.
-		
-		for(int i=0;i<numberOfPlayers;i++)
-		{
-			playerStatus.add(new StateContext());
-		}
 		
 		//Close Scanner object
 		//keyIn.close();//Don't close until done using in whole proyect.
@@ -110,9 +104,20 @@ public class Game {
 			bank.transferFunds(players[i], 10);
 		}
 		
+		//Depending on the number of players initialize their States(to wait).
+		playerStatus=new ArrayList<StateContext> ();//put on heap.
+				
+		for(int i=0;i<numberOfPlayers;i++)
+		{
+			playerStatus.add(new StateContext());
+			System.out.println("Player:"+players[i].getColor()+ " Current State:"+playerStatus.get(i).getState());
+			playerStatus.get(i).performAction(players[i], this);//Set to next state(Play State.)So players are ready to play when their turn comes up.
+			
+		}
+		
 		//Initialize Gameboard:
 		this.gameboard = new Gameboard();
-		Die die=new Die();
+		this.die=new Die();
 			
 		return "Initialization was succssessfull";
 	}
@@ -132,12 +137,13 @@ public class Game {
 			playerDieRollMap.put(rollValue, this.players[i].getColor());//Store  Player color,roll value pair.
 		}
 		
+		System.out.println();
+		
 		int highestRoll=highestValue(playerDieRoll);
 		String startingColor=playerDieRollMap.get(highestRoll);
 		
 		System.out.println("The player with the color:"+startingColor+" starts the game.");
 		//Set the pointer to the starting player in the array.
-		int currentPlayer=-1;
 		for(int i=0;i<this.numberOfPlayers;i++)
 		{
 			if(this.players[i].getColor().equals(startingColor))//Found a match
@@ -150,9 +156,11 @@ public class Game {
 		while(true)//Keep goind until a player wins the game.
 		{
 			System.out.println("Game has begun!!!!!!");
+			//Start Playing select the player who's turn it is.
+			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
+			//Display players info
 			
-			
-			
+			break;
 		}
 		
 	}
