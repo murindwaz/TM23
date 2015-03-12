@@ -222,7 +222,6 @@ public class Area {
 		this.minions.remove(minion);
 	}
 	
-
 	/**
 	 * Add troubleMarker to area if possible(Only one trouble marker is allowed per area). Return true if successful else return false.
 	 * @return

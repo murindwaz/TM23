@@ -132,7 +132,7 @@ public class Gameboard {
 	}
 	
 	/**
-	 * Returns the areas that currently contain a trouble marker on it.
+	 * Returns the names of areas that currently contain a trouble marker on it.
 	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> troubleMarkers(){
@@ -142,6 +142,22 @@ public class Gameboard {
 			tempArea=this.areas.get(i);
 			if(tempArea.getTroubleMarker()) {
 				troubleMarkersAreas.add(tempArea.getCityCard().getName());
+			}
+		}
+		return troubleMarkersAreas;
+	}
+	
+	/**
+	 * Returns the  areas that currently contain a trouble marker on it.
+	 * @return ArrayList<Area>
+	 */
+	public ArrayList<Area> troubleMarkersAreas(){
+		ArrayList<Area> troubleMarkersAreas=new ArrayList<Area>();
+		Area tempArea;
+		for(int i=0; i< this.areas.size();i++){
+			tempArea=this.areas.get(i);
+			if(tempArea.getTroubleMarker()) {
+				troubleMarkersAreas.add(tempArea);
 			}
 		}
 		return troubleMarkersAreas;

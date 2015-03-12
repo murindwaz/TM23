@@ -72,7 +72,7 @@ public class Symbol {
 				placeBuilding(currentPlayer,game);
 				break;
 			case 3:
-			
+				removeMinion(currentPlayer,game);
 				break;
 			case 4:
 			
@@ -98,38 +98,84 @@ public class Symbol {
 		}
 	}
 	
-	/**
-	 * Delete every cardNumber that is repeated.
-	 * @param arrayList
-	 * @return ArrayList<Integer>
-	 */
-	private ArrayList<Integer> deleteAllRepetisions(ArrayList<Integer> arrayList)
+	
+	private boolean removeMinion(Player currentPlayer,Game game)
 	{
-		HashSet tempHashSet = new HashSet();
-		tempHashSet.addAll(arrayList);
-		arrayList.clear();
-		arrayList.addAll(tempHashSet);
+		//Get gameboard areas.
+		Gameboard gameBoard=game.getGameBoard();
+		//ArrayList<Area> areas= gameBoard.getAreas();
+		//Get all the areas that contain a trouble marker.
+		ArrayList<Area> troubleMarkersAreas=gameBoard.troubleMarkersAreas();
 		
-		return arrayList;
+		ArrayList<Piece> possibleVictims;//will contain the minions that can be assassinated per area.
+		
+		System.out.println("Please select the area code you wish to remove a minion,demon or troll from, the following are areas with trouble markers:");
+		//Select minions in an area
+		for(int i=0;i<troubleMarkersAreas.size();i++)
+		{
+			System.out.println("Area: "+troubleMarkersAreas.get(i).getCityCard().getName()+"("+troubleMarkersAreas.get(i).getCityCard().getCardNumber()+"):");
+			possibleVictims=troubleMarkersAreas.get(i).getMinions();
+			//Display all minions that do not belong to the player.
+			System.out.print("Minions on area:");
+			for(int j=0;j<possibleVictims.size();j++)
+			{
+				if(possibleVictims.get(i).getColor() != currentPlayer.getColor())//Only display minions that belong to a different player.
+					if(j==possibleVictims.size()-1)//last item
+						System.out.print(possibleVictims.get(i).getColor()+"\n");
+					else
+						System.out.print(possibleVictims.get(i).getColor()+",");
+			}
+			//Display number of trolls or demons if they exist.
+			if(troubleMarkersAreas.get(i).getTroll()>=1)
+				System.out.println("This area contains:"+troubleMarkersAreas.get(i).getTroll()+" trolls.");
+			if(troubleMarkersAreas.get(i).getDemon()>=1)
+				System.out.println("This area contains:"+troubleMarkersAreas.get(i).getDemon()+" demons.");
+			
+			System.out.println();//Blank Line
+		}
+		
+		System.out.println("Please select the area code(Integer) from where you wish to remove a minion,demon or troll:" );
+		Scanner input=new Scanner(System.in);
+		int selectedCardNumber = input.nextInt();
+		System.out.println("Enter 1 to remove a minion,2 to remove a troll and 3 to remove a demon:" );
+		int type = input.nextInt();
+		
+		
+		if(type==1)
+		{
+			System.out.println("Select the color of minion you wish to remove:" );
+			String color = input.next();
+			color=color.toUpperCase();
+			//Remove a minion of the color specified by the player.
+			gameBoard.getAreas().get(selectedCardNumber).removeMinion(new Piece(color));
+			
+		}
+		else if(type==2)
+		{
+			
+		}	
+		else if(type==3)
+		{
+			
+		}
+		
+		input.close();
+		
+		return true;
 	}
-	
-	/**
-	 * Remove last character of a string if it's a coma.
-	 * @param str
-	 * @return
-	 */
-	private String removeLastChar(String str) {
-	    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
-	      str = str.substring(0, str.length()-1);
-	    }
-	    return str;
-	}
-	
 	
 	/*
 	 * To do: let the player choose the option not to place a building. 
 	 */
-	
+	/**
+	 * Performs the place a building symbol. A player is allowed to place a building in an area  where he possesses a least one minion and the area
+	 * does not contain a trouble marker. Once a Building is placed the player get's the area's city card. further a player has to have enough money
+	 * to place a building, depending on the cost that depends on the area the player wishes to place a building on. Further this updates the player,the
+	 * gameboard, the area and the bank classes; after a building is purchased and built on the area chosen by the player.
+	 * @param currentPlayer
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 */
 	private boolean placeBuilding(Player currentPlayer,Game game)
 	{
 		ArrayList<Integer> possibleAreas=new ArrayList<Integer>();//Will contain the possible areas a player can put a bulding on.
@@ -279,6 +325,33 @@ public class Symbol {
 		areas.get(selectedCardNumber).addMinion(new Piece(currentPlayer.getColor()));
 		
 		return true;
+	}
+	
+	/**
+	 * Delete every cardNumber that is repeated.
+	 * @param arrayList
+	 * @return ArrayList<Integer>
+	 */
+	private ArrayList<Integer> deleteAllRepetisions(ArrayList<Integer> arrayList)
+	{
+		HashSet tempHashSet = new HashSet();
+		tempHashSet.addAll(arrayList);
+		arrayList.clear();
+		arrayList.addAll(tempHashSet);
+		
+		return arrayList;
+	}
+	
+	/**
+	 * Remove last character of a string if it's a coma.
+	 * @param str
+	 * @return
+	 */
+	private String removeLastChar(String str) {
+	    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
+	      str = str.substring(0, str.length()-1);
+	    }
+	    return str;
 	}
 
 }
