@@ -37,11 +37,12 @@ public class Deck {
 			case "P":
 				//The personality deck has 7 cards:
 				this.cards = new ArrayDeque<Card>();
+				this.arrayCards = new ArrayList<Card>();
 				PersonalityCard temp;
 				for (int i = 0; i < 7; i++) {
 					temp=new PersonalityCard(i,numPlayers);
 					this.cards.add(temp);
-					//this.arrayCards.add(temp);
+					this.arrayCards.add(temp);
 				}
 				break;
 				/*

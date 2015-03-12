@@ -30,8 +30,10 @@ public class Gameboard {
 
 	public Gameboard()
 	{
+		//Initialize instance ArrayLists.
 
 		this.areas = new ArrayList<Area>();
+		this.cityCards =new ArrayList<CityCard>();
 		CityCard temp;
 		for(int i=0;i<12;i++)//Populate the gameboard with the twelve areas.
 		{
