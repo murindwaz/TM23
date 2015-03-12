@@ -73,14 +73,16 @@ public class Deck {
 	}
 	
 	/**
-	 * Suffle Deck
+	 * Shuffle Deck
 	 */
 	public void shuffle() {
 		
 		//Shuffles the cards in this deck
 		int max = this.cards.size();
-
-		Card[] tmp = new Card[max];
+		/**
+		 * @warning increased by +1, and failed at the second warning ....
+		 */
+		Card[] tmp = new Card[ max + 1];
 		//Fill in the array:
 		for(int i = 0; i < max; i++) {
 			tmp[i] = this.cards.getFirst();
@@ -98,6 +100,9 @@ public class Deck {
 				
 		//Put back the cards:
 		for(int i = 0; i < max; i++) {
+			/**
+			 * @warning this section is subject to ArrayIndexOutOfBoundException 
+			 */
 			this.cards.add(tmp[i]);
 		}
 	}
@@ -107,10 +112,11 @@ public class Deck {
 	 * @return Card
 	 */
 	public Card getCard() {
-		if(cards.size()>0)
-			return cards.pop();
-		else 
+		if( this.cards.size() > 0 ){
+			return this.cards.pop();
+		}else{ 
 			return null;
+		}
 	}
 	/**
 	 * put Card in a deck.
