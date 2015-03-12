@@ -2,6 +2,8 @@ package ca.concordia.game;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,26 +27,57 @@ import ca.concordia.game.model.*;
 public class PlayerTest {
 
 	Game game;
+	Gameboard gameboard;
 	Player dpizar;
 	Player gamest;
 	
+	int MINIONS = 12; 
+	int MONEY	= 10; 
+	int BUILDINGS = 6; 
+	
+	
+	
 	@BeforeClass 
-	public void setup(){ 
-		game = new Game();
-		
-		//PersonalityCard lordVetinari = new PersonalityCard(0, 2);
-		//PersonalityCard lordSelachii = new PersonalityCard(1, 2);
-			
-		
-		//dpizar = new Player( lordVetinari,  ); 
-		//gamest = new Player( );
-	}
+	public static void setup(){ 
+		}
 	
 	@Before 
 	public void starts(){ 
-		
+		game = Game.getInstance();
+		gameboard = new Gameboard();
+		PersonalityCard lordVetinari = new PersonalityCard(0, 2);
+		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
+		dpizar = new Player( lordVetinari,  "Green",  MINIONS, BUILDINGS); 
+		gamest = new Player( lordSelachii, "Green",  MINIONS, BUILDINGS);
 	}
 	
+	
+	
+	@Test 
+	public void playerInitialState(){
+		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
+		gamest.transferMoney(MONEY);
+		assertTrue( gamest.getMoney() == MONEY ); 
+		dpizar.transferMoney(MONEY);
+		assertTrue( dpizar.getMoney() == MONEY ); 
+		assertTrue("Player has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1) ); 
+		assertTrue("Player has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5) ); 
+		assertTrue("Player has minion in The Shades(7)",  dpizar.putNewMinionOnBoard(7) ); 
+		assertTrue("Player2 has minion in Dolly Sisters(1)",  gamest.putNewMinionOnBoard(1) ); 
+		assertTrue("Player has minion in The Scours(5)",  gamest.putNewMinionOnBoard(5) ); 
+		assertTrue("Player has minion in The Shades(7)",  gamest.putNewMinionOnBoard(7) ); 
+		assertTrue( gamest.toString().length() > 0 ); 
+		assertTrue( dpizar.toString().length() > 0 ); 
+	}
+	
+	
+	
+	@Test 
+	public void winningConditions(){
+		//@todo make game moves till a winning condition is met 
+		assertFalse("Player 2 has not winning conditions", gamest.checkWinningCondition(gameboard) );
+		assertFalse("Player 1 has not winning conditions", dpizar.checkWinningCondition(gameboard) );
+	}
 	
 	
 	@After 
@@ -53,22 +86,8 @@ public class PlayerTest {
 	}
 	
 	@AfterClass 
-	public void teardown(){
+	public static void teardown(){
 		
-	}
-	
-	
-
-	@Test
-	public void testLoadGame(){
-		Game test = new Game(); //Game Object(Main Functions init(),loadGame(),saveGame())
-		//Initialialize all structures.
-		String resultInit= test.init();
-		assertEquals("Run was Successfull",resultInit);
-		//Load Game
-		String result= test.loadGame();
-		assertEquals("Load Was Successfull",result);
-		test.printCurrentState();
 	}
 
 }

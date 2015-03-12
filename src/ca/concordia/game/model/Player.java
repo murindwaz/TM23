@@ -87,8 +87,7 @@ public class Player {
 	{
 		this.netWorth= this.money;
 		//calculate the money invested in buildings so far, and add it to the networth.
-		for(int i=0;i<this.playerCityCard.size();i++)
-		{
+		for(int i=0;i<this.playerCityCard.size();i++){
 			this.netWorth=this.netWorth+this.playerCityCard.get(i).getBuldingCost();
 		}
 		//If the player has any loans substract that amount to networth
