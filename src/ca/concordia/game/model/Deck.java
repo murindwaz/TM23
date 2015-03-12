@@ -1,5 +1,6 @@
 package ca.concordia.game.model;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.ArrayDeque;
 import java.util.Random;
@@ -20,14 +21,13 @@ public class Deck {
 	
 	private int numPlayers;
 	private Deque<Card> cards;
+	private ArrayList<Card> arrayCards;//Will serve for some of the decks.
 	
 	/**
 	 * Constructor: Creates an Array of cards depending on the type of the card which is specified as an argument.
 	 * @param type
 	 */
-	public Deck(String type, int numberOfPlayers){
-		this.numPlayers = numberOfPlayers;
-		
+	public Deck(String type,int numPlayers){
 		switch(type) {
 			case "D":
 				//The discard deck is empty to start with
@@ -36,17 +36,24 @@ public class Deck {
 			case "P":
 				//The personality deck has 7 cards:
 				this.cards = new ArrayDeque<Card>();
+				this.arrayCards = new ArrayList<Card>();
+				PersonalityCard temp;
 				for (int i = 0; i < 7; i++) {
-					this.cards.add(new PersonalityCard(i, numberOfPlayers));
+					temp=new PersonalityCard(i,numPlayers);
+					this.cards.add(temp);
+					this.arrayCards.add(temp);
 				}
 				break;
+				/*
 			case "C":
 				//The city deck has 12 cards:
 				this.cards = new ArrayDeque<Card>();
 				for (int i = 0; i < 12; i++) {
 					this.cards.add(new CityCard(i));
+					this.arrayCards.add(new CityCard(i));
 				}
 				break;
+				*/
 			case "E":
 				//The event deck has 12 cards:
 				this.cards = new ArrayDeque<Card>();
@@ -93,9 +100,8 @@ public class Deck {
 				
 		//Fisher-Yates shuffle:
 		Random rnd = new Random();
-		for(int i = max-1; i>0; i--) {
-			int idx = rnd.nextInt(i+1);
-	
+		for(int i = max - 1; i > 0; i-- ){
+			int idx = rnd.nextInt(i+1);	
 			//Perform swap:
 			Card a = tmp[idx];
 			tmp[idx] = tmp[i];
@@ -109,6 +115,19 @@ public class Deck {
 	}
 	
 	/**
+	 * Remove A Card Object.
+	 * @param card(Card)
+	 * @return Card
+	 */
+	/*
+	public Card deleteCardFromDeck(Card card)
+	{
+		int index=this.arrayCards.indexOf(card);
+		this.cards.remove(card);
+		return this.arrayCards.remove(index);
+	}*/
+	
+	/**
 	 * Get first card of a deck; if the deck still has cards otherwise it will return null.
 	 * @return Card
 	 */
@@ -118,6 +137,15 @@ public class Deck {
 		}else{ 
 			return null;
 		}
+	}
+	
+	/**
+	 * Return ArrayList for the Deck.
+	 * @return 
+	 */
+	public ArrayList<Card> getArrayDeck()
+	{
+		return this.arrayCards;
 	}
 	/**
 	 * put Card in a deck.

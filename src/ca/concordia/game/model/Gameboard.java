@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 //Packages
 import ca.concordia.game.main.Game;
-import ca.concordia.game.common.common.*;
+import ca.concordia.game.common.common;
+
 
 
 /**
@@ -21,19 +23,39 @@ import ca.concordia.game.common.common.*;
 public class Gameboard {
 	
 	private ArrayList<Area> areas;
+	private ArrayList<CityCard> cityCards;//Initially all city cards belong to the Deck.
 	
 	/**
 	 * Contructor for new game
 	 */
-	public Gameboard(){
+
+	public Gameboard()
+	{
+		//Initialize instance ArrayLists.
+
 		this.areas = new ArrayList<Area>();
+		this.cityCards =new ArrayList<CityCard>();
+		CityCard temp;
 		for(int i=0;i<12;i++)//Populate the gameboard with the twelve areas.
 		{
-			
-			this.areas.add(new Area(new CityCard(i))); //Initialize new cityAreas
+			//Initialize city Cards.
+			 temp= new CityCard(i);
+			this.cityCards.add(temp);
+			this.areas.add(new Area(temp)); //Initialize new cityAreas
 		}
 	}
 	
+	
+	/**
+	 * Remove A Card Object and return it.(When a player takes possession of a city card)
+	 * @param card(Card)
+	 * @return Card
+	 */
+	public CityCard deleteCardFromDeck(CityCard card)
+	{
+		int index=this.cityCards.indexOf(card);
+		return this.cityCards.remove(index);
+	}
 
 	/**
 	 * getter Twelve areas.
@@ -94,27 +116,22 @@ public class Gameboard {
 	 * @param currentPlayer(Player)
 	 * @return int
 	 */
-	public int numberMinionsAreas(Player currentPlayer)
-	{
+	public int numberMinionsAreas(Player currentPlayer){
 		int [] minionsInArea=new int [12];
 		int numberOfMinionsInAreas=0;
-		
 		minionsInArea= currentPlayer.getMinionsOnArea();
-		
-		for(int i=0;i<minionsInArea.length;i++)
-		{
+		for(int i=0;i<minionsInArea.length;i++){
 			if(this.areas.get(i).getDemon()>0)//If there are demoan in the area then the area doesn't count for winning condition.
 				continue;
 			//the player possess at least one minion on the current Area.
 			if(minionsInArea[i]>0)
 				numberOfMinionsInAreas++;
 		}
-		
 		return numberOfMinionsInAreas;
 	}
 	
 	/**
-	 * Returns the areas that currently contain a trouble marker on it.
+	 * Returns the names of areas that currently contain a trouble marker on it.
 	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> troubleMarkers(){
@@ -124,6 +141,22 @@ public class Gameboard {
 			tempArea=this.areas.get(i);
 			if(tempArea.getTroubleMarker()) {
 				troubleMarkersAreas.add(tempArea.getCityCard().getName());
+			}
+		}
+		return troubleMarkersAreas;
+	}
+	
+	/**
+	 * Returns the  areas that currently contain a trouble marker on it.
+	 * @return ArrayList<Area>
+	 */
+	public ArrayList<Area> troubleMarkersAreas(){
+		ArrayList<Area> troubleMarkersAreas=new ArrayList<Area>();
+		Area tempArea;
+		for(int i=0; i< this.areas.size();i++){
+			tempArea=this.areas.get(i);
+			if(tempArea.getTroubleMarker()) {
+				troubleMarkersAreas.add(tempArea);
 			}
 		}
 		return troubleMarkersAreas;

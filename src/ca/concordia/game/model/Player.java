@@ -124,6 +124,21 @@ public class Player {
 		this.money += amount;
 	}
 	
+	/**
+	 * Subtracts an amount of money from the player. Returns true if successfull otherwise return false;
+	 * @param amount
+	 * @return boolean
+	 */
+	public boolean payMoney(int amount)
+	{
+		if(money>amount)
+		{
+			this.money=this.money-amount;
+			return true;
+		}else
+			return false;
+	}
+	
 
 	/**
 	 * Add card to player playing cards.
@@ -176,6 +191,22 @@ public class Player {
 		{
 			this.minionsOnHand--;
 			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]+1;
+			return true;
+		}else
+			return false;
+	}
+	
+	/**
+	 * Remove a minion from an area and add it to player's hand.
+	 * @param areaCode
+	 * @return boolean
+	 */
+	public boolean removeMinionOnBoard(int areaCode)
+	{
+		if(this.minionsOnAreas[areaCode]>0)
+		{
+			this.minionsOnHand++;
+			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]-1;
 			return true;
 		}else
 			return false;
@@ -367,6 +398,24 @@ public class Player {
 	public int[] getMinionsOnArea()
 	{
 		return this.minionsOnAreas;
+	}
+	
+	/**
+	 * Setter for buildingsOnHand.
+	 * @param newNum(int)
+	 */
+	public void setBuildingOnHand(int newNum)
+	{
+		this.buildingOnHand=newNum;
+	}
+	
+	/**
+	 * Setter for minionOnHand.
+	 * @param newNum(int)
+	 */
+	public void setMinionsOnHand(int newNum)
+	{
+		this.minionsOnHand=newNum;
 	}
 	
 }
