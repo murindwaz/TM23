@@ -1,6 +1,7 @@
 package ca.concordia.game.gameState;
 
 import ca.concordia.game.main.Game;
+import ca.concordia.game.model.Gameboard;
 import ca.concordia.game.model.Player;
 
 public class StatePlay  implements StateLike{
@@ -16,8 +17,18 @@ public class StatePlay  implements StateLike{
 	{
 		System.out.println();
 		
+		//Display Gameboard Status.
+		Gameboard gameBoard=game.getInstance().getGameBoard();
+		System.out.println(gameBoard.toString());
+		
+		System.out.println();
+		
 		//Display the players hand.
 		System.out.println(player.toString());
+		
+		//Play one of the cards
+		System.out.println("Please enter the card number you wish to play(Select the number for 'Position in Player Hand'):");
+		
 		context.setState(new StateDrawCard());
 	}
 	

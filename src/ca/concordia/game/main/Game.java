@@ -116,7 +116,7 @@ public class Game {
 		}
 		
 		//Initialize Gameboard:
-		this.gameboard = new Gameboard();
+		this.gameboard = new Gameboard(this.players);
 		this.die=new Die();
 			
 		return "Initialization was succssessfull";
@@ -493,6 +493,8 @@ public class Game {
 	{
 		return this.gameboard;
 	}
+	
+
 	
 	/**
 	 * Get a Player using a color.

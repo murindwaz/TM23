@@ -43,8 +43,9 @@ public class PlayerTest {
 	
 	@Before 
 	public void starts(){ 
+		Player [] players=null;
 		game = Game.getInstance();
-		gameboard = new Gameboard();
+		gameboard = new Gameboard(players);
 		PersonalityCard lordVetinari = new PersonalityCard(0, 2);
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
 		dpizar = new Player( lordVetinari,  "Green",  MINIONS, BUILDINGS); 
