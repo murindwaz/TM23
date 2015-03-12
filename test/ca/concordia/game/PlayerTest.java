@@ -51,13 +51,7 @@ public class PlayerTest {
 	
 	@Before 
 	public void starts(){ 
-		Player [] players=null;
 		game = Game.getInstance();
-		/**
-		 * @todo - load game players by assigning them via a function rather than a console on terminal
-		 * game.init();
-		 */
-		gameboard = new Gameboard();
 		/**
 		 * Initiaalization of areas
 		 */
@@ -74,6 +68,12 @@ public class PlayerTest {
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
 		dpizar = new Player( lordVetinari,  Colors.GREEN,  MINIONS, BUILDINGS); 
 		gamest = new Player( lordSelachii, Colors.GREEN,  MINIONS, BUILDINGS);
+		/**
+		 * @todo - load game players by assigning them via a function rather than a console on terminal
+		 * game.init();
+		 */
+		Player[] players = new Player[]{ dpizar, gamest };
+		gameboard = new Gameboard( players );
 	}
 	
 	
