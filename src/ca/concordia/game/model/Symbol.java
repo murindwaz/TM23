@@ -11,7 +11,7 @@ import ca.concordia.game.main.Game;
 public class Symbol {
 	
 	private int symbolId;
-	private boolean isMandatory;
+	public boolean isMandatory;
 	private String description;
 	
 	/**
@@ -26,7 +26,6 @@ public class Symbol {
 		switch(symbolId) {
 			case 1:
 				this.description="Place a minion in adjacent are where one possesses a minion.";
-			
 				break;
 			case 2:
 				this.description="Place a building, where one possesses a minion and there's no trouble markers in the area.";
@@ -41,7 +40,7 @@ public class Symbol {
 				this.description="Take money indicated in the card.";
 				break;
 			case 6:
-				this.description="Take Money From Bank.";
+				this.description="Perform the action described in the text at the bottom of the card.";
 				break;
 			case 7:
 				this.description="Take a random event card and see effects.";
@@ -101,6 +100,11 @@ public class Symbol {
 		}
 	}
 	
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
 	/*
 	 * To do: make the amount to take a variable that changes depending to which card it belongs to.
 	 */
@@ -113,7 +117,7 @@ public class Symbol {
 	private boolean takeMoneyFromBank(Player currentPlayer,Game game)
 	{
 		//Amost all 
-		int amountToTake=3;
+		int amountToTake=2;
 		Bank bank=Bank.getInstance();
 		
 		//Check if bank has enough money.
@@ -145,12 +149,12 @@ public class Symbol {
 			System.out.println("Area: "+troubleMarkersAreas.get(i).getCityCard().getName()+"("+troubleMarkersAreas.get(i).getCityCard().getCardNumber()+"):");
 		}
 		
-		
+		Scanner input=new Scanner(System.in);
 		System.out.println("Please select the area code(Integer) from where you wish to remove a trouble marker:" );
-		int selectedCardNumber = game.keyIn.nextInt();
+		int selectedCardNumber = input.nextInt();
+		input.close();
 		
-		
-		boolean check=gameBoard.getAreas().get(selectedCardNumber-1).removeTroubleMarker();
+		boolean check=gameBoard.getAreas().get(selectedCardNumber).removeTroubleMarker();
 		if(!check)
 			System.out.println("An error has occured(While removing a trouble marker from the Board): Can't Remove it(Check Logic).");
 		
@@ -175,8 +179,6 @@ public class Symbol {
 		
 		ArrayList<Piece> possibleVictims;//will contain the minions that can be assassinated per area.
 		
-		ArrayList<Area> areas= gameBoard.getAreas();
-		
 		System.out.println("The following are areas with trouble markers:");
 		//Display minions,trolls and demosn in an area
 		for(int i=0;i<troubleMarkersAreas.size();i++)
@@ -187,11 +189,11 @@ public class Symbol {
 			System.out.print("Minions on area:");
 			for(int j=0;j<possibleVictims.size();j++)
 			{
-				if(!possibleVictims.get(j).getColor().equals(currentPlayer.getColor()) )//Only display minions that belong to a different player.
+				if(!possibleVictims.get(i).getColor().equals(currentPlayer.getColor()) )//Only display minions that belong to a different player.
 					if(j==possibleVictims.size()-1)//last item
-						System.out.print(possibleVictims.get(j).getColor()+"\n");
+						System.out.print(possibleVictims.get(i).getColor()+"\n");
 					else
-						System.out.print(possibleVictims.get(j).getColor()+",");
+						System.out.print(possibleVictims.get(i).getColor()+",");
 			}
 			//Display number of trolls or demons if they exist.
 			if(troubleMarkersAreas.get(i).getTroll()>=1)
@@ -203,11 +205,12 @@ public class Symbol {
 		}
 		
 		
+		Scanner input=new Scanner(System.in);
 		
 		System.out.println("Please select the area code(Integer) from where you wish to remove a minion,demon or troll:" );
-		int selectedCardNumber = game.keyIn.nextInt();
+		int selectedCardNumber = input.nextInt();
 		System.out.println("Enter 1 to remove a minion,2 to remove a troll and 3 to remove a demon:" );
-		int type = game.keyIn.nextInt();
+		int type = input.nextInt();
 		
 		
 		if(type==1)//Remove a minion 
@@ -216,11 +219,10 @@ public class Symbol {
 			String tmpColor = input.next();
 			Colors color = Colors.colorForString(tmpColor);
 			//Remove a minion of the color specified by the player.
-			gameBoard.getAreas().get(selectedCardNumber-1).removeMinion(color);
+			gameBoard.getAreas().get(selectedCardNumber).removeMinion(color);
 			//Update the status of the player to whom the minion belonged to.
 			Player player=game.getPlayerByColor(color);
 			player.removeMinionOnBoard(selectedCardNumber);
-
 			
 		}
 		else if(type==2)//remove a troll
@@ -228,7 +230,6 @@ public class Symbol {
 			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
 			if(!check)
 				System.out.println("An error has occured(While removing a troll from the Board): Can't Remove it(Check Logic).");
-
 			
 		}
 		else if(type==3)//remove a demon
@@ -236,10 +237,11 @@ public class Symbol {
 			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
 			if(!check)
 				System.out.println("An error has occured(While removing a demon from the Board): Can't Remove it(Check Logic).");
-
 		}
 		
-			
+	
+		
+		input.close();
 		
 		return true;
 	}
@@ -269,7 +271,7 @@ public class Symbol {
 		
 		System.out.println("Player: "+currentPlayer.getColor()+" you can put a building in the following areas:");
 		
-		//Find possible areas to put a Building on.
+		//Find possible areas to put a Bulding on.
 		for(int i=0;i<playerMinionsOnBoard.length;i++)
 		{
 			if(playerMinionsOnBoard[i]>0 && areas.get(i).getTroubleMarker() != true && areas.get(i).getBuilding()!=true)//player has at least one minion in the area and the area doesn't have a trouble maker or another Building.
@@ -286,55 +288,49 @@ public class Symbol {
 		for(int i=0;i<possibleAreas.size();i++)
 		{
 			int cardNumber=possibleAreas.get(i);
-			display=display+areas.get(cardNumber-1).getCityCard().getName()+"("+cardNumber+")"+" Price to place Building: "+areas.get(cardNumber-1).getCityCard().getBuldingCost()+"$" +", ";
+			display=display+areas.get(i).getCityCard().getName()+"("+cardNumber+")"+" Price to place Building: "+areas.get(i).getCityCard().getBuldingCost()+"$" +", ";
 		}
 		//Remove last coma for displaying purposes.
 		display=removeLastChar(display);
 		System.out.println(display);
 		
 		//Ask player where he wishes to put a building on and check if the player has the money to do it.
-
+		Scanner input=new Scanner(System.in);
 		int selectedCardNumber;
 		while(true)
 		{
 			//Ask player for input.
-			System.out.println("Please select the cardNumber(Integer) where you wish to put your Building, otherwise enter -1 not place one:");
-			selectedCardNumber = game.keyIn.nextInt();
+			System.out.println("Please select the cardNumber(Integer) where you wish to put your Building:");
+			selectedCardNumber = input.nextInt();
 			//Check if the area the player chooses is valid to put a building and if he has enough money to do it and if he has enough buildings on hand.
-			if(possibleAreas.contains(selectedCardNumber) && currentPlayer.getMoney()>=areas.get(selectedCardNumber-1).getCityCard().getBuldingCost() && currentPlayer.getBuildingOnHand()>=1  )
+			if(possibleAreas.contains(selectedCardNumber) && currentPlayer.getMoney()>=areas.get(selectedCardNumber).getCityCard().getBuldingCost() && currentPlayer.getBuildingOnHand()>=1)
 				break;
-			else if(selectedCardNumber<0)
-				break;
-			
 			else
 				System.out.println("You can't put a Building there or you don't have enough money or you are out of buildings.");
 		}
+		input.close();
 		
-		if(selectedCardNumber>0)
-		{
-			//update Player,Bank,City Card Deck and Gameboard status.
-			//Player has to be given the corresponding city card,a building has to be taken from his/her hand, money has to be updated.
-			currentPlayer.getPlayerCityCard().add(gameBoard.deleteCardFromDeck(areas.get(selectedCardNumber-1).getCityCard()));//Add city card to player and delete it from the gameBoard
+		//update Player,Bank,City Card Deck and Gameboard status.
+		//Player has to be given the corresponding city card,a building has to be taken from his/her hand, money has to be updated.
+		currentPlayer.getPlayerCityCard().add(gameBoard.deleteCardFromDeck(areas.get(selectedCardNumber).getCityCard()));//Add city card to player and delete it from the gameBoard
 		
-			int buildingOnHand=currentPlayer.getBuildingOnHand();
-			buildingOnHand--;
-			currentPlayer.setBuildingOnHand(buildingOnHand);
-			//Update player's money.
-			boolean check=currentPlayer.payMoney(areas.get(selectedCardNumber-1).getCityCard().getBuldingCost());
+		int buildingOnHand=currentPlayer.getBuildingOnHand();
+		buildingOnHand--;
+		currentPlayer.setBuildingOnHand(buildingOnHand);
+		//Update player's money.
+		boolean check=currentPlayer.payMoney(areas.get(selectedCardNumber).getCityCard().getBuldingCost());
 		
-			if(check!= true)
-				System.out.println("An error has occured(While Placing a Building on the Board): Player doesn't have enough money.");
+		if(check!= true)
+			System.out.println("An error has occured(While Placing a Building on the Board): Player doesn't have enough money.");
 		
-			//Deposit into Bank the cost of the Building.
-			Bank bank=Bank.getInstance();
-			bank.deposit(areas.get(selectedCardNumber-1).getCityCard().getBuldingCost());
+		//Deposit into Bank the cost of the Building.
+		Bank bank=Bank.getInstance();
+		bank.deposit(areas.get(selectedCardNumber).getCityCard().getBuldingCost());
 		
-			//Update Area On GameBoard. now it has a Building and it needs to know the color to see which player it belongs to.
-			check=areas.get(selectedCardNumber-1).addBuilding(currentPlayer);
-			if(check!= true)
-				System.out.println("An error has occured(While Placing a Building on the Board): The Area already has a Building.");
-		}else
-			System.out.println("You did not place any buildings on the board.");
+		//Update Area On GameBoard. now it has a Building and it needs to know the color to see which player it belongs to.
+		check=areas.get(selectedCardNumber).addBuilding(currentPlayer);
+		if(check!= true)
+			System.out.println("An error has occured(While Placing a Building on the Board): The Area already has a Building.");
 		
 		return true;
 	}
@@ -388,19 +384,19 @@ public class Symbol {
 		display=removeLastChar(display);
 		System.out.println(display);
 		
-		
+		Scanner input=new Scanner(System.in);
 		int selectedCardNumber;
 		while(true)
 		{
 			//Ask player for input.
 			System.out.println("Please select the cardNumber(Integer) where you wish to put your minion:");
-			selectedCardNumber = game.keyIn.nextInt();
+			selectedCardNumber = input.nextInt();
 			if(possibleAreas.contains(selectedCardNumber))
 				break;
 			else
 				System.out.println("You can't put a minion there.");
 		}
-		
+		input.close();
 		
 		//Update GameState.(Player and Boardgame)
 		//update player.
@@ -408,7 +404,7 @@ public class Symbol {
 		if(!success)
 			System.out.println("Sorry you do not have any more minions on your hand.");
 		//update Gameboard
-		areas.get(selectedCardNumber-1).addMinion(new Piece(currentPlayer.getColor()));
+		areas.get(selectedCardNumber).addMinion(new Piece(currentPlayer.getColor()));
 		
 		return true;
 	}
@@ -431,7 +427,7 @@ public class Symbol {
 	/**
 	 * Remove last character of a string if it's a coma.
 	 * @param str
-	 * @return String
+	 * @return
 	 */
 	private String removeLastChar(String str) {
 	    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
@@ -440,21 +436,4 @@ public class Symbol {
 	    return str;
 	}
 
-	/**
-	 * Getter: to check if symbol is mandatory to play.
-	 * @return boolean
-	 */
-	public boolean isMandatory()
-	{
-		return this.isMandatory;
-	}
-	
-	/**
-	 * Getter: Symbol action description.
-	 * @return String
-	 */
-	public String getDescription()
-	{
-		return this.description;
-	}
 }

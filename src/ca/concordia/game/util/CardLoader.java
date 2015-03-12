@@ -52,16 +52,26 @@ public class CardLoader {
 		String tmp = "";
 		switch(type) {
 			case "B":
-				tmp = cards.get(i-1);
+				if(i > 0) {
+					tmp = cards.get(i-1);
+				}
 				break;
 			case "G":
-				tmp = cards.get(i+52);
+				if(i < 49) {
+					tmp = cards.get(i+52);
+				} else {
+					return "NO NAME FOR CARD WITH INDEX " + i;
+				}
 				break;
 			default:
 				break;
 		}
 		
-		String resp = tmp.split("\\|")[2];
+		String resp = "NO NAME AVAILABLE";
+		String[] arr = tmp.split("\\|");
+		if(arr.length > 2)
+			resp = arr[2]; 
+
 		return resp;
 	}
 	
@@ -70,16 +80,26 @@ public class CardLoader {
 		String tmp = "";
 		switch(type) {
 			case "B":
-				tmp = cards.get(i-1);
+				if (i > 0) {
+					tmp = cards.get(i-1);
+				}
 				break;
 			case "G":
-				tmp = cards.get(i+52);
+				if(i < 49) {
+					tmp = cards.get(i+52);
+				} else {
+					return "NO ABILITY FOR CARD WITH INDEX " + i;
+				}
 				break;
 			default:
 				break;
 		}
 		
-		String resp = tmp.split("\\|")[5];
+		String resp = "NO ABILITY AVAILABLE";
+		String[] arr = tmp.split("\\|");
+		if(arr.length > 5)
+			resp = arr[5]; 
+
 		return resp;
 	}
 

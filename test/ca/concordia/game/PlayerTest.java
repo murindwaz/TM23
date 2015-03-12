@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.*;
 import ca.concordia.game.model.*;
@@ -57,7 +59,6 @@ public class PlayerTest {
 		 * @todo - load game players by assigning them via a function rather than a console on terminal
 		 * game.init();
 		 */
-		gameboard = new Gameboard();
 		/**
 		 * Initiaalization of areas
 		 */
@@ -74,6 +75,8 @@ public class PlayerTest {
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
 		dpizar = new Player( lordVetinari,  Colors.GREEN,  MINIONS, BUILDINGS); 
 		gamest = new Player( lordSelachii, Colors.GREEN,  MINIONS, BUILDINGS);
+		
+		gameboard = new Gameboard(new Player[]{dpizar,gamest});
 	}
 	
 	
