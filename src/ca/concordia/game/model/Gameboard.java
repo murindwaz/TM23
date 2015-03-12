@@ -1,6 +1,13 @@
 package ca.concordia.game.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+//Packages
+import ca.concordia.game.main.Game;
+import ca.concordia.game.common.common;
+
 
 
 /**
@@ -15,19 +22,36 @@ import java.util.ArrayList;
 public class Gameboard {
 	
 	private ArrayList<Area> areas;
+	private ArrayList<CityCard> cityCards;//Initially all city cards belong to the Deck.
 	
 	/**
 	 * Contructor for new game
 	 */
-	public Gameboard(){
+
+	public Gameboard()
+	{
+
 		this.areas = new ArrayList<Area>();
 		for(int i=0;i<12;i++)//Populate the gameboard with the twelve areas.
 		{
-			
-			this.areas.add(new Area(new CityCard(i))); //Initialize new cityAreas
+			//Initialize city Cards.
+			CityCard temp = new CityCard(i);
+			this.cityCards.add(temp);
+			this.areas.add(new Area(temp)); //Initialize new cityAreas
 		}
 	}
 	
+	
+	/**
+	 * Remove A Card Object and return it.(When a player takes possession of a city card)
+	 * @param card(Card)
+	 * @return Card
+	 */
+	public CityCard deleteCardFromDeck(CityCard card)
+	{
+		int index=this.cityCards.indexOf(card);
+		return this.cityCards.remove(index);
+	}
 
 	/**
 	 * getter Twelve areas.

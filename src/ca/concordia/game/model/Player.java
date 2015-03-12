@@ -87,7 +87,8 @@ public class Player {
 	{
 		this.netWorth= this.money;
 		//calculate the money invested in buildings so far, and add it to the networth.
-		for(int i=0;i<this.playerCityCard.size();i++){
+		for(int i=0;i<this.playerCityCard.size();i++)
+		{
 			this.netWorth=this.netWorth+this.playerCityCard.get(i).getBuldingCost();
 		}
 		//If the player has any loans substract that amount to networth
@@ -120,6 +121,21 @@ public class Player {
 	 */
 	public void transferMoney(int amount) {
 		this.money += amount;
+	}
+	
+	/**
+	 * Subtracts an amount of money from the player. Returns true if successfull otherwise return false;
+	 * @param amount
+	 * @return boolean
+	 */
+	public boolean payMoney(int amount)
+	{
+		if(money>amount)
+		{
+			this.money=this.money-amount;
+			return true;
+		}else
+			return false;
 	}
 	
 
@@ -365,6 +381,15 @@ public class Player {
 	public int[] getMinionsOnArea()
 	{
 		return this.minionsOnAreas;
+	}
+	
+	/**
+	 * Setter for buildingsOnHand.
+	 * @param newNum(int)
+	 */
+	public void setBuildingOnHand(int newNum)
+	{
+		this.buildingOnHand=newNum;
 	}
 	
 }

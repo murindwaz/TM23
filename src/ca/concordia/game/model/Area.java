@@ -258,14 +258,15 @@ public class Area {
 	
 
 	/**
-	 * Add troubleMarker to area if possible(Only one trouble marker is allowed per area). Return true if successful else return false.
+	 * Add Building to area if possible(Only one Bulding  is allowed per area). Also set the color of the building.
 	 * @return
 	 */
-	public boolean addBuilding()
+	public boolean addBuilding(Player player)
 	{
 		if(this.building==false)//There's no trouble marker on this area.
 		{
 			this.building=true;
+			this.buildingColor=player.getColor();
 			return true;
 		}else
 		{//A trouble marker already exists on this area.
@@ -275,7 +276,7 @@ public class Area {
 	
 
 	/**
-	 * Add troubleMarker to area if possible(Only one trouble marker is allowed per area). Return true if successful else return false.
+	 * Add Bulding to area if possible(Only one Bulding is allowed per area). Return true if successful else return false.
 	 * @return
 	 */
 	public boolean removeBuilding()
