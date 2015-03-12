@@ -1,5 +1,6 @@
 package ca.concordia.game.main;
 
+import ca.concordia.game.model.*;
 /**
  * Run Test Cases. Controls The game activities.
  * @author Pascal Maniraho 
@@ -13,11 +14,13 @@ public class Controller {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//Create 
+
 		Game game;
 		game= Game.getInstance();
 		
 		game.init();
 		game.play();
+				 
 		//game.loadGame();
 		//game.printCurrentState();
 		

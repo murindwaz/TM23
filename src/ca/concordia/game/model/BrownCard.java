@@ -1,6 +1,7 @@
 package ca.concordia.game.model;
 
 import java.util.ArrayList;
+import ca.concordia.game.util.*;
 
 /**
  * Brown card is a type of Card. for this version of the system it contains a unique number and the color Brown for all cards of this type.
@@ -17,6 +18,7 @@ public class BrownCard extends Card {
 	
 	private String color;
 	private int number;
+	
 	private String name;
 	private ArrayList<Symbol> symbols;
 	private Action especialAbility;
@@ -31,10 +33,9 @@ public class BrownCard extends Card {
 		
 		this.color="BROWN";
 		this.number=i;
-		//Handle 53 cases:
-		switch(i) {
-			
-		}
+
+		this.name = CardLoader.getInstance().nameForCard(i,"B");		
+		this.especialAbility = new Action(CardLoader.getInstance().abilityForCard(i,"B"));
 	}
 	
 	/**
@@ -44,5 +45,23 @@ public class BrownCard extends Card {
 	public int getNumber()
 	{
 		return this.number;
+	}
+	
+	/**
+	 * Getter
+	 * @return
+	 */
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	/**
+	 * Getter
+	 * @return
+	 */
+	public String getAbility()
+	{
+		return this.especialAbility.toString();
 	}
 }
