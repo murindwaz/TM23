@@ -31,8 +31,13 @@ public class PlayerTest {
 	@BeforeClass 
 	public void setup(){ 
 		game = new Game();
-		dpizar = new Player( ); 
-		gamest = new Player( );
+		
+		//PersonalityCard lordVetinari = new PersonalityCard(0, 2);
+		//PersonalityCard lordSelachii = new PersonalityCard(1, 2);
+			
+		
+		//dpizar = new Player( lordVetinari,  ); 
+		//gamest = new Player( );
 	}
 	
 	@Before 
