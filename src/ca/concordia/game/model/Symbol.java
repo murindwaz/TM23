@@ -422,7 +422,7 @@ public class Symbol {
 	/**
 	 * Remove last character of a string if it's a coma.
 	 * @param str
-	 * @return
+	 * @return String
 	 */
 	private String removeLastChar(String str) {
 	    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
@@ -431,4 +431,21 @@ public class Symbol {
 	    return str;
 	}
 
+	/**
+	 * Getter: to check if symbol is mandatory to play.
+	 * @return boolean
+	 */
+	public boolean isMandatory()
+	{
+		return this.isMandatory;
+	}
+	
+	/**
+	 * Getter: Symbol action description.
+	 * @return String
+	 */
+	public String getDescription()
+	{
+		return this.description;
+	}
 }

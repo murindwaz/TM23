@@ -32,7 +32,7 @@ public class Game {
 	private Map<String,Deck> decks;
 	private Bank bank;
 	private Die die;
-
+	private ArrayList<Symbol> symbols;
 	
 	public int currentPlayer;
 	public int numberOfPlayers;
@@ -60,6 +60,13 @@ public class Game {
 		Scanner keyIn=new Scanner(System.in);
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
+		
+		this.symbols= new ArrayList<Symbol>();
+		//Initialize all Symbol Actions.
+		for(int i=1;i<=9;i++)
+		{
+			
+		}
 		
 		//Close Scanner object
 		//keyIn.close();//Don't close until done using in whole proyect.
