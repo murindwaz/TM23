@@ -35,6 +35,7 @@ public class Piece {
 	/**
 	 * toString method for class Color.
 	 */
+	@Override
 	public String toString()
 	{
 		return "Color: "+ this.color;

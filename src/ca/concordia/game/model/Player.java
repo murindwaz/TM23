@@ -1,6 +1,5 @@
 package ca.concordia.game.model;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import ca.concordia.game.main.Game;
@@ -266,6 +265,7 @@ public class Player {
 	/**
 	 * ToString Method for class Player.
 	 */
+	@Override
 	public String toString()
 	{
 		String info="Money: "+this.money+ " Playing as: "+ this.personality.getName()+ " Using Color:"+this.color +"." +"\n";

@@ -7,13 +7,12 @@ import java.util.Map.Entry;
 
 /**
  * Class Area contains the possible object that could be available to an area.
-*@author Pascal Maniraho 
- *@author Gustavo Pereira
- *@author Bhavik Desai 
- *@author Jesus Esteban Garro Matamoros 
- *@author Diego Pizarro
-
- *
+ * 
+ * @author Pascal Maniraho 
+ * @author Gustavo Pereira
+ * @author Bhavik Desai 
+ * @author Jesus Esteban Garro Matamoros 
+ * @author Diego Pizarro
  */
 
 public class Area {
@@ -188,6 +187,7 @@ public class Area {
 	 * 
 	 * toString method for Area Class.
 	 */
+	@Override
 	public String toString()
 	{
 		String info="Area Name: "+ this.cityCard.getName()+" ." + " Trouble Marker: "+this.troubleMarker+". Building: "+this.building+" .";

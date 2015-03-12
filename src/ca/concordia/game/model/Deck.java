@@ -6,11 +6,14 @@ import java.util.Random;
 
 /**
  * Class Deck Creates the decks of cards.
- * @author Pascal,Gustavo,bhavik,Esteban,Diego
- *
+ * A deck is a double-ended queue of cards: We can take from the front and put in the back 
+ * 
+ * @author Pascal Maniraho 
+ * @author Gustavo Pereira
+ * @author Bhavik Desai 
+ * @author Jesus Esteban Garro Matamoros 
+ * @author Diego Pizarro
  */
-
-//A deck is a double-ended queue of cards: We can take from the front and put in the back 
 public class Deck {
 	
 	private Deque<Card> cards;

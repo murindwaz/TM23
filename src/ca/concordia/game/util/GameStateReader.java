@@ -1,8 +1,5 @@
 package ca.concordia.game.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-
 import ca.concordia.game.main.Game;
 
 
