@@ -79,9 +79,6 @@ public class Deck {
 		
 		//Shuffles the cards in this deck
 		int max = this.cards.size();
-		/**
-		 * @warning increased by +1, and failed at the second warning ....
-		 */
 		Card[] tmp = new Card[ max ];
 		//Fill in the array:
 		for(int i = 0; i < max; i++) {
@@ -90,7 +87,7 @@ public class Deck {
 				
 		//Fisher-Yates shuffle:
 		Random rnd = new Random();
-		for(int i = max-1; i>0; i++) {
+		for(int i = max - 1; i > 0; i-- ){
 			int idx = rnd.nextInt(i+1);	
 			//Perform swap:
 			Card a = tmp[idx];
@@ -98,22 +95,10 @@ public class Deck {
 			tmp[i] = a;
 		}
 		
-		/**
-		 * @todo remove this try/catch after investigation 
-		 */
-		try{
-			//Put back the cards:
-			for(int i = 0; i < max; i++) {
-				/**
-				 * @warning this section is subject to ArrayIndexOutOfBoundException 
-				 */
-				this.cards.add(tmp[i]);
-			}
-		}catch( ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
-			arrayIndexOutOfBoundsException.printStackTrace();
+		//Put back the cards:
+		for(int i = 0; i < max; i++) {
+			this.cards.add(tmp[i]);
 		}
-		
-		
 	}
 	
 	/**
