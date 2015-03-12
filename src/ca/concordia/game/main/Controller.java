@@ -17,6 +17,7 @@ public class Controller {
 		game= Game.getInstance();
 		
 		game.init();
+		game.play();
 		//game.loadGame();
 		//game.printCurrentState();
 		

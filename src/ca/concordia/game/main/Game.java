@@ -8,12 +8,13 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ca.concordia.game.gameState.StateContext;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
 
 
 /**
- * Game class creates a new game, loads and saves a game state. 
+ * Game class creates a new game, loads and saves a game state. Further it specifies and controls the logic required to play a game.
 *@author Pascal Maniraho 
  *@author Gustavo Pereira
  *@author Bhavik Desai 
@@ -26,6 +27,7 @@ public class Game {
 	private static Game instance = null;
 	
 	private Player[] players; 
+	private ArrayList<StateContext> playerStatus; //This will contain the state each player is at the moment.And the actions he can perform.
 	private Gameboard gameboard;
 	private Map<String,Deck> decks;
 	private Bank bank;
@@ -56,6 +58,15 @@ public class Game {
 		Scanner keyIn=new Scanner(System.in);
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
+		
+		//Depending on the number of players initialize their States(to wait).
+		playerStatus=new ArrayList<StateContext> ();//put on heap.
+		
+		for(int i=0;i<numberOfPlayers;i++)
+		{
+			playerStatus.add(new StateContext());
+		}
+		
 		//Close Scanner object
 		//keyIn.close();//Don't close until done using in whole proyect.
 		
@@ -102,6 +113,13 @@ public class Game {
 		//Initialize Gameboard:
 		this.gameboard = new Gameboard();
 		Die die=new Die();
+			
+		return "Initialization was succssessfull";
+	}
+	
+	//Start playing game instance.
+	public void play()
+	{
 		Map<Integer,String> playerDieRollMap=new HashMap<Integer,String>();//Will store the value rolled depending on the player's color.
 		ArrayList<Integer> playerDieRoll=new ArrayList<Integer>();
 		int rollValue=-1;
@@ -134,10 +152,9 @@ public class Game {
 			System.out.println("Game has begun!!!!!!");
 			
 			
-			return "jojojojojo";//Remove later.
+			
 		}
 		
-		//return "Run was Successfull";
 	}
 	
 	/**
