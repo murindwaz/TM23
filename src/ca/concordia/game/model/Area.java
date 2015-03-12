@@ -293,50 +293,50 @@ public class Area {
 
 	/**
 	 * Add or remove demon to area. If the argument is 1 then it will add a demon else if it is 2 it will remove a demon if possible.
-	 * Will return a string with the status.
+	 * Will return a boolean depending on weather the action was successful
 	 * @param addRemove
-	 * @return
+	 * @return boolean
 	 */
-	public String addRemoveDemon(int addRemove)
+	public boolean addRemoveDemon(int addRemove)
 	{
 		if(addRemove==1)//add demon
 		{
 			this.demon++;
-			return "success";
+			return true;
 		}else if (addRemove==2)//remove demon if possible
 		{
 			if(this.demon >0)
 			{
-				this.demon++;
-				return "success";
+				this.demon--;
+				return true;
 			}else
-				return "failed";
+				return false;
 		}
-		return "error";
+		return false;
 	}
 	
 
 	/**
 	 * Add or remove troll to area. If the argument is 1 then it will add a troll else if it is 2 it will remove a troll if possible.
-	 * Will return a string with the status.
+	 * Will return a boolean depending on weather the action was successful
 	 * @param addRemove
-	 * @return
+	 * @return boolean
 	 */
-	public String addRemoveTroll(int addRemove){
+	public boolean addRemoveTroll(int addRemove){
 		if( addRemove == 1 ){
 			//add troll
 			this.troll++;
-			return "success";
+			return true;
 			//remove troll if possible
 		}else if ( addRemove == 2 ){
 			if( this.troll > 0 ){
-				this.troll++;
-				return "success";
+				this.troll--;
+				return true;
 			}else{
-				return "failed";
+				return false;
 			} 
 		}
-		return "error";
+		return false;
 	}
 
 }

@@ -196,6 +196,22 @@ public class Player {
 	}
 	
 	/**
+	 * Remove a minion from an area and add it to player's hand.
+	 * @param areaCode
+	 * @return boolean
+	 */
+	public boolean removeMinionOnBoard(int areaCode)
+	{
+		if(this.minionsOnAreas[areaCode]>0)
+		{
+			this.minionsOnHand++;
+			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]-1;
+			return true;
+		}else
+			return false;
+	}
+	
+	/**
 	 * Move a minion from one area to another.
 	 * @param oldAreaCode
 	 * @param newAreaCode
@@ -390,6 +406,15 @@ public class Player {
 	public void setBuildingOnHand(int newNum)
 	{
 		this.buildingOnHand=newNum;
+	}
+	
+	/**
+	 * Setter for minionOnHand.
+	 * @param newNum(int)
+	 */
+	public void setMinionsOnHand(int newNum)
+	{
+		this.minionsOnHand=newNum;
 	}
 	
 }

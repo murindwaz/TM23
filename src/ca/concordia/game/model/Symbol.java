@@ -75,30 +75,95 @@ public class Symbol {
 				removeMinion(currentPlayer,game);
 				break;
 			case 4:
-			
+				removeTroubleMarker(currentPlayer,game);
 				break;
 			case 5:
-			
+				
 				break;
 			case 6:
-			
+				takeMoneyFromBank(currentPlayer,game);
 				break;
 			case 7:
-			
+				//Random event.
 			
 				break;
 			case 8:
-			
+				//Play another card.
+				
 				break;
 			case 9:
-			
+				//Interrupt card.
+				
 				break;
 			default:
 				break;
 		}
 	}
 	
+	/*
+	 * To do: make the amount to take a variable that changes depending to which card it belongs to.
+	 */
+	/**
+	 * Take a certain amount of moeny from the bank, if the bank has enough funds.
+	 * @param currentPlayer
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 */
+	private boolean takeMoneyFromBank(Player currentPlayer,Game game)
+	{
+		//Amost all 
+		int amountToTake=2;
+		Bank bank=Bank.getInstance();
+		
+		//Check if bank has enough money.
+		boolean check=bank.hasEnoughFunds(amountToTake);
+		if(check)
+			bank.transferFunds(currentPlayer, amountToTake);
+		else
+			System.out.println("Bank Doesn't have enough funds...Sorry; Bank funds:"+bank.getTotal());
+		
+		return true;
+	}
 	
+	/**
+	 * Removes a trouble marker from area depending on player's input. Can only remove a trouble marker if the area contain one.
+	 * Function will display all areas that currently contain a trouble marker.
+	 * @param currentPlayer
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 */
+	private boolean removeTroubleMarker(Player currentPlayer,Game game)
+	{
+		Gameboard gameBoard=game.getGameBoard();
+		//Get all the areas that contain a trouble marker.
+		ArrayList<Area> troubleMarkersAreas=gameBoard.troubleMarkersAreas();
+		
+		System.out.println("The following are areas with trouble markers:");
+		for(int i=0;i<troubleMarkersAreas.size();i++)
+		{
+			System.out.println("Area: "+troubleMarkersAreas.get(i).getCityCard().getName()+"("+troubleMarkersAreas.get(i).getCityCard().getCardNumber()+"):");
+		}
+		
+		Scanner input=new Scanner(System.in);
+		System.out.println("Please select the area code(Integer) from where you wish to remove a trouble marker:" );
+		int selectedCardNumber = input.nextInt();
+		input.close();
+		
+		boolean check=gameBoard.getAreas().get(selectedCardNumber).removeTroubleMarker();
+		if(!check)
+			System.out.println("An error has occured(While removing a trouble marker from the Board): Can't Remove it(Check Logic).");
+		
+		
+		return true;
+	}
+	
+	/**
+	 * Remove a minion,troll or demon from gameboard, depending on user input. Can only remove a minion if there's a trouble marker in  the area
+	 * Further, player can not remove one of their minions.
+	 * @param currentPlayer
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 */
 	private boolean removeMinion(Player currentPlayer,Game game)
 	{
 		//Get gameboard areas.
@@ -109,8 +174,8 @@ public class Symbol {
 		
 		ArrayList<Piece> possibleVictims;//will contain the minions that can be assassinated per area.
 		
-		System.out.println("Please select the area code you wish to remove a minion,demon or troll from, the following are areas with trouble markers:");
-		//Select minions in an area
+		System.out.println("The following are areas with trouble markers:");
+		//Display minions,trolls and demosn in an area
 		for(int i=0;i<troubleMarkersAreas.size();i++)
 		{
 			System.out.println("Area: "+troubleMarkersAreas.get(i).getCityCard().getName()+"("+troubleMarkersAreas.get(i).getCityCard().getCardNumber()+"):");
@@ -134,30 +199,42 @@ public class Symbol {
 			System.out.println();//Blank Line
 		}
 		
-		System.out.println("Please select the area code(Integer) from where you wish to remove a minion,demon or troll:" );
+		
 		Scanner input=new Scanner(System.in);
+		
+		System.out.println("Please select the area code(Integer) from where you wish to remove a minion,demon or troll:" );
 		int selectedCardNumber = input.nextInt();
 		System.out.println("Enter 1 to remove a minion,2 to remove a troll and 3 to remove a demon:" );
 		int type = input.nextInt();
 		
 		
-		if(type==1)
+		if(type==1)//Remove a minion 
 		{
 			System.out.println("Select the color of minion you wish to remove:" );
 			String color = input.next();
 			color=color.toUpperCase();
 			//Remove a minion of the color specified by the player.
 			gameBoard.getAreas().get(selectedCardNumber).removeMinion(new Piece(color));
+			//Update the status of the player to whom the minion belonged to.
+			Player player=game.getPlayerByColor(color);
+			player.removeMinionOnBoard(selectedCardNumber);
 			
 		}
-		else if(type==2)
+		else if(type==2)//remove a troll
 		{
-			
-		}	
-		else if(type==3)
-		{
+			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
+			if(!check)
+				System.out.println("An error has occured(While removing a troll from the Board): Can't Remove it(Check Logic).");
 			
 		}
+		else if(type==3)//remove a demon
+		{
+			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
+			if(!check)
+				System.out.println("An error has occured(While removing a demon from the Board): Can't Remove it(Check Logic).");
+		}
+		
+	
 		
 		input.close();
 		

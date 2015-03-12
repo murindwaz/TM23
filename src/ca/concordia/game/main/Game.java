@@ -420,6 +420,26 @@ public class Game {
 	{
 		return this.gameboard;
 	}
+	
+	/**
+	 * Get a Player using a color.
+	 * @param color(String)
+	 * @return Player
+	 */
+	public Player getPlayerByColor(String color)
+	{
+		Player player = null;
+		//Select player with passed color.
+		for(int i=0;i<this.players.length;i++)
+		{
+			if(players[i].getColor()== color)
+			{
+				player=players[i];
+				break;
+			}
+		}
+		return player;
+	}
 	/**
 	 * Prints Information about current game.
 	 */
