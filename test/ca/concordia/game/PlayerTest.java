@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.*;
 import ca.concordia.game.model.*;

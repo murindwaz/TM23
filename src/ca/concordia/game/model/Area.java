@@ -223,12 +223,12 @@ public class Area {
 	 * Add a minion to area
 	 * @param minion
 	 */
-	public void removeMinion(String color)
+	public void removeMinion(Colors color)
 	{
 		//this.minions.remove(minion);
 		for(int i=0;i<minions.size();i++)
 		{
-			if(minions.get(i).getColor().equals(color))
+			if(minions.get(i).getColor() == color)
 				this.minions.remove(i);
 		}
 	}
