@@ -2,23 +2,31 @@ package ca.concordia.game.model;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
+
+import ca.concordia.game.common.common.Colors;
+import ca.concordia.game.main.Game;
 
 public class Action {
-
+	private Game game;
 	private Gameboard gameBoard;
 	private Player player;
 	private Map<String,Deck> decks;
+	private Scanner keyIn;
+	private Scanner input;
+	private Player[] players;
 	Bank bank=Bank.getInstance();
 	
 	/**
 	 * Constructor: initilializes an action according to Card's ID.
 	 * @param cardId
 	 */
-	public Action(Gameboard agameBoard, Player aplayer, int cardId)
+	public Action(int cardId)
 	{	
-		this.gameBoard = agameBoard;
-		this.player = aplayer;
-		
+		this.game = Game.getInstance();
+		this.gameBoard = game.getGameBoard( );
+		this.player = game.getPlayers()[game.currentPlayer];
+		this.players = game.getPlayers();
 		switch(cardId) 
 		{
 
@@ -47,10 +55,10 @@ public class Action {
 			break;
 			
 			
-	     //Group3 : Pay another player then move minion
+	     //Group3: Pay another player then move minion
 	     //5,8,44
 			case 5: case 8: case 44:
-			paynRemoveMinion( 2 );	
+			paynRemoveMinion( 2 , cardId);	
 		    break;
 
     		//6 : Remove one minion from Unreal Estate.
@@ -116,10 +124,53 @@ public class Action {
 	}
 
 	/**
-	 * Pay another player then remove one minion of their choice (not one of yours) from an area with a trouble marker in it.
+	 * Pay another player then remove one minion
 	 */
-	private void paynRemoveMinion(int amount) {
-    //??
+	private void paynRemoveMinion(int amount, int cardId) {
+		int choosenPlayer, choosenArea;
+		choosenPlayer = 0;
+		System.out.println("Choose a player to receive $"+amount+" dollars:");
+		for(int i=0; i<game.numberOfPlayers; i++)
+		{
+			if (game.currentPlayer != i)
+			{
+			System.out.println(i + "." + players[i].getPersonality().getName() + " " + players[i].getColor() + ",");
+			}
+			choosenPlayer = keyIn.nextInt();
+			bank.deposit(amount);
+			player.transferMoneyto(amount,players[choosenPlayer]);
+			bank.transferFunds(player, amount);
+		}
+		switch(cardId) 
+		{			
+			case 5:
+				ArrayList<Area> troubleMarkersAreas = gameBoard.troubleMarkersAreas();
+				System.out.println("Player "+choosenPlayer+"must choose an area to remove one minion (not your choice), an area with a trouble marker in it");
+				for(int i=0; i<troubleMarkersAreas.size(); i++)
+				{
+					System.out.println(i + "." + troubleMarkersAreas.get(i).toString());
+				}
+				choosenArea = keyIn.nextInt();
+				
+				System.out.println("Select the color of minion you wish to remove:" );
+				String tmpColor = input.next();
+				Colors color = Colors.colorForString(tmpColor);
+				//Remove a minion of the color specified by the player.
+				troubleMarkersAreas.get(choosenArea).removeMinion(color);
+				//Update the status of the player to whom the minion belonged to.
+				Player playerbycolor=game.getPlayerByColor(color);
+				playerbycolor.removeMinionOnBoard(choosenArea);
+						
+				break;		
+			case 8:
+				
+				break;	
+			case 44:
+			paynRemoveMinion( 2 , cardId);	
+		    break;
+		    
+		}
+		
 	}
 	
 	/**

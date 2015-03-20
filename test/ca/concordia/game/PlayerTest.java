@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.*;
 import ca.concordia.game.model.*;
@@ -51,13 +53,7 @@ public class PlayerTest {
 	
 	@Before 
 	public void starts(){ 
-		Player [] players=null;
 		game = Game.getInstance();
-		/**
-		 * @todo - load game players by assigning them via a function rather than a console on terminal
-		 * game.init();
-		 */
-		gameboard = new Gameboard();
 		/**
 		 * Initiaalization of areas
 		 */
@@ -74,6 +70,12 @@ public class PlayerTest {
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);
 		dpizar = new Player( lordVetinari,  Colors.GREEN,  MINIONS, BUILDINGS); 
 		gamest = new Player( lordSelachii, Colors.GREEN,  MINIONS, BUILDINGS);
+		/**
+		 * @todo - load game players by assigning them via a function rather than a console on terminal
+		 * game.init();
+		 */
+		Player[] players = new Player[]{ dpizar, gamest };
+		gameboard = new Gameboard( players );
 	}
 	
 	
@@ -81,9 +83,9 @@ public class PlayerTest {
 	@Test 
 	public void playerInitialState(){
 		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
-		gamest.transferMoney(MONEY);
+		gamest.addMoney(MONEY);
 		assertTrue( gamest.getMoney() == MONEY ); 
-		dpizar.transferMoney(MONEY);
+		dpizar.addMoney(MONEY);
 		assertTrue( dpizar.getMoney() == MONEY ); 
 		assertTrue("Player dpizar has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1) ); 
 		assertTrue("Player dpizar has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5) ); 

@@ -119,13 +119,23 @@ public class Player {
 	}
 
 	/**
-	 * Transfer Money into players account.
+	 * Add Money into players account.
 	 * @param amount
 	 */
-	public void transferMoney(int amount) {
+	public void addMoney(int amount) {
 		this.money += amount;
 	}
 	
+	/**
+	 * Transfer Money to another player's account.
+	 * @param amount
+	 */
+	public void transferMoneyto(int amount, Player aPlayer) {
+		this.money -= amount;
+		aPlayer.addMoney(amount);
+		
+	}
+		
 	/**
 	 * Subtracts an amount of money from the player. Returns true if successfull otherwise return false;
 	 * @param amount
@@ -310,8 +320,8 @@ public class Player {
 		for(int i=0 ; i<playerCards.size();i++)
 		{
 			Card card = playerCards.get(i);
-			BrownCard bCard = new BrownCard(0);
-			GreenCard gCard= new GreenCard(0);
+			BrownCard bCard = new BrownCard(1);
+			GreenCard gCard= new GreenCard(1);
 			if(card.getClass().equals(bCard.getClass())){//The card is of type BrownCard, convert to brown card.
 				bCard = (BrownCard) card;
 				info3=info3+ "Brown-"+bCard.getNumber()+" ";

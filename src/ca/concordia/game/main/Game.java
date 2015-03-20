@@ -27,7 +27,6 @@ public class Game {
 	
 	private static Game instance = null;
 	
-	private Player[] players; 
 	private ArrayList<StateContext> playerStatus; //This will contain the state each player is at the moment.And the actions he can perform.
 	private Gameboard gameboard;
 	private Map<String,Deck> decks;
@@ -38,7 +37,7 @@ public class Game {
 	
 	public int currentPlayer;
 	public int numberOfPlayers;
-	
+	private Player[] players; 	
 	
 	/**
 	 * 
@@ -558,6 +557,11 @@ public class Game {
 		System.out.println("Game Board State:");
 		System.out.println(this.gameboard.toString());
 		
+	}
+	
+	public Player[] getPlayers()
+	{
+		return this.players;
 	}
 
 }
