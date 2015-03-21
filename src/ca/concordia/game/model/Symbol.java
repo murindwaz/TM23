@@ -169,52 +169,47 @@ public class Symbol {
 	 * @param currentPlayer(Player)
 	 * @param game (Game)
 	 */
-	private boolean removePiece(Player currentPlayer,Game game)
-	{
+	private boolean removePiece(Player currentPlayer,Game game) {
 		//Get gameboard areas.
-		Gameboard gameBoard=game.getGameBoard();
-		//ArrayList<Area> areas= gameBoard.getAreas();
+		Gameboard gameBoard = game.getGameBoard();
 		//Get all the areas that contain a trouble marker.
-		ArrayList<Area> troubleMarkersAreas=gameBoard.troubleMarkersAreas();
-		
+		ArrayList<Area> troubleMarkersAreas = gameBoard.troubleMarkersAreas();
 		ArrayList<Piece> possibleVictims;//will contain the minions that can be assassinated per area.
-		
 		System.out.println("The following are areas with trouble markers:");
 		//Display minions,trolls and demosn in an area
-		for(int i=0;i<troubleMarkersAreas.size();i++)
-		{
+		for( int i = 0;i < troubleMarkersAreas.size();i++){
 			System.out.println("Area: "+troubleMarkersAreas.get(i).getCityCard().getName()+"("+troubleMarkersAreas.get(i).getCityCard().getCardNumber()+"):");
 			possibleVictims=troubleMarkersAreas.get(i).getMinions();
 			//Display all minions that do not belong to the player.
 			System.out.print("Minions on area:");
-			for(int j=0;j<possibleVictims.size();j++)
-			{
-				if(!possibleVictims.get(i).getColor().equals(currentPlayer.getColor()) )//Only display minions that belong to a different player.
-					if(j==possibleVictims.size()-1)//last item
-						System.out.print(possibleVictims.get(i).getColor()+"\n");
-					else
-						System.out.print(possibleVictims.get(i).getColor()+",");
+			for(int j=0;j<possibleVictims.size();j++) {
+				//Only display minions that belong to a different player.
+				if(!possibleVictims.get(i).getColor().equals(currentPlayer.getColor()) ){
+					if(j==possibleVictims.size()-1){
+							System.out.print(possibleVictims.get(i).getColor()+"\n");
+						} else{
+							System.out.print(possibleVictims.get(i).getColor()+",");
+						}
+					}
 			}
 			//Display number of trolls or demons if they exist.
-			if(troubleMarkersAreas.get(i).getTroll()>=1)
+			if(troubleMarkersAreas.get(i).getTroll()>=1){
 				System.out.println("This area contains:"+troubleMarkersAreas.get(i).getTroll()+" trolls.");
-			if(troubleMarkersAreas.get(i).getDemon()>=1)
-				System.out.println("This area contains:"+troubleMarkersAreas.get(i).getDemon()+" demons.");
-			
-			System.out.println();//Blank Line
+			}
+			if(troubleMarkersAreas.get(i).getDemon()>=1){
+				System.out.println("This area contains:"+troubleMarkersAreas.get(i).getDemon()+" demons.\r\n");
+			}
+			System.out.println("\r\n");//Blank Line
 		}
 		
 		
-		Scanner input=new Scanner(System.in);
-		
+		Scanner input = new Scanner(System.in);
 		System.out.println("Please select the area code(Integer) from where you wish to remove a minion,demon or troll:" );
 		int selectedCardNumber = input.nextInt();
 		System.out.println("Enter 1 to remove a minion,2 to remove a troll and 3 to remove a demon:" );
 		int type = input.nextInt();
-		
-		
-		if(type==1)//Remove a minion 
-		{
+		//Remove a minion 
+		if(type == 1 ){
 			System.out.println("Select the color of minion you wish to remove:" );
 			String tmpColor = input.next();
 			Colors color = Colors.colorForString(tmpColor);
@@ -224,25 +219,20 @@ public class Symbol {
 			Player player=game.getPlayerByColor(color);
 			player.removeMinionOnBoard(selectedCardNumber);
 			
-		}
-		else if(type==2)//remove a troll
-		{
+		} else if( type == 2 ){
+			//remove a troll
 			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
-			if(!check)
+			if(!check){
 				System.out.println("An error has occured(While removing a troll from the Board): Can't Remove it(Check Logic).");
-			
-		}
-		else if(type==3)//remove a demon
-		{
+			}
+		}else if( type == 3 ){
+			//remove a demon
 			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
-			if(!check)
+			if(!check){
 				System.out.println("An error has occured(While removing a demon from the Board): Can't Remove it(Check Logic).");
+			}
 		}
-		
-	
-		
 		input.close();
-		
 		return true;
 	}
 	
@@ -414,13 +404,11 @@ public class Symbol {
 	 * @param arrayList
 	 * @return ArrayList<Integer>
 	 */
-	private ArrayList<Integer> deleteAllRepetisions(ArrayList<Integer> arrayList)
-	{
-		HashSet tempHashSet = new HashSet();
+	private ArrayList<Integer> deleteAllRepetisions(ArrayList<Integer> arrayList){
+		HashSet<Integer> tempHashSet = new HashSet<Integer>();
 		tempHashSet.addAll(arrayList);
 		arrayList.clear();
 		arrayList.addAll(tempHashSet);
-		
 		return arrayList;
 	}
 	

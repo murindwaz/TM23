@@ -21,19 +21,13 @@ public class StatePlay  implements StateLike{
 	@Override
 	public void performAction(StateContext context,Player player, Game game)
 	{
-		System.out.println();
 		
 		//Display Gameboard Status.
 		Gameboard gameBoard=game.getInstance().getGameBoard();
 		System.out.println(gameBoard.toString());
-		
-		System.out.println();
-		
 		//Display the players hand.
 		System.out.println(player.toString());
-		
 		//Play one of the cards, ask user for input.
-		
 		int cardNumberInPlayerHand;
 		while(true)
 		{

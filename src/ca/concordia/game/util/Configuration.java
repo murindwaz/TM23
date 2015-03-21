@@ -25,15 +25,11 @@ public class Configuration {
 	public static String AREA_SEVEN_SLEEPERS = "Seven Sleepers";
 	public static String AREA_NAP_HILL = "Nap Hill";
 
+	
+	
 	/**
-	 * Character variables used in the game
+	 * The balance to be used at Game initialization
 	 */
-	/**
-	 * public static String CHARACTER_ = ""; public static String CHARACTER_ =
-	 * ""; public static String CHARACTER_ = ""; public static String CHARACTER_
-	 * = ""; public static String CHARACTER_ = ""; public static String
-	 * CHARACTER_ = ""; public static String CHARACTER_ = ""; public static
-	 * String CHARACTER_ = "";
-	 **/
+	public static int DEFAULT_BALANCE = 120;
 
 }

@@ -16,7 +16,7 @@ import ca.concordia.game.common.common.Colors;
 
 /**
  * Game class creates a new game, loads and saves a game state. Further it specifies and controls the logic required to play a game.
-*@author Pascal Maniraho 
+ *@author Pascal Maniraho 
  *@author Gustavo Pereira
  *@author Bhavik Desai 
  *@author Jesus Esteban Garro Matamoros 
@@ -24,110 +24,85 @@ import ca.concordia.game.common.common.Colors;
 
  */
 public class Game {
-	
+
 	private static Game instance = null;
-	
-	private ArrayList<StateContext> playerStatus; //This will contain the state each player is at the moment.And the actions he can perform.
+
+	/**
+	 * This will contain the state each player is at the moment.And the actions he can perform.
+	 */
+	private ArrayList<StateContext> playerStatus; 
 	private Gameboard gameboard;
 	private Map<String,Deck> decks;
 	private Bank bank;
 	private Die die;
 	private ArrayList<Symbol> symbols;
 	public Scanner keyIn;
-	
 	public int currentPlayer;
 	public int numberOfPlayers;
 	private Player[] players; 	
-	
+
 	/**
-	 * 
-	 * Start New Game
+	 * This function initialiazes a new Game
+	 * 	- Since the current player is not yet detemined, it sets currentPlayer to -1
+	 *  - Creates a new Instance of Bank. Note the Bank has to be unique. 
+	 *  - Initializes the balance to Initial Balance of 120. 
+	 *  - Initializes the Scanner instance to be used in the game 
+	 *  - Initializes the number of players via CLI
 	 */
 	public String init() {
-				
+
+		currentPlayer = -1;
 		this.bank = Bank.getInstance();
-		
-		
-		currentPlayer=-1;//current player has not been determined yet.
-		//Set bank to full since it's a new game.
-		int newBalance = 120;
-		AtomicInteger aNewBalance= new AtomicInteger(newBalance);
-		bank.setBankMoney(aNewBalance);
-		
-		
+		bank.setBankMoney(new AtomicInteger(Configuration.DEFAULT_BALANCE));
 		//Select number of players
-		keyIn=new Scanner(System.in);
+		keyIn = new Scanner(System.in);
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
-		
-		this.symbols= new ArrayList<Symbol>();
+		this.symbols = new ArrayList<Symbol>();
 		//Initialize all Symbol Actions.
-		for(int i=1;i<=9;i++)
-		{
-			
+		for(int i=1;i<=9;i++){
+			/**
+			 * @todo remove this section as it is not being used yet. 
+			 */
 		}
-		
+
 		//Close Scanner object
 		//keyIn.close();//Don't close until done using in whole proyect.
-		
 		this.decks = new HashMap<String,Deck>();
-		//There is exactly 5 decks per game + a Discard Deck
-		for(int i = 0 ; i <= 5 ; i++) {
-			switch(i) {
-				case 0:
-					this.decks.put("discard", new Deck("D",numberOfPlayers));
-					break;
-					
-				case 1:
-					this.decks.put("personalities", new Deck("P",numberOfPlayers));
-					break;
-					/*
-				case 2:
-					this.decks.put("cities", new Deck("C",numberOfPlayers));
-					break;
-					*/
-				case 3:
-					this.decks.put("events", new Deck("E",numberOfPlayers));
-					break;
-				case 4:
-					this.decks.put("green", new Deck("G",numberOfPlayers));
-					break;
-				case 5:
-					this.decks.put("brown", new Deck("B",numberOfPlayers));
-					break;
-			}
-		}
-		
+		this.decks.put("discard", new Deck("D",numberOfPlayers));
+		this.decks.put("personalities", new Deck("P",numberOfPlayers));
+		this.decks.put("events", new Deck("E",numberOfPlayers));
+		this.decks.put("green", new Deck("G",numberOfPlayers));
+		this.decks.put("brown", new Deck("B",numberOfPlayers));
+
 		//Select number of players and their colors.
 		//For now we use four players of fixed colors:
 		this.players = new Player[numberOfPlayers];
-		
 		for(int i=0; i<numberOfPlayers; i++) {
 			this.players[i] = new Player((PersonalityCard)decks.get("personalities").getCard(),Colors.colorForIndex(i),12,6);
 			//Deal 5 green cards to each player:
-			decks.get("green").dealCardsToPlayer(players[i],5);
+			decks.get("green").dealCardsToPlayer(players[i], 5);
 			//Give $10 to each player:
 			bank.transferFunds(players[i], 10);
 		}
-		
+
 		//Depending on the number of players initialize their States(to wait).
 		playerStatus=new ArrayList<StateContext> ();//put on heap.
-				
-		for(int i=0;i<numberOfPlayers;i++)
-		{
+
+		for(int i=0;i<numberOfPlayers;i++){
 			playerStatus.add(new StateContext());
 			System.out.println("Player:"+players[i].getColor()+ " Current State:"+playerStatus.get(i).getState());
-			playerStatus.get(i).performAction(players[i], this);//Set to next state(Play State.)So players are ready to play when their turn comes up.
-			
+			/**
+			 * Set to next state(Play State.)So players are ready to play when their turn comes up.
+			 */
+			playerStatus.get(i).performAction(players[i], this);
 		}
-		
 		//Initialize Gameboard:
 		this.gameboard = new Gameboard(this.players);
 		this.die=new Die();
-			
 		return "Initialization was succssessfull";
 	}
-	
+
 	//Start playing game instance.
 	public void play()
 	{
@@ -142,23 +117,19 @@ public class Game {
 			playerDieRoll.add(rollValue);//store value gotten by player.
 			playerDieRollMap.put(rollValue, this.players[i].getColor());//Store  Player color,roll value pair.
 		}
-		
-		System.out.println();
-		
+
 		int highestRoll=highestValue(playerDieRoll);
 		Colors startingColor=playerDieRollMap.get(highestRoll);
-		
 		System.out.println("The player with the color:"+startingColor+" starts the game.");
 		//Set the pointer to the starting player in the array.
-		for(int i=0;i<this.numberOfPlayers;i++)
-		{
-			if(this.players[i].getColor().equals(startingColor))//Found a match
-			{
-				currentPlayer=i;
+		for(int i=0;i<this.numberOfPlayers;i++){
+			//Found a match
+			if(this.players[i].getColor().equals(startingColor)){
+				currentPlayer = i;
 				break;
 			}
 		}
-		
+
 		while(true)//Keep going until a player wins the game.
 		{
 			System.out.println("Game has begun!!!!!!");
@@ -167,25 +138,19 @@ public class Game {
 			System.out.println("Player:"+players[currentPlayer].getColor()+ " Current State:"+playerStatus.get(currentPlayer).getState());
 			//Draw Cards State
 			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
-			
 			System.out.println("Player:"+players[currentPlayer].getColor()+ " Current State:"+playerStatus.get(currentPlayer).getState());
-			
 			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
 			System.out.println("Player:"+players[currentPlayer].getColor()+ " Current State:"+playerStatus.get(currentPlayer).getState());
-			
 			currentPlayer=nextPlayer();
-			
 			System.out.println("Do you wish to exit?? Enter -1, otherwise enter 1.");
 			int exit =this.keyIn.nextInt();
-			if(exit < 1)
+			if(exit < 1){
 				break;
-			//break;
+			}
 		}
-		
 		this.keyIn.close();
-		
 	}
-	
+
 	/**
 	 * Return the highest value in an Arraylist of integers.
 	 * @param arrayList(ArrayList<Integer>)
@@ -195,7 +160,7 @@ public class Game {
 	{
 		Collections.sort(arrayList); // Sort the arraylist
 		int highest=arrayList.get(arrayList.size() - 1); //gets the last item, largest for an ascending sort
-		
+
 		return highest;
 	}
 	/**
@@ -208,14 +173,14 @@ public class Game {
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Constructor, initializes a new game.
 	 */
 	public Game() {
 		//init();
 	}
-	
+
 	/**
 	 * 
 	 * @param gameState
@@ -227,16 +192,18 @@ public class Game {
 		//@todo check the bank
 		return false;
 	}
-	
+
 	/**
-	 * Returns the player who's turn is up.
-	 * @return
+	 * This function 
+	 * 	- Sets currentPlayer
+	 * 	- Returns the player who's turn is up.
+	 * @return int currentPlayer
 	 */
-	public int nextPlayer() {
-		currentPlayer = (currentPlayer + 1)%numberOfPlayers;
+	public int nextPlayer(){
+		currentPlayer = (currentPlayer + 1) % numberOfPlayers;
 		return currentPlayer;
 	}
-	
+
 	/**
 	 * Save game State.In the correct format.
 	 */
@@ -244,7 +211,6 @@ public class Game {
 	{
 		String temp="";
 		ArrayList<String> content= new ArrayList<String>();
-		
 		//Store GameBoard's  Info.
 		for(int i=0;i<12;i++)
 		{
@@ -253,7 +219,7 @@ public class Game {
 			temp=temp+this.gameboard.getAreas().get(i).getBuilding()+",";
 			temp=temp+this.gameboard.getAreas().get(i).getDemon()+",";
 			temp=temp+this.gameboard.getAreas().get(i).getTroll()+",";
-			
+
 			//Get Minions of each class
 			for(int j=0;j<this.gameboard.getAreas().get(i).getMinions().size();j++)
 			{
@@ -265,13 +231,13 @@ public class Game {
 			content.add(temp);
 			temp="";
 		}
-		
-		
+
+
 		//Store Player's Info.
 		temp=temp+this.players.length;//Get totalNumber of players.
 		content.add(temp);
 		temp="";
-		
+
 		for(int i=0;i<this.players.length;i++)
 		{
 			temp=temp+ this.players[i].getPersonality().getName()+",";
@@ -279,7 +245,7 @@ public class Game {
 			temp=temp+this.players[i].getMinionsOnHand()+",";
 			temp=temp+this.players[i].getBuildingOnHand()+",";
 			temp=temp+this.players[i].getMoney()+",";
-			
+
 			temp=temp+this.players[i].getPlayerCards().size()+",";
 			for(int j=0; j<this.players[i].getPlayerCards().size();j++)
 			{
@@ -293,7 +259,7 @@ public class Game {
 					gCard=(GreenCard) this.players[i].getPlayerCards().get(j);;
 					temp=temp+gCard.getNumber()+",";
 				}
-				
+
 			}
 			temp=temp+this.players[i].getPlayerCityCard().size()+",";
 			for(int j=0; j<this.players[i].getPlayerCityCard().size();j++)
@@ -310,13 +276,13 @@ public class Game {
 		//Add the banks current bank balance to arraylist content.
 		temp=temp+this.bank.getTotal();
 		content.add(temp);
-		
+
 		//Write current game's state to 
 		Saver.saveGameState(content);
-		
+
 		return "Save Was Successfull";
 	}
-	
+
 
 	/**
 	 * Remove last character of a string if it's a coma.
@@ -324,39 +290,39 @@ public class Game {
 	 * @return
 	 */
 	public String removeLastChar(String str) {
-	    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
-	      str = str.substring(0, str.length()-1);
-	    }
-	    return str;
+		if (str.length() > 0 && str.charAt(str.length()-1)==',') {
+			str = str.substring(0, str.length()-1);
+		}
+		return str;
 	}
-	
+
 	/**
 	 * Load a Game State from a txt. file.
 	 */
 	public String loadGame()
 	{
 		ArrayList<String> content = new ArrayList<String>();
-		
+
 		//First set the game instance to null since there could already be another game running.
 		Game.instance=null;
-		
+
 		//Load SavedGame
 		//Create Scanner Object
 		Scanner input=new Scanner(System.in);
 		String savedGame="";
-		
+
 		System.out.println("Please enter the name of the file you wish to load:");
 		savedGame = input.next();
 		//input.close();
 		//Load new gameState into arraylist.
 		content=Loader.loadGameState(savedGame);
-		
+
 		//Parse Data and create new gameState.
 		while(true)
 		{
 			//Parse Areas from gameboard (Total of 12 Areas).
 			this.gameboard.resetAreas();//erase last state of the areas.
-			
+
 			//temporary variables.
 			String areaName = null;
 			boolean troubleMarker = false;
@@ -365,8 +331,8 @@ public class Game {
 			Colors buildingColor=Colors.NONE;
 			int demon = 0;
 			int troll = 0;
-			
-			
+
+
 			for(int i=0;i<12;i++)
 			{
 				ArrayList<Colors> minions = new ArrayList<Colors>();//Array that will contain the color of the minions on a certain area.
@@ -387,7 +353,7 @@ public class Game {
 						troll=Integer.parseInt(parts[j]);
 					else 
 						minions.add(Colors.colorForString(parts[j]));
-							
+
 				}
 				//Create new city card with the name extracted.
 				CityCard cityCard=new CityCard(areaName);
@@ -398,22 +364,22 @@ public class Game {
 				for(int j=0 ; j<minions.size();j++)
 					area.addMinion(new Piece(minions.get(j)));
 			}
-				
+
 			//savedGame="Test.txt";
 			//Get Number of Players(Always at line 12(in array))
 			int numberPlayers=Integer.parseInt(content.get(12));
 			this.numberOfPlayers=numberPlayers;
-			
+
 			//Parse PLayers information.
 			this.players=null; //Reset Last state of players.
 			this.players = new Player[numberPlayers];//Set new number players.
-			
+
 			PersonalityCard perCard = null;
 			Colors color = null;
 			int minionOnHand = 0;
 			int buildingOnHand = 0;
 			int money = 0;
-			
+
 			int NumplayerCards = 0;
 			int NumcityCards = 0;
 			//Start at position 13 after areas and # of players.
@@ -435,13 +401,13 @@ public class Game {
 						money=Integer.parseInt(parts[j]);
 					else if(j==5)
 					{
-						 NumplayerCards=Integer.parseInt(parts[j]);
-						
+						NumplayerCards=Integer.parseInt(parts[j]);
+
 					}else if(j==(5+NumplayerCards)+1)
 					{
-						 NumcityCards=Integer.parseInt(parts[j]);
+						NumcityCards=Integer.parseInt(parts[j]);
 					}
-					 
+
 				}
 				//Create and add new Player
 				this.players[playerIndex]= new Player(perCard,color,minionOnHand,buildingOnHand,money);
@@ -450,30 +416,30 @@ public class Game {
 				{
 					//Brown cards have int values of 1-48 and green cards have int values of 49-101.
 					int checkColor= Integer.parseInt(parts[(5+j)+1]);
-					
+
 					Card card= new Card(false,false); //City cards are always visible.
 					if(checkColor <49)//This is a Brown card
-						 card=new BrownCard(checkColor); 
+						card=new BrownCard(checkColor); 
 					else if (checkColor >48)
 						card = new GreenCard(checkColor);
-					
+
 					this.players[playerIndex].receiveCard(card);
 				}
-				
+
 				//Add CityCards.
 				for(int j=0 ; j<NumcityCards;j++)
 				{
 					//Get CityCard number.
 					int cardNumber= Integer.parseInt(parts[(5+NumplayerCards+(j+1))+1]);
-					
+
 					CityCard cC=new CityCard(cardNumber);
-					
+
 					this.players[playerIndex].receiveCityCard(cC);
 				}
-				
-				
+
+
 			}//PLayers
-			
+
 			//Parse BankMoney
 			for(int i=14+numberPlayers ; i< (13 +numberPlayers)+1;i++)//Get money bank has.
 			{
@@ -481,13 +447,13 @@ public class Game {
 				AtomicInteger aInt= new AtomicInteger(bankMoney);
 				this.bank.setBankMoney(aInt);//Set new bank balance.
 			}
-			
+
 			break; //Exit while loop.
 		}//While
-		
+
 		return "Load Was Successfull";
 	}
-	
+
 	/**
 	 * Getter: Returns number of players
 	 * @return int
@@ -496,7 +462,7 @@ public class Game {
 	{
 		return this.numberOfPlayers;
 	}
-	
+
 	/**
 	 * returns the size of the brown deck.
 	 * @return int
@@ -506,7 +472,7 @@ public class Game {
 		Deck brownDeck=this.decks.get("Brown");//Get the size of the brown deck since it's on the bottom and can give us the status of the draw deck is empty.
 		return brownDeck.getSizeDeck();
 	}
-	
+
 	/**
 	 * Returns the game's current GameBoard.
 	 * @return Gameboard
@@ -515,9 +481,9 @@ public class Game {
 	{
 		return this.gameboard;
 	}
-	
 
-	
+
+
 	/**
 	 * Get a Player using a color.
 	 * @param color(String)
@@ -525,42 +491,36 @@ public class Game {
 	 */
 	public Player getPlayerByColor(Colors color)
 	{
-		
+
 		//Select player with passed color.
 		for(int i=0;i<this.players.length;i++)
 		{
 			if(players[i].getColor().equals(color))
 			{
 				return players[i];
-				
+
 			}
 		}
 		return null;
-		
+
 	}
 	/**
 	 * Prints Information about current game.
 	 */
-	public void printCurrentState()
-	{	
+	public void printCurrentState(){	
 		System.out.println("Current Game Status:"+"\n");
 		System.out.println("Number Of Players:"+this.numberOfPlayers);
 		System.out.println("Bank balance:"+this.bank.getTotal()+"\n");
-		
 		System.out.println("Players:");
-		for(int i=0;i<this.players.length;i++)
-		{
+		for(int i=0;i<this.players.length;i++){
 			System.out.println("Player"+(i+1)+":");
 			System.out.println(this.players[i].toString());
 		}
-		
 		System.out.println("Game Board State:");
 		System.out.println(this.gameboard.toString());
-		
 	}
-	
-	public Player[] getPlayers()
-	{
+
+	public Player[] getPlayers(){
 		return this.players;
 	}
 
