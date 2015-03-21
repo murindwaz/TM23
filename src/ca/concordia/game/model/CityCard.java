@@ -143,7 +143,6 @@ public class CityCard extends Card {
 	public CityCard (String name) {
 		//City Cards are always Visible!
 		super(true,false);
-		
 		this.setName(name);
 	}
 	

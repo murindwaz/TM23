@@ -44,16 +44,6 @@ public class Deck {
 					this.arrayCards.add(temp);
 				}
 				break;
-				/*
-			case "C":
-				//The city deck has 12 cards:
-				this.cards = new ArrayDeque<Card>();
-				for (int i = 0; i < 12; i++) {
-					this.cards.add(new CityCard(i));
-					this.arrayCards.add(new CityCard(i));
-				}
-				break;
-				*/
 			case "E":
 				//The event deck has 12 cards:
 				this.cards = new ArrayDeque<Card>();

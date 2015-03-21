@@ -21,15 +21,12 @@ public class Action {
 	 * Constructor: initilializes an action according to Card's ID.
 	 * @param cardId
 	 */
-	public Action(int cardId)
-	{	
+	public Action(int cardId){	
 		this.game = Game.getInstance();
 		this.gameBoard = game.getGameBoard( );
 		this.player = game.getPlayers()[game.currentPlayer];
 		this.players = game.getPlayers();
-		switch(cardId) 
-		{
-
+		switch(cardId){
 		//Group1: Get Cards from DrawDeck
 		//1,3,36,42,77,87,88
 		case 1: case 3: case 36: case 42 :
@@ -41,7 +38,6 @@ public class Action {
 		case 87: case 88:	
 			getCards( 4 );	
 			break;
-
 		//Group2: Get Money for pieces on Board
 	    //2,14,27,40,54,61,83,84,90,101					
 		case 2: case 27: case 90: 
@@ -52,37 +48,29 @@ public class Action {
 			break;
 		case 14: 
 			getforBuilding( 1 );	
-			break;
-			
-			
+			break;	
 	     //Group3: Pay another player then move minion
 	     //5,8,44
 			case 5: case 8: case 44:
 			paynRemoveMinion( 2 , cardId);	
 		    break;
-
     		//6 : Remove one minion from Unreal Estate.
 	    	case 6: 
 			removeUnrealEstateMinion( );	
 			break;
-				
-			
 	    default:
 			System.out.println("Action Id doesn't exist.");
 			break;
 		}
 	}
 
-	//Perform Actions
-	
 	/**
 	 * Add card to player playing cards.
+	 * Perform Actions
 	 * @param nbCards
 	 */
-	private void getCards(int nbCards)
-	{
-		for (int i = 0; i < nbCards; i++) 
-		{
+	private void getCards(int nbCards){
+		for( int i = 0; i < nbCards; i++ ){
 			decks.get("green").dealCardsToPlayer(player, nbCards);  //??
 		}   		
 	}

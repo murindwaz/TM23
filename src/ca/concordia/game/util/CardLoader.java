@@ -29,12 +29,11 @@ public class CardLoader {
 		//Open Resource file:
 		cards = new ArrayList<String>();
 		for( Entry<Object, Object> property : Configuration.PLAYER_PROPERTIES.entrySet() ){
-			System.out.println( property.getValue().toString() );
 			cards.add( property.getValue().toString() );
 		}
 	}
 	
-	public String nameForCard(int i,String type) {
+	public String nameForCard(int i, String type) {
 		String tmp = "";
 		switch(type) {
 			case "B":
