@@ -1,6 +1,5 @@
 package ca.concordia.game.model;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -13,7 +12,6 @@ public class Symbol {
 	private int symbolId;
 	public boolean isMandatory;
 	private String description;
-	private Action Action;
 	/**
 	 * Constructor: initilializes a symbol according to it's ID.
 	 * @param symbolId
@@ -81,7 +79,7 @@ public class Symbol {
 				takeMoneyFromBank(currentPlayer,game);
 				break;				
 			case 6:
-				Action = new Action(cardID);
+			new Action(cardID);
 				break;
 			case 7:
 				//Random event.
