@@ -19,8 +19,7 @@ public class StatePlay  implements StateLike{
 	 * Controls actions for current state.
 	 */
 	@Override
-	public void performAction(StateContext context,Player player, Game game)
-	{
+	public void performAction(StateContext context,Player player, Game game){
 		
 		//Display Gameboard Status.
 		Gameboard gameBoard=game.getInstance().getGameBoard();

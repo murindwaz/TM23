@@ -27,8 +27,8 @@ public class BrownCard extends Card {
 	public BrownCard(int i) {
 		//City Cards are always Visible!
 		super(false,false);
-		this.color="BROWN";
-		this.number=i;
+		this.color = "BROWN";
+		this.number = i;
 		this.name = CardLoader.getInstance().nameForCard(i,"B");		
 		this.especialAbility = new Action(i);
 	}

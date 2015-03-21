@@ -35,14 +35,13 @@ public class Area {
 	 */
 	public Area(CityCard cityCard)
 	{
-		this.cityCard=cityCard;
-		this.troubleMarker=false;
-		this.building=false;
-		this.buildingColor=Colors.NONE;
-		this.demon=0;
-		this.troll=0;
+		this.cityCard = cityCard;
+		this.troubleMarker = false;
+		this.building = false;
+		this.buildingColor = Colors.NONE;
+		this.demon = 0;
+		this.troll = 0;
 		minions= new ArrayList<Piece>();
-		
 	}
 	
 
