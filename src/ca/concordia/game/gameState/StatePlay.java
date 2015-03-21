@@ -50,20 +50,28 @@ public class StatePlay  implements StateLike{
 		//Get the actions for the chosen card.
 		ArrayList<Symbol> actionSymbols= chosenCard.getActionsSymbols();
 		
-		
 		/*
 		 * For testing purposes 
 		 */
 		Symbol placeMinion=new Symbol(1);
 		Symbol placeBulding=new Symbol(2);
-		Symbol removeMinion=new Symbol(3);
+		Symbol removePiece=new Symbol(3);
 		Symbol removeTroubleMarker=new Symbol(4);
-		Symbol takeMoneyFromBank=new Symbol(6);
+		Symbol takeMoneyFromBank=new Symbol(5);
+		Symbol scroll=new Symbol(6);
+		Symbol event=new Symbol(7);
+		Symbol playAnotherCard=new Symbol(8);
+		Symbol interrupt=new Symbol(9);
+		
 		actionSymbols.add(placeMinion);
 		actionSymbols.add(placeBulding);
-		actionSymbols.add(removeMinion);
+		actionSymbols.add(removePiece);
 		actionSymbols.add(removeTroubleMarker);
 		actionSymbols.add(takeMoneyFromBank);
+		actionSymbols.add(scroll);
+		actionSymbols.add(event);
+		actionSymbols.add(playAnotherCard);
+		actionSymbols.add(interrupt);
 		
 		//Execute each Symbol action sequentially.
 		String userAwnser;
@@ -74,7 +82,7 @@ public class StatePlay  implements StateLike{
 			if(actionSymbols.get(i).isMandatory)
 			{
 				System.out.println("This action is mandatory.");
-				actionSymbols.get(i).useSymbol(player, game);
+				actionSymbols.get(i).useSymbol(player, game, cardNumberInPlayerHand);
 				
 			}else
 			{
@@ -83,7 +91,7 @@ public class StatePlay  implements StateLike{
 				userAwnser = game.keyIn.next();
 				if(userAwnser.contains("y"))
 				{
-					actionSymbols.get(i).useSymbol(player, game);
+					actionSymbols.get(i).useSymbol(player, game, cardNumberInPlayerHand);
 					//Display board status.
 					System.out.println(gameBoard.toString());
 				}else

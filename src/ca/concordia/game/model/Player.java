@@ -119,13 +119,23 @@ public class Player {
 	}
 
 	/**
-	 * Transfer Money into players account.
+	 * Add Money into players account.
 	 * @param amount
 	 */
-	public void transferMoney(int amount) {
+	public void addMoney(int amount) {
 		this.money += amount;
 	}
 	
+	/**
+	 * Transfer Money to another player's account.
+	 * @param amount
+	 */
+	public void transferMoneyto(int amount, Player aPlayer) {
+		this.money -= amount;
+		aPlayer.addMoney(amount);
+		
+	}
+		
 	/**
 	 * Subtracts an amount of money from the player. Returns true if successfull otherwise return false;
 	 * @param amount

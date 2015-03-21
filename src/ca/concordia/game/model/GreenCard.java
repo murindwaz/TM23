@@ -37,7 +37,7 @@ public class GreenCard extends Card {
 		this.number=i;
 		
 		this.name = CardLoader.getInstance().nameForCard(i,"G");		
-		this.especialAbility = new Action(CardLoader.getInstance().abilityForCard(i,"G"));
+		this.especialAbility = new Action(i);
 	}	
 	
 	/**

@@ -13,7 +13,7 @@ public class Symbol {
 	private int symbolId;
 	public boolean isMandatory;
 	private String description;
-	
+	private Action Action;
 	/**
 	 * Constructor: initilializes a symbol according to it's ID.
 	 * @param symbolId
@@ -62,7 +62,7 @@ public class Symbol {
 	 * @param currentPlayer
 	 * @param game
 	 */
-	public void useSymbol(Player currentPlayer,Game game)
+	public void useSymbol(Player currentPlayer,Game game, int cardID)
 	{
 		switch(this.symbolId) {
 			case 1:
@@ -72,16 +72,16 @@ public class Symbol {
 				placeBuilding(currentPlayer,game);
 				break;
 			case 3:
-				removeMinion(currentPlayer,game);
+				removePiece(currentPlayer,game);
 				break;
 			case 4:
 				removeTroubleMarker(currentPlayer,game);
 				break;
 			case 5:
-				
-				break;
-			case 6:
 				takeMoneyFromBank(currentPlayer,game);
+				break;				
+			case 6:
+				Action = new Action(cardID);
 				break;
 			case 7:
 				//Random event.
@@ -169,7 +169,7 @@ public class Symbol {
 	 * @param currentPlayer(Player)
 	 * @param game (Game)
 	 */
-	private boolean removeMinion(Player currentPlayer,Game game)
+	private boolean removePiece(Player currentPlayer,Game game)
 	{
 		//Get gameboard areas.
 		Gameboard gameBoard=game.getGameBoard();

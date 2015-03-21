@@ -83,9 +83,9 @@ public class PlayerTest {
 	@Test 
 	public void playerInitialState(){
 		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
-		gamest.transferMoney(MONEY);
+		gamest.addMoney(MONEY);
 		assertTrue( gamest.getMoney() == MONEY ); 
-		dpizar.transferMoney(MONEY);
+		dpizar.addMoney(MONEY);
 		assertTrue( dpizar.getMoney() == MONEY ); 
 		assertTrue("Player dpizar has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1) ); 
 		assertTrue("Player dpizar has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5) ); 

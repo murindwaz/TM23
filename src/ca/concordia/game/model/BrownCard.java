@@ -35,7 +35,7 @@ public class BrownCard extends Card {
 		this.number=i;
 
 		this.name = CardLoader.getInstance().nameForCard(i,"B");		
-		this.especialAbility = new Action(CardLoader.getInstance().abilityForCard(i,"B"));
+		this.especialAbility = new Action(i);
 	}
 	
 	/**
