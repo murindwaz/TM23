@@ -154,7 +154,7 @@ public class Configuration {
 		/**
 		 * These properties were loaded via Players.txt file. 
 		 */
-		Properties playerProperties = new Properties(){
+		public static final Properties PLAYER_PROPERTIES = new Properties(){
 			private static final long serialVersionUID = 109935086079578524L;{
 			put("Sergeant Cheery Littlebottom","1|B|Sergeant Cheery Littlebottom|2|64|Take two cards from the draw deck.");
 			put("Otto Chriek","2|B|Otto Chriek|2|62|Earn $1 for each trouble marker on the board.");
@@ -258,4 +258,5 @@ public class Configuration {
 			put("Mr Pin & Mr Tulip","100|G|Mr Pin & Mr Tulip |2|3M1|The New Firm.");
 			put("The Thieves' Guild","101|G|The Thieves' Guild|2|61| Take $2, if possible, from every other player.");
 		}};
+		
 }
