@@ -72,6 +72,12 @@ public class Action {
 				//10 Look other player's cards and discard one
 			case 10:
 				discardOthersCard( );
+				//Group4: Move a minion belonging to another player from one area to an adjacent area
+				//11,62,72
+			case 11: case 62: case 72:
+				moveMinion( );	
+				break;
+
 			default:
 				System.out.println("Action Id doesn't exist.");
 				break;
@@ -107,6 +113,10 @@ public class Action {
 			if (hasMinions)
 				if (gameBoard.getAreas().get(i).getMinions().isEmpty())
 					continue;
+/*			if (adjacentTo.)
+				if (gameBoard.getAreas().get(i).adjacentTo())
+					continue;
+*/				
 			System.out.println(i + "." + gameBoard.getAreas().get(i).toString());				
 		}		
 		choosenArea = keyIn.nextInt();
@@ -213,7 +223,6 @@ public class Action {
 	private void exchangeMinions( )
 	{
 		int fromArea, toArea;		
-
 		while (true) 
 		{
 
@@ -221,17 +230,39 @@ public class Action {
 			String tmpColor = input.next();
 			Colors color = Colors.colorForString(tmpColor);
 
-			Player playerbycolor = game.getPlayerByColor(color);
+			Player playerbycolorfrom = game.getPlayerByColor(color);
 
 			System.out.println("Choose an area to move one minion from:");
 			fromArea = this.chooseArea(true);
 
-			System.out.println("Choose an area to move one minion to:");
-			toArea = this.chooseArea(false);
-			if (playerbycolor.moveMinionToNewArea( fromArea, toArea ));
-			break;
-		}
+			while(true) {
+				System.out.println("Choose an area to move one minion to:");
+				toArea = this.chooseArea(true);
 
+				if (gameBoard.getAreas().get(toArea).getMinions().isEmpty()) {
+					System.out.println("This Area has no Minions");
+					continue;
+				}
+
+				while(true) {
+					System.out.println("Select the color of minion you wish to move out:" );
+					tmpColor = input.next();
+					color = Colors.colorForString(tmpColor);
+
+					Player playerbycolorto = game.getPlayerByColor(color);	
+
+					if (playerbycolorto.moveMinionToNewArea( toArea, fromArea )){ 
+						if (playerbycolorfrom.moveMinionToNewArea( fromArea, toArea ))
+							break;
+					}
+					else {
+						System.out.println("This Area has no Minions.");
+						continue;
+					}
+				}
+
+			}
+		}
 	}
 
 	/**
@@ -242,5 +273,52 @@ public class Action {
 		gameBoard.getAreas().get(2).getMinions().remove(1);
 	}
 
+	/**
+	 * Move a minion belonging to another player from one area to an adjacent area.
+	 */
+	private void moveMinion( )
+	{
+		int fromArea, toArea;		
+
+		while (true) 
+		{
+
+			System.out.println("Select the color of minion you wish to move:" );
+			String tmpColor = input.next();
+			Colors color = Colors.colorForString(tmpColor);
+
+			Player playerbycolor = game.getPlayerByColor(color);
+
+			if (color.equals(player.color)) {
+				System.out.println("Minion should belong to another player.");
+				continue;
+			}
+
+			while(true) {
+
+				System.out.println("Choose an area to move this minion from:");
+				fromArea = this.chooseArea(true);
+
+				if (gameBoard.getAreas().get(fromArea).getMinions().isEmpty()) {
+					System.out.println("This Area has no Minions");
+					continue;
+				}
+				else
+					break;
+			}
+
+			System.out.println("Choose an adjacent area to move this minion to:");
+			toArea = this.chooseArea(true); //should be adjacent area
+
+			if (playerbycolor.moveMinionToNewArea( fromArea, toArea ))
+				break;
+			else {
+				System.out.println("Not possible to move to this Area");
+				continue;
+			}
+		}
+
+	}
 
 }
+
