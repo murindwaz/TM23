@@ -533,5 +533,9 @@ public class Game {
 	public Player[] getPlayers() {
 		return this.players;
 	}
+	
+	public Map<String, Deck> getDecks() {
+		return this.decks;
+	}
 
 }
