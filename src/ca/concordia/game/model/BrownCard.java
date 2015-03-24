@@ -34,6 +34,19 @@ public class BrownCard extends Card {
 	}
 	
 	/**
+	 * This constructor will be used with CardLoader to initialze the cards in a Map 
+	 * @param number
+	 * @param name
+	 * @param color
+	 */
+	public BrownCard( int number, String name, String color ){
+		this( number ); 
+		this.number = number; 
+		this.name = name; 
+		this.color = color; 
+	}
+	
+	/**
 	 * Getter
 	 * @return
 	 */

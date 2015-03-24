@@ -3,13 +3,28 @@ package ca.concordia.game.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+
+import ca.concordia.game.model.BrownCard;
+import ca.concordia.game.model.GreenCard;
 
 
 public class CardLoader {
 	private static CardLoader instance = null;
 	private ArrayList<String> cards;
+	/**
+	 * The first card, works with raw string, and the second works with real objects
+	 * Using the Map<Integer, String>
+	 * Using the Map<Integer, Card>
+	 */
+	private Map<Integer, String> mcards;
+	private Map<Integer, BrownCard> brownCards;
+	private Map<Integer, GreenCard> greenCards;
+	
+	
 	
 	/**
 	 * Implements CardLoader as a singleton.
@@ -24,12 +39,25 @@ public class CardLoader {
 	
 	/**
 	 * Constructor, initializes Cards.
+	 * CardLoader is a singleton, and is made un-accessible unless to Children. 
 	 */
-	public CardLoader() {
-		//Open Resource file:
+	protected CardLoader() {
+		String data = "";
+		int index = -1;
 		cards = new ArrayList<String>();
+		mcards = new HashMap<Integer, String>();//
+		greenCards = new HashMap<Integer, GreenCard>(); 
+		brownCards = new HashMap<Integer, BrownCard>();
+		cards.ensureCapacity( Configuration.PLAYER_PROPERTIES.size() );
 		for( Entry<Object, Object> property : Configuration.PLAYER_PROPERTIES.entrySet() ){
-			cards.add( property.getValue().toString() );
+			data = property.getValue().toString();
+			String[] extracted = data.split("\\|");
+			index = Integer.parseInt( extracted[0] );
+			/**
+			 * @todo parse and add brownCards
+			 * @todo parse and add greenCards
+			 */
+			mcards.put( new Integer(index) , data );
 		}
 	}
 	
@@ -38,7 +66,7 @@ public class CardLoader {
 		switch(type) {
 			case "B":
 				if(i > 0) {
-					tmp = cards.get(i-1);
+					tmp = mcards.get( i );
 				}
 				break;
 			case "G":
@@ -53,10 +81,14 @@ public class CardLoader {
 		}
 		
 		String resp = "NO NAME AVAILABLE";
+		if( tmp.isEmpty() ){
+			return resp;
+		}
 		String[] arr = tmp.split("\\|");
-		if(arr.length > 2)
+		if( arr.length > 2 ){
 			resp = arr[2]; 
-
+		}
+		
 		return resp;
 	}
 	

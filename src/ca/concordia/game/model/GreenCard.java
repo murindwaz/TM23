@@ -18,7 +18,6 @@ public class GreenCard extends Card {
 	
 	private String color;
 	private int number;
-	
 	private String name;
 	private ArrayList<Symbol> symbols;
 	private Action especialAbility;
@@ -31,21 +30,31 @@ public class GreenCard extends Card {
 		//City Cards are always Visible!
 		super(false,false);
 		this.symbols = new ArrayList<Symbol>();
-		
-		
 		this.color="GREEN";
 		this.number=i;
-		
 		this.name = CardLoader.getInstance().nameForCard(i,"G");		
 		this.especialAbility = new Action(i);
 	}	
 	
 	/**
+	 * The GreenCard will be used to initialize cards CardLoader
+	 * @param number
+	 * @param name
+	 * @param color
+	 */
+	public GreenCard( int number, String name, String color){
+		this( number ); 
+		this.number = number; 
+		this.name = name;
+		this.color = color;
+	}
+	
+	
+	/**
 	 * Getter: Returns the array of symbols which represent the different actions the card can perform sequentially.
 	 * @return ArrayList<Symbol>
 	 */
-	public ArrayList<Symbol> getActionsSymbols()
-	{
+	public ArrayList<Symbol> getActionsSymbols(){
 		return this.symbols;
 	}
 	
@@ -53,8 +62,7 @@ public class GreenCard extends Card {
 	 * Getter unique Number
 	 * @return int
 	 */
-	public int getNumber()
-	{
+	public int getNumber(){
 		return this.number;
 	}
 	
@@ -62,8 +70,7 @@ public class GreenCard extends Card {
 	 * Getter
 	 * @return
 	 */
-	public String getName()
-	{
+	public String getName(){
 		return this.name;
 	}
 	
@@ -71,9 +78,7 @@ public class GreenCard extends Card {
 	 * Getter
 	 * @return
 	 */
-	public String getAbility()
-	{
+	public String getAbility(){
 		return this.especialAbility.toString();
 	}
 }
-

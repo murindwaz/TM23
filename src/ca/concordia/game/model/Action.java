@@ -8,6 +8,7 @@ import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
 
 public class Action {
+	
 	private Game game;
 	private Gameboard gameBoard;
 	private Player player;
