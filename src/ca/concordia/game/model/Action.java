@@ -11,28 +11,32 @@ public class Action {
 	private Game game;
 	private Gameboard gameBoard;
 	private Player player;
-	private Map<String,Deck> decks;
 	private Scanner keyIn;
 	private Scanner input;
 	private Player[] players;
-
+	private Die die;
+	
 	Bank bank=Bank.getInstance();
 
 	private int choosenPlayer;
 	private int choosenArea;
-
+    private int rollValue;
 	/**
 	 * Constructor: initilializes an action according to Card's ID.
 	 * @param cardId
 	 */
 	public Action(int cardId){	
 		this.game = Game.getInstance();
+	
 		if (game.currentPlayer != -1)
 		{
 			this.gameBoard = game.getGameBoard( );
 			this.players = game.getPlayers();
 			this.player = players[(game.currentPlayer)];
 			this.choosenPlayer = 0;
+			this.die = new Die();
+			rollValue = -1;
+
 			switch(cardId){
 			//Group1: Get Cards from DrawDeck
 			//1,3,36,42,77,87,88
@@ -77,7 +81,11 @@ public class Action {
 			case 11: case 62: case 72:
 				moveMinion( );	
 				break;
-
+				
+				//12: Roll the die twice and remove one minion of your choice from those areas, even if there is no trouble there.
+			case 12:
+				rollnRemoveMinion( );	
+				break;
 			default:
 				System.out.println("Action Id doesn't exist.");
 				break;
@@ -270,7 +278,18 @@ public class Action {
 	 */
 	private void discardOthersCard( )
 	{
-		gameBoard.getAreas().get(2).getMinions().remove(1);
+		
+		ArrayList<Card> playerCards;
+		int cardNb;
+		System.out.println("Select a Player to loose a card:" );    
+		playerCards = players[choosePlayer()].getPlayerCards();
+		System.out.println("Select a card to discard:" );  
+		for( int i=0; i<playerCards.size(); i++ ) 
+		{
+			System.out.println(i+playerCards.get(i).toString());
+		}
+		cardNb = keyIn.nextInt();
+		playerCards.remove(cardNb);
 	}
 
 	/**
@@ -320,5 +339,34 @@ public class Action {
 
 	}
 
+	
+	/**
+	 * Roll the die twice and remove one minion of your choice from those areas, even if there is no trouble there.
+	 */
+	private void rollnRemoveMinion( ){ 
+		for(int i=0; i==2; i++)
+		{
+			
+			System.out.println("Rolling the die..." );			
+			rollValue = die.roll();
+
+			System.out.println("Select the minion from Area "+rollValue+":");
+
+			if (gameBoard.getAreas().get(rollValue).getMinions().isEmpty()) {
+				System.out.println("Area has no Minions");
+				continue;
+			}
+			
+			for (int count=0; count==gameBoard.getAreas().get(rollValue).getMinions().size();count++)
+			{
+				System.out.println(count+". "+gameBoard.getAreas().get(rollValue).getMinions().get(count).toString());
+			}
+			
+			int pieceChoosen = keyIn.nextInt();
+			
+			gameBoard.getAreas().get(rollValue).getMinions().remove(pieceChoosen);
+
+		}
+	}
 }
 
