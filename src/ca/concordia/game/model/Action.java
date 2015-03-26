@@ -82,10 +82,15 @@ public class Action {
 				moveMinion( );	
 				break;
 				
-				//12: Roll the die twice and remove one minion of your choice from those areas, even if there is no trouble there.
+				//12: Roll the die twice and remove one minion of your choice from those areas.
 			case 12:
 				rollnRemoveMinion( );	
 				break;
+				//13: Exchange your hand with that of another player.
+			case 13:
+				exchangeCards( );	
+				break;
+				
 			default:
 				System.out.println("Action Id doesn't exist.");
 				break;
@@ -368,5 +373,24 @@ public class Action {
 
 		}
 	}
+	
+	
+	
+	/**
+	 * Exchange your hand with that of another player.
+	 */
+	private void exchangeCards( )
+	{ 
+        
+		
+		System.out.println("Select a player to exchange all your Cards:");
+        ArrayList<Card> playerCards = players[choosePlayer()].getPlayerCards();
+        
+        players[choosenPlayer].loseAllCards();
+        players[choosenPlayer].receiveAllCards( players[game.currentPlayer].getPlayerCards());
+        
+        players[game.currentPlayer].loseAllCards();
+        players[game.currentPlayer].receiveAllCards(playerCards);
+	}	
 }
 
