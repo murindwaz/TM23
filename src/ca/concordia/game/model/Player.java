@@ -193,6 +193,23 @@ public class Player {
 	}
 	
 	/**
+	 * Lose all Player Cards
+	 */
+	public void loseAllCards( )
+	{
+		this.playerCards.clear();
+	}
+
+	/**
+	 * Receive all Player Cards
+	 * @param allCards
+	 */
+	public void receiveAllCards( ArrayList<Card> allCards )
+	{
+		this.playerCards = allCards;
+	}
+
+	/**
 	 * Add a minion that was on hand to an area. Reduces by one the number of minion on hand and adds one minion to the respective area.
 	 * @param areaCode
 	 * @return boolean
