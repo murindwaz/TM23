@@ -6,6 +6,15 @@ import java.util.Scanner;
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
 
+/**
+ * Class Action handles action from all Brown and Green borders playing cards
+ * 
+ * @author Pascal Maniraho 
+ * @author Gustavo Pereira
+ * @author Bhavik Desai 
+ * @author Jesus Esteban Garro Matamoros 
+ * @author Diego Pizarro
+ */
 public class Action {
 	private Game game;
 	private Gameboard gameBoard;
@@ -91,6 +100,30 @@ public class Action {
 				moveMinion( true, true, true );	
 				break;
 
+				//Group5: Place a minion
+				//17,32
+				//34    has TroubleMarker
+				//28    has Building
+				//31,29 inUE
+				//46,71 removed ??
+			case 17: case 32: 
+				placeMinion( false, false, false, 1);	
+				break;
+			case 34: 
+				placeMinion( false, false, true, 1);	
+				break;
+			case 28: 
+				placeMinion( false, true, false, 1);
+				break;
+			case 31:
+				placeMinion( true, false, false, 1);
+				break;						
+			case 29: 
+				placeMinion( true, false, false, 2);
+				break;			
+			case 46: case 71: 
+				placeMinion( false, false, false, 1);	
+				break;
 				//6 : Remove one minion from Unreal Estate.
 			case 6: 
 				removeUnrealEstateMinion( );	
@@ -441,7 +474,35 @@ public class Action {
 
 		players[game.currentPlayer].loseAllCards();
 		players[game.currentPlayer].receiveAllCards(playerCards);
-	}	
+	}
+
+	/**
+	 * Place a minion 
+	 * @param isUEadjacent
+	 * @param hasownBuilding
+	 * @param hasTroubleMarker
+	 * @param times
+	 */
+	private void placeMinion( boolean UEadjacent, boolean hasownBuilding, boolean hasTroubleMarker, int times)
+	{
+		for (int i=1;i<=times;i++)
+		{
+			int toArea;	
+
+			System.out.println("Choose an area to place this minion:");
+
+			if (UEadjacent)
+				toArea = this.chooseArea(false, true, gameBoard.getAreas().get(2));
+			else
+				toArea = this.chooseArea(false, true, null);
+
+			if (!player.putNewMinionOnBoard(toArea))
+				System.out.println("Not possible to place Minion");
+		}
+	}
+
+
+
 
 }
 
