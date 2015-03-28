@@ -8,7 +8,6 @@ import ca.concordia.game.main.Game;
 
 /**
  * Class Action handles action from all Brown and Green borders playing cards
- * asdf
  * @author Pascal Maniraho 
  * @author Gustavo Pereira
  * @author Bhavik Desai 
@@ -136,6 +135,13 @@ public class Action {
 			case 56: case 94: 
 				takeCard( );	
 				break;
+				
+				//58: Each player must give you either $1 or one of their cards.
+			case 58: 
+				get1fromOthers( );	
+				break;
+								
+				
 
 				//6 : Remove one minion from Unreal Estate.
 			case 6: 
@@ -548,6 +554,33 @@ public class Action {
 	    }
 
 	}
-
+	
+	/**
+	 * Each player must give you either $1 or one of their cards.
+	 */
+	private void get1fromOthers( )
+	{
+		int choosenCard;
+		ArrayList<Card> playerCards;
+		
+		System.out.println(" Each player must give you either $1 or one of their cards.");
+	    for (int i=0;i<game.getNumberOfPlayers();i++){
+		    System.out.println("Player: "+players[i].getColor().toString()+". Choose 1 for Money or 2 for Card:");
+        if (keyIn.nextInt() == 1){
+          players[i].transferMoneyto(1, player);
+        }
+        else{
+    		playerCards = players[i].getPlayerCards();
+        	System.out.println("Choose the card:");
+    	    for (int count=0;count<playerCards.size();count++){
+    	    	System.out.println(i+"."+playerCards.get(i).getName());
+    	    }
+    		System.out.println("Card"+i+":");
+    	    choosenCard = keyIn.nextInt();
+    		players[i].transferCard(choosenCard, player);
+        }
+	    }
+	}
+	
 }
 
