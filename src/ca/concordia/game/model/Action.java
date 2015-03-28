@@ -8,7 +8,7 @@ import ca.concordia.game.main.Game;
 
 /**
  * Class Action handles action from all Brown and Green borders playing cards
- * 
+ * asdf
  * @author Pascal Maniraho 
  * @author Gustavo Pereira
  * @author Bhavik Desai 
@@ -124,6 +124,19 @@ public class Action {
 			case 46: case 71: 
 				placeMinion( false, false, false, 1);	
 				break;
+
+				//Group6: TakeLoan
+				//55,57
+			case 55: case 57: 
+				takeLoan( 10 );	
+				break;
+
+				//Group7: TakeCard from Player
+				//56
+			case 56: case 94: 
+				takeCard( );	
+				break;
+
 				//6 : Remove one minion from Unreal Estate.
 			case 6: 
 				removeUnrealEstateMinion( );	
@@ -501,8 +514,40 @@ public class Action {
 		}
 	}
 
+	/**
+	 * Take a loan of @amount from the bank. At the end of the game you must pay back $12 or lose 15 points.
+	 * @param amount
+	 */
+	private void takeLoan( int amount )
+	{
+	      player.takeLoan(amount);
+	      player.addMoney(amount);
+	}
 
+	/**
+	 * Select one player. They must give you two cards of their choice.
+	 */
+	private void takeCard( )
+	{
+		int choosenPlayer = 0;
+		int choosenCard;
+		ArrayList<Card> playerCards;
+		
+		System.out.println("Select a player to get 2 Cards:");
+		playerCards = players[choosePlayer()].getPlayerCards();
+	 
+	    System.out.println("Choosen Player(NOT YOU) must choose 2 Cards to give you:");
+	    
+	    for (int i=0;i<playerCards.size();i++){
+	    	System.out.println(i+"."+playerCards.get(i).getName());
+	    }
+	    for (int i=0;i<2;i++){
+	    	System.out.println("Card"+i+":");
+	    	choosenCard = keyIn.nextInt();
+			players[choosenPlayer].transferCard(choosenCard, player);
+	    }
 
+	}
 
 }
 
