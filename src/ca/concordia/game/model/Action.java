@@ -136,12 +136,17 @@ public class Action {
 				takeCard( );	
 				break;
 				
+				//Group8: Play two other cards
+				//39, 63
+			case 39: case 63: 
+				play2Cards( );
+				break;
+				
 				//58: Each player must give you either $1 or one of their cards.
 			case 58: 
 				get1fromOthers( );	
 				break;
 								
-				
 
 				//6 : Remove one minion from Unreal Estate.
 			case 6: 
@@ -192,6 +197,25 @@ public class Action {
 		return choosenPlayer;
 	}
 
+	/**
+	 * Choose a Card from Player
+	 * @param aPlayer
+	 * @return choosenCard
+	 */
+	private int chooseCard( Player aPlayer){ 
+		int choosenCard;
+
+		ArrayList<Card> playerCards;
+		playerCards = aPlayer.getPlayerCards();
+		
+	    for (int i=0;i<playerCards.size();i++){
+	    	System.out.println(i+"."+playerCards.get(i).getName());
+	    }
+	    choosenCard = keyIn.nextInt();
+
+		return choosenCard;
+	}
+	
 	/**
 	 * Choose an Area
 	 * @param hasMinions
@@ -582,5 +606,16 @@ public class Action {
 	    }
 	}
 	
+	
+	/**
+	 * Play any two other cards from your hand.
+	 */
+	private void play2Cards( )
+	{
+	    for (int count=0;count<2;count++){
+	    	System.out.println("Choose another card to play:");
+	    	new Action(chooseCard(player));
+	    }		
+	}
 }
 
