@@ -15,6 +15,7 @@ import java.util.Random;
  * @author Jesus Esteban Garro Matamoros
  * @author Diego Pizarro
  */
+ //A deck is a double-ended queue of cards: We can take from the front and put in the back 
 public class Deck {
 
 	private int players;
@@ -47,10 +48,12 @@ public class Deck {
 	public Deck(String type, int players) {
 		this.players = players;
 		switch (type) {
+		//The discard deck is empty to start with
 		case CARD_DECK:
 			this.cards = new ArrayDeque<Card>();
 			break;
 		case PERSONALITY_DECK:
+		//The personality deck has 7 cards:
 			this.cards = new ArrayDeque<Card>();
 			this.arrayCards = new ArrayList<Card>();
 			PersonalityCard temp;
@@ -61,20 +64,23 @@ public class Deck {
 			}
 			break;
 		case EVENT_DECK:
+			//The event deck has 12 cards:
 			this.cards = new ArrayDeque<Card>();
 			for (int i = 0; i < 12; i++) {
 				this.cards.add(new EventCard(i));
 			}
 			break;
 		case GREEN_CARDS_DECK:
+			//The green-bordered player deck has 48 cards:
 			this.cards = new ArrayDeque<Card>();
-			for (int i = 49; i <= 101; i++) {
+			for (int i = 1; i <= 48; i++) {
 				this.cards.add(new GreenCard(i));
 			}
 			break;
 		case BROWN_CARDS_DECK:
+			//The brown-bordered player deck has 53 cards:
 			this.cards = new ArrayDeque<Card>();
-			for (int i = 1; i <= 48; i++) {
+			for (int i = 49; i <= 101; i++) {
 				this.cards.add(new BrownCard(i));
 			}
 			break;
