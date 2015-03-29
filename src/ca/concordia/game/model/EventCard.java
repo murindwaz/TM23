@@ -1,5 +1,7 @@
 package ca.concordia.game.model;
 
+import java.util.ArrayList;
+
 import ca.concordia.game.main.Game;
 import ca.concordia.game.util.Configuration;
 
@@ -151,7 +153,7 @@ public class EventCard extends Card {
 	 * @param currentPlayer
 	 * @param game
 	 */
-	public void fog(Player currentPlayer,Game game)
+	private void fog(Player currentPlayer,Game game)
 	{
 		Deck deck;
 		GreenCard gCard;
@@ -160,18 +162,18 @@ public class EventCard extends Card {
 		{
 			
 			//Get the green deck or brown deck depending which one is in use.
-			if(game.getEspecificDeck("G").getSizeDeck()>0)
+			if(game.getEspecificDeck("green").getSizeDeck()>0)
 			{
 				//Green deck is not empty yet.
-				deck=game.getEspecificDeck("G");
+				deck=game.getEspecificDeck("green");
 				gCard=(GreenCard) deck.getCard();
 				//Display the card that's being discarded.
 				gCard.toString();
 			
-			}else if(game.getEspecificDeck("B").getSizeDeck()>0)
+			}else if(game.getEspecificDeck("brown").getSizeDeck()>0)
 			{
 				//Brown deck is not empty yet but green deck is.
-				deck=game.getEspecificDeck("B");
+				deck=game.getEspecificDeck("brown");
 				bCard=(BrownCard) deck.getCard();
 				//Display the card that's being discarded.
 				bCard.toString();
@@ -179,11 +181,65 @@ public class EventCard extends Card {
 		}
 	}
 	
-	public void misteriousMurders(Player currentPlayer,Game game)
+	private void misteriousMurders(Player currentPlayer,Game game)
 	{
+		int selectedIndex=-1;
 		
+		//Make current player roll the die
+		Die die=game.getDie();
+		//Get players
+		Player [] players=game.getPlayers();
+		
+		int currentPlayerIndex=game.getCurrentPlayer();//Get index of current player.
+		
+		//Make all players roll.
+		for(int index=0;index<game.getNumberOfPlayers();index++)
+		{
+			int rolledValue=die.roll();
+			
+			System.out.println("Player: "+players[currentPlayerIndex].getColor()+" rolled:"+rolledValue+" .");
+			//Get area rolled by player
+			Area rolledArea=game.getGameBoard().getAreas().get(rolledValue);
+		
+			int numMinions=rolledArea.getMinions().size();//Get number of minions on that area.
+			ArrayList<Piece> minions=rolledArea.getMinions();//Get minions on rolled area.
+		
+		
+			//Check if the area has any minion on it	
+			if(numMinions>0)
+			{
+				//Display minions and ask player to remove one.
+				System.out.println("The area rolled is: "+rolledArea.getCityCard().getName());
+				System.out.println("Please select the index next to the minions you wish to remove(If area contains only player's minions one has to be removed anyways):");
+				for(int i=0;i<numMinions;i++)
+				{
+					System.out.println("Color:"+minions.get(i).getColor()+" (index: "+i+")  ");
+				}
+				selectedIndex = game.keyIn.nextInt();
+				//Update Gameboard.
+				minions.remove(selectedIndex);
+				//Update current player's hand. Remove minion from player depending on the areaCode(Card Number).
+				players[currentPlayerIndex].removeMinionOnBoard(rolledArea.getCityCard().getCardNumber());
+			
+			}else
+			{
+				System.out.println("The rolled area doesn't contain any minions on it.");
+			}
+			//Get next Player: The one to the left.
+			currentPlayerIndex=nextPlayer(currentPlayerIndex,game.getNumberOfPlayers());
+		}
 	}
 	
+	/**
+	 * Returns the next player depending on the parameters sent. Works only for the misterious Murders event. Since it depends on the player that called the function.
+	 * @param currentPlayer(int)
+	 * @param numberOfPlayers(int)
+	 * @return int
+	 */
+	private  int nextPlayer(int currentPlayer,int numberOfPlayers) {
+		currentPlayer = (currentPlayer + 1) % numberOfPlayers;
+		return currentPlayer;
+	}
 	
 	/**
 	 * Setter: set name for event card.

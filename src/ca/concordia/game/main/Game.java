@@ -462,37 +462,6 @@ public class Game {
 		return "Load Was Successfull";
 	}
 
-	/**
-	 * Getter: Returns number of players
-	 * 
-	 * @return int
-	 */
-	public int getNumberOfPlayers() {
-		return this.numberOfPlayers;
-	}
-
-	/**
-	 * returns the size of the brown deck.
-	 * 
-	 * @return int
-	 */
-	public int getSizeDrawDeck() {
-		/**
-		 * Get the size of the brown deck since it's on the bottom and can give
-		 * us the status of the draw deck is empty.
-		 */
-		Deck brownDeck = this.decks.get("Brown");
-		return brownDeck.getSizeDeck();
-	}
-
-	/**
-	 * Returns the game's current GameBoard.
-	 * 
-	 * @return Gameboard
-	 */
-	public Gameboard getGameBoard() {
-		return this.gameboard;
-	}
 
 	/**
 	 * Get a Player using a color.
@@ -529,15 +498,17 @@ public class Game {
 		System.out.println("Game Board State:");
 		System.out.println(this.gameboard.toString());
 	}
+	
+	//Getters
 	/**
-	 * Returns array with players.
+	 * Getter: array with players.
 	 * @return Player[]
 	 */
 	public Player[] getPlayers() {
 		return this.players;
 	}
 	/**
-	 * Returns the decks from the game.
+	 * Getter: the decks from the game.
 	 * @return Map<String, Deck>
 	 */
 	public Map<String, Deck> getDecks() {
@@ -545,13 +516,62 @@ public class Game {
 	}
 	
 	/**
-	 * Returns the requested deck.
+	 * Getter: the requested deck.
 	 * @param whichDeck
 	 * @return  Deck 
 	 */
 	public Deck getEspecificDeck(String whichDeck)
 	{
 		return this.decks.get(whichDeck);
+	}
+	
+	/**
+	 * Getter: Game Die.
+	 * @return Die
+	 */
+	public Die getDie()
+	{
+		return this.die;
+	}
+	/**
+	 * Getter: Returns number of players
+	 * 
+	 * @return int
+	 */
+	public int getNumberOfPlayers() {
+		return this.numberOfPlayers;
+	}
+
+	/**
+	 * Getter: the size of the brown deck.
+	 * 
+	 * @return int
+	 */
+	public int getSizeDrawDeck() {
+		/**
+		 * Get the size of the brown deck since it's on the bottom and can give
+		 * us the status of the draw deck is empty.
+		 */
+		Deck brownDeck = this.decks.get("Brown");
+		return brownDeck.getSizeDeck();
+	}
+
+	/**
+	 * Getter: the game's current GameBoard.
+	 * 
+	 * @return Gameboard
+	 */
+	public Gameboard getGameBoard() {
+		return this.gameboard;
+	}
+	
+	/**
+	 * Getter: Get index of current player.
+	 * @return int
+	 */
+	public int getCurrentPlayer()
+	{
+		return this.currentPlayer;
 	}
 
 }

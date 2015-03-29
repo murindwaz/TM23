@@ -437,6 +437,7 @@ public class Player {
 		return this.minionsOnAreas;
 	}
 	
+	
 	/**
 	 * Setter for buildingsOnHand.
 	 * @param newNum(int)
