@@ -185,11 +185,14 @@ public class Player {
 	
 	/**
 	 * Remove card from player's city Cards(Player removed or moved a building to another area.)
-	 * @param card
-	 * @return
+	 * @param card(CityCard)
+	 * @return CityCard
 	 */
-	public boolean returnCityCard(CityCard card)
+	public CityCard returnCityCard(CityCard card)
 	{
+		int index=this.playerCityCard.indexOf(card);
+		return this.playerCityCard.remove(index);
+		/*
 		int oldSize=this.playerCityCard.size();
 		this.playerCityCard.remove(card);
 		int newSize=this.playerCityCard.size();
@@ -198,6 +201,7 @@ public class Player {
 			return true;
 		else
 			return false;
+			*/
 	}
 	
 	/**
@@ -309,7 +313,7 @@ public class Player {
 		}
 		else if(cardId==5)//Commander Vimes
 		{
-			//Check if the draw deck is empty by chequin the size of the brown deck since it's the one at the bottom.
+			//Check if the draw deck is empty by chequing the size of the brown deck since it's the one at the bottom.
 			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
 			if(game.getSizeDrawDeck()==0)//Draw deck is empty
 				return true;

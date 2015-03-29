@@ -61,13 +61,30 @@ public class Gameboard {
 	
 	/**
 	 * Remove A Card Object and return it.(When a player takes possession of a city card)
-	 * @param card(Card)
+	 * @param card(CityCard)
 	 * @return Card
 	 */
 	public CityCard deleteCardFromDeck(CityCard card)
 	{
 		int index=this.cityCards.indexOf(card);
 		return this.cityCards.remove(index);
+	}
+	
+	/**
+	 * Add city card to game board. When player returns one of it's city cards.
+	 * @param card(CityCard)
+	 * @return boolean
+	 */
+	public boolean addCityCard(CityCard card)
+	{
+		int oldSize=this.cityCards.size();
+		this.cityCards.add(card);
+		int newSize=this.cityCards.size();
+		
+		if(newSize == oldSize+1)
+			return true;
+		else
+			return false;
 	}
 
 	/**
