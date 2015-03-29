@@ -115,7 +115,7 @@ public class EventCard extends Card {
 				bloodyStupidJohnson(currentPlayer,game);
 				break;
 			case 6:
-				//Random event.
+				demonsFromDungeonDimensions(currentPlayer,game);
 			
 				break;
 			case 7:
@@ -413,6 +413,11 @@ public class EventCard extends Card {
 		game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
 		
 		System.out.println("Players city card was taken away....");
+		
+	}
+	
+	public void demonsFromDungeonDimensions(Player currentPlayer,Game game)
+	{
 		
 	}
 	
