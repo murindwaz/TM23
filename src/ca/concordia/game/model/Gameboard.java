@@ -58,6 +58,21 @@ public class Gameboard {
 
 	}
 	
+	/**
+	 * Function returns an area depending on it's city card area code. If not found returns null.
+	 * @param areaCode(int)
+	 * @return Area
+	 */
+	public Area getAreaByCityCard(int areaCode)
+	{
+		for(int i=0;i<this.areas.size();i++)
+		{
+			if(this.areas.get(i).getCityCard().getCardNumber()==areaCode)
+				return this.areas.get(i);
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Remove A Card Object and return it.(When a player takes possession of a city card)

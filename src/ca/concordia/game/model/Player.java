@@ -375,6 +375,22 @@ public class Player {
 		
 	}
 	
+	/**
+	 * Returns a city card if the player has it otherwise it returns null. It searches using the cardcode(int).
+	 * @param cardCode(int)
+	 * @return CityCard
+	 */
+	public CityCard getCCByCardNumber(int cardCode)
+	{
+		//Get requested city card
+		for(int i=0;i<this.playerCityCard.size();i++)
+		{
+			if(cardCode == this.playerCityCard.get(i).getCardNumber())
+				return this.playerCityCard.get(i);
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Getter money

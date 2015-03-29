@@ -109,10 +109,10 @@ public class EventCard extends Card {
 				subsidence(currentPlayer,game);
 				break;
 			case 4:
-				
+				trolls(currentPlayer,game);
 				break;				
 			case 5:
-			new Action(cardID);
+				bloodyStupidJohnson(currentPlayer,game);
 				break;
 			case 6:
 				//Random event.
@@ -138,10 +138,7 @@ public class EventCard extends Card {
 				//Interrupt card.
 				
 				break;
-			case 12:
-				//Interrupt card.
-				
-				break;
+
 			default:
 				break;
 		}
@@ -180,6 +177,7 @@ public class EventCard extends Card {
 			}
 		}
 	}
+	
 	
 	/**
 	 * Function makes all players, starting with the current player, roll a die and then remove a minion from the rolled area. If an area only contains minions from the rolling player
@@ -333,7 +331,90 @@ public class EventCard extends Card {
 		
 	}
 	
+	/**
+	 * Function will make the requesting player roll the die three times. After it will add three trolls to the values rolled.
+	 * Since Trolls are a consider as minions trouble markers will be added to the areas if required.
+	 * @param currentPlayer (Player)
+	 * @param game (Game)
+	 */
+	private void trolls(Player currentPlayer,Game game)
+	{
+		//Make current player roll the die
+		Die die=game.getDie();
+		int [] rolledDie=new int[3];
+		//Roll die three times and store results.
+		for(int i=0;i<rolledDie.length;i++)
+			rolledDie[i]=die.roll();
+		
+		ArrayList<Area> areas=game.getGameBoard().getAreas();
+		
+		//Add trolls to the required areas.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			areas.get(rolledDie[i]-1).addRemoveTroll(1);//-1 since the array list starts at 0;
+		}
+	}
 	
+	/**
+	 * Function has invoking player to roll a die. The die represents an area, if a player has a building on it then the city card is taken away from the player and a minion belonging to 
+	 * that player is also removed from the gameboard; if one exists.
+	 * @param currentPlayer (Player)
+	 * @param game (Game)
+	 */
+	private void bloodyStupidJohnson(Player currentPlayer,Game game)
+	{
+		//Make current player roll the die
+		Die die=game.getDie();
+		
+		Player[] players=game.getPlayers();
+		int currentPlayerIndex=game.getCurrentPlayer();//Get index of current player.
+		
+		int valueDie=die.roll();
+		
+		System.out.println("Player: "+players[currentPlayerIndex].getColor()+" rolled: "+valueDie);
+		
+		//temp varialbes
+		Player selectedPlayer;
+		CityCard cityCard=null;
+		
+		//check if rolled card is in play(A player has it)
+		for(int i=0;i<players.length;i++)
+		{
+			cityCard=players[currentPlayerIndex].getCCByCardNumber(valueDie);
+			if(cityCard != null)
+				break;
+			//else keep looking in other players hand.
+			currentPlayerIndex=nextPlayer(currentPlayerIndex,game.getNumberOfPlayers());
+		}
+		
+		//check if the card was found in one of the players hand if not card is not valid.
+		if(cityCard==null)
+		{
+			System.out.println("The rolled City Card Area Code is not currently in play. Bloddy Stupid Johnson does not apply.");
+			return;
+		}
+		
+		//Remove a minion belonging to the player that had the rolled city card.
+		Gameboard gameBoard=game.getGameBoard();
+		Area rolledArea=gameBoard.getAreaByCityCard(valueDie);//Get respective area.
+		
+		//Try to remove minion. 
+		if(rolledArea.removeMinion(players[currentPlayerIndex].getColor()))
+		{
+			System.out.println("A minion belonging to Player: "+players[currentPlayerIndex].getColor()+" on area: "+rolledArea.getCityCard().getName()+" has been removed.");
+			//update players hand.
+			players[currentPlayerIndex].removeMinionOnBoard(valueDie-1);//-1 since it's using an array that start on 0.
+		}
+		else
+			System.out.println("Player: "+players[currentPlayerIndex].getColor()+" didn't have any minions on area: "+rolledArea.getCityCard().getName()+ " nothing was removed.");
+		
+		//Update player and gameboard
+		CityCard returnCityCard=players[currentPlayerIndex].returnCityCard(cityCard);//Remove city card from player.
+		game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
+		
+		System.out.println("Players city card was taken away....");
+		
+	}
 	
 	/**
 	 * Returns the next player depending on the parameters sent. Getting the next player  depends on the player that called the function.

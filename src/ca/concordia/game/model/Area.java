@@ -219,23 +219,27 @@ public class Area {
 	
 
 	/**
-	 * Add a minion to area..
+	 * Add a minion to area. Returns true if successful otherwise it returns false.
 	 * @param minion
 	 */
-	public void removeMinion(Colors color)
+	public boolean removeMinion(Colors color)
 	{
 		//this.minions.remove(minion);
 		for(int i=0;i<minions.size();i++)
 		{
 			if(minions.get(i).getColor() == color)
+			{
 				this.minions.remove(i);
+				return true;
+			}
 		}
+		return false;
 		
 	}
 	
 	/**
 	 * Add troubleMarker to area if possible(Only one trouble marker is allowed per area). Return true if successful else return false.
-	 * @return
+	 * @return boolean
 	 */
 	public boolean addTroubleMarker(){
 		if(this.troubleMarker==false ){
@@ -251,7 +255,7 @@ public class Area {
 
 	/**
 	 * remove troubleMarker to area if possible(Only one trouble marker is allowed per area). Return true if successful else return false.
-	 * @return
+	 * @return boolean
 	 */
 	public boolean removeTroubleMarker()
 	{
@@ -268,7 +272,7 @@ public class Area {
 
 	/**
 	 * Add Building to area if possible(Only one Bulding  is allowed per area). Also set the color of the building.
-	 * @return
+	 * @return boolean
 	 */
 	public boolean addBuilding(Player player)
 	{
@@ -286,7 +290,7 @@ public class Area {
 
 	/**
 	 * Add Bulding to area if possible(Only one Bulding is allowed per area). Return true if successful else return false.
-	 * @return
+	 * @return boolean
 	 */
 	public boolean removeBuilding()
 	{
@@ -328,7 +332,8 @@ public class Area {
 
 	/**
 	 * Add or remove troll to area. If the argument is 1 then it will add a troll else if it is 2 it will remove a troll if possible.
-	 * Will return a boolean depending on weather the action was successful
+	 * Will return a boolean depending on weather the action was successful. further it will add a trouble marker if there's already a 
+	 * minion,demon or another troll in the area.
 	 * @param addRemove
 	 * @return boolean
 	 */
@@ -336,6 +341,13 @@ public class Area {
 		if( addRemove == 1 ){
 			//add troll
 			this.troll++;
+			//Add trouble marker of applicable.
+			if(this.demon>0 || this.minions.size()>0 || this.troll>0)
+			{
+				boolean check=this.addTroubleMarker();
+				if(check)
+					System.out.println("Added a trouble marker.");
+			}
 			return true;
 			//remove troll if possible
 		}else if ( addRemove == 2 ){
