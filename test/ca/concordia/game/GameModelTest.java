@@ -1,14 +1,23 @@
 package ca.concordia.game;
 
-import static org.junit.Assert.*;
-
-import java.awt.Color;
-
-import ca.concordia.game.common.common.Colors;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import ca.concordia.game.model.*;
+import ca.concordia.game.common.common.Colors;
+import ca.concordia.game.model.Area;
+import ca.concordia.game.model.Bank;
+import ca.concordia.game.model.Card;
+import ca.concordia.game.model.CityCard;
+import ca.concordia.game.model.Deck;
+import ca.concordia.game.model.Demon;
+import ca.concordia.game.model.Die;
+import ca.concordia.game.model.EventCard;
+import ca.concordia.game.model.Minion;
+import ca.concordia.game.model.PersonalityCard;
+import ca.concordia.game.model.Piece;
+import ca.concordia.game.model.Player;
 import ca.concordia.game.util.CardLoader;
 
 
