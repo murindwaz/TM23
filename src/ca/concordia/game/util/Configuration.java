@@ -13,7 +13,6 @@ public class Configuration {
 	/**
 	 * Areas
 	 */
-
 	public static String AREA_DOLLY_SISTERS = "Dolly Sisters";
 	public static String AREA_UNREAL_ESTATE = "Unreal Estate";
 	public static String AREA_DRAGON_S_LANDING = "Dragon's Landing";
