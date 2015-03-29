@@ -9,6 +9,7 @@ import ca.concordia.game.model.Gameboard;
 import ca.concordia.game.model.GreenCard;
 import ca.concordia.game.model.Player;
 import ca.concordia.game.model.Symbol;
+import ca.concordia.game.util.Configuration;
 
 public class StatePlay implements StateLike {
 
@@ -109,8 +110,11 @@ public class StatePlay implements StateLike {
 	 */
 	@Override
 	public String getStatus() {
-		this.Status = "Play State.";
-		return this.Status;
+		/**
+		 * This status is not needed here, the static variable made it easy for unit testing 
+		 * this.Status = "Play State.";
+		 */
+		return Configuration.STATE_PLAY;
 	}
 
 }

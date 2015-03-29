@@ -2,6 +2,7 @@ package ca.concordia.game.gameState;
 
 import ca.concordia.game.main.Game;
 import ca.concordia.game.model.Player;
+import ca.concordia.game.util.Configuration;
 
 public class StateDrawCard implements StateLike{
 	
@@ -22,9 +23,11 @@ public class StateDrawCard implements StateLike{
 	 * @return String
 	 */
 	@Override
-	public String getStatus()
-	{
-		this.Status="Drawing State.";
-		return this.Status;
+	public String getStatus(){
+		/**
+		 * Not needed, the static variable makes it easy for Unit testing 
+		 * this.Status="Drawing State.";
+		 */
+		return Configuration.STATE_DRAWING;
 	}
 }

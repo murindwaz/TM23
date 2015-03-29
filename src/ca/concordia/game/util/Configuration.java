@@ -9,6 +9,12 @@ public class Configuration {
 
 	public static String GAME = "Diskworld: Ankh-Morpork";
 	public static String PATH = "diskworld";
+	
+	
+	public static String STATE_WAIT = "Wait State."; 
+	public static String STATE_PLAY = "Play State."; 
+	public static String STATE_DRAWING = "Drawing State."; 
+	
 
 	/**
 	 * Areas

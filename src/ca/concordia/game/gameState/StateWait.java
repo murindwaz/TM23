@@ -2,6 +2,7 @@ package ca.concordia.game.gameState;
 
 import ca.concordia.game.main.Game;
 import ca.concordia.game.model.Player;
+import ca.concordia.game.util.Configuration;
 
 /**
  * When the player is in this state he will have the ability to only play
@@ -29,7 +30,10 @@ public class StateWait implements StateLike {
 	 */
 	@Override
 	public String getStatus() {
-		this.Status = "Wait State.";
-		return this.Status;
+		/**
+		 * Not needed
+		 * this.Status = "Wait State.";
+		 */
+		return Configuration.STATE_WAIT;
 	}
 }
