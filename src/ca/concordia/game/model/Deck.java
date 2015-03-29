@@ -52,16 +52,16 @@ public class Deck {
 				}
 				break;
 			case "G":
-				//The green-bordered player deck has 53 cards:
+				//The green-bordered player deck has 48 cards:
 				this.cards = new ArrayDeque<Card>();
-				for (int i = 49; i <= 101; i++) {
+				for (int i = 1; i <= 48; i++) {
 					this.cards.add(new GreenCard(i));
 				}
 				break;
 			case "B":
-				//The brown-bordered player deck has 48 cards:
+				//The brown-bordered player deck has 53 cards:
 				this.cards = new ArrayDeque<Card>();
-				for (int i = 1; i <= 48; i++) {
+				for (int i = 49; i <= 101; i++) {
 					this.cards.add(new BrownCard(i));
 				}
 				break;

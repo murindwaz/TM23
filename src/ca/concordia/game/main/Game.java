@@ -529,13 +529,29 @@ public class Game {
 		System.out.println("Game Board State:");
 		System.out.println(this.gameboard.toString());
 	}
-
+	/**
+	 * Returns array with players.
+	 * @return Player[]
+	 */
 	public Player[] getPlayers() {
 		return this.players;
 	}
-	
+	/**
+	 * Returns the decks from the game.
+	 * @return Map<String, Deck>
+	 */
 	public Map<String, Deck> getDecks() {
 		return this.decks;
+	}
+	
+	/**
+	 * Returns the requested deck.
+	 * @param whichDeck
+	 * @return  Deck 
+	 */
+	public Deck getEspecificDeck(String whichDeck)
+	{
+		return this.decks.get(whichDeck);
 	}
 
 }
