@@ -6,6 +6,14 @@ import java.util.Scanner;
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
 
+/**
+ * Class Action handles action from all Brown and Green borders playing cards
+ * @author Pascal Maniraho 
+ * @author Gustavo Pereira
+ * @author Bhavik Desai 
+ * @author Jesus Esteban Garro Matamoros 
+ * @author Diego Pizarro
+ */
 public class Action {
 	
 	private Game game;
@@ -92,6 +100,55 @@ public class Action {
 				moveMinion( true, true, true );	
 				break;
 
+				//Group5: Place a minion
+				//17,32
+				//34    has TroubleMarker
+				//28    has Building
+				//31,29 inUE
+				//46,71 removed ??
+			case 17: case 32: 
+				placeMinion( false, false, false, 1);	
+				break;
+			case 34: 
+				placeMinion( false, false, true, 1);	
+				break;
+			case 28: 
+				placeMinion( false, true, false, 1);
+				break;
+			case 31:
+				placeMinion( true, false, false, 1);
+				break;						
+			case 29: 
+				placeMinion( true, false, false, 2);
+				break;			
+			case 46: case 71: 
+				placeMinion( false, false, false, 1);	
+				break;
+
+				//Group6: TakeLoan
+				//55,57
+			case 55: case 57: 
+				takeLoan( 10 );	
+				break;
+
+				//Group7: TakeCard from Player
+				//56
+			case 56: case 94: 
+				takeCard( );	
+				break;
+				
+				//Group8: Play two other cards
+				//39, 63
+			case 39: case 63: 
+				play2Cards( );
+				break;
+				
+				//58: Each player must give you either $1 or one of their cards.
+			case 58: 
+				get1fromOthers( );	
+				break;
+								
+
 				//6 : Remove one minion from Unreal Estate.
 			case 6: 
 				removeUnrealEstateMinion( );	
@@ -141,6 +198,25 @@ public class Action {
 		return choosenPlayer;
 	}
 
+	/**
+	 * Choose a Card from Player
+	 * @param aPlayer
+	 * @return choosenCard
+	 */
+	private int chooseCard( Player aPlayer){ 
+		int choosenCard;
+
+		ArrayList<Card> playerCards;
+		playerCards = aPlayer.getPlayerCards();
+		
+	    for (int i=0;i<playerCards.size();i++){
+	    	System.out.println(i+"."+playerCards.get(i).getName());
+	    }
+	    choosenCard = keyIn.nextInt();
+
+		return choosenCard;
+	}
+	
 	/**
 	 * Choose an Area
 	 * @param hasMinions
@@ -442,7 +518,105 @@ public class Action {
 
 		players[game.currentPlayer].loseAllCards();
 		players[game.currentPlayer].receiveAllCards(playerCards);
-	}	
+	}
 
+	/**
+	 * Place a minion 
+	 * @param isUEadjacent
+	 * @param hasownBuilding
+	 * @param hasTroubleMarker
+	 * @param times
+	 */
+	private void placeMinion( boolean UEadjacent, boolean hasownBuilding, boolean hasTroubleMarker, int times)
+	{
+		for (int i=1;i<=times;i++)
+		{
+			int toArea;	
+
+			System.out.println("Choose an area to place this minion:");
+
+			if (UEadjacent)
+				toArea = this.chooseArea(false, true, gameBoard.getAreas().get(2));
+			else
+				toArea = this.chooseArea(false, true, null);
+
+			if (!player.putNewMinionOnBoard(toArea))
+				System.out.println("Not possible to place Minion");
+		}
+	}
+
+	/**
+	 * Take a loan of @amount from the bank. At the end of the game you must pay back $12 or lose 15 points.
+	 * @param amount
+	 */
+	private void takeLoan( int amount )
+	{
+	      player.takeLoan(amount);
+	      player.addMoney(amount);
+	}
+
+	/**
+	 * Select one player. They must give you two cards of their choice.
+	 */
+	private void takeCard( )
+	{
+		int choosenPlayer = 0;
+		int choosenCard;
+		ArrayList<Card> playerCards;
+		
+		System.out.println("Select a player to get 2 Cards:");
+		playerCards = players[choosePlayer()].getPlayerCards();
+	 
+	    System.out.println("Choosen Player(NOT YOU) must choose 2 Cards to give you:");
+	    
+	    for (int i=0;i<playerCards.size();i++){
+	    	System.out.println(i+"."+playerCards.get(i).getName());
+	    }
+	    for (int i=0;i<2;i++){
+	    	System.out.println("Card"+i+":");
+	    	choosenCard = keyIn.nextInt();
+			players[choosenPlayer].transferCard(choosenCard, player);
+	    }
+
+	}
+	
+	/**
+	 * Each player must give you either $1 or one of their cards.
+	 */
+	private void get1fromOthers( )
+	{
+		int choosenCard;
+		ArrayList<Card> playerCards;
+		
+		System.out.println(" Each player must give you either $1 or one of their cards.");
+	    for (int i=0;i<game.getNumberOfPlayers();i++){
+		    System.out.println("Player: "+players[i].getColor().toString()+". Choose 1 for Money or 2 for Card:");
+        if (keyIn.nextInt() == 1){
+          players[i].transferMoneyto(1, player);
+        }
+        else{
+    		playerCards = players[i].getPlayerCards();
+        	System.out.println("Choose the card:");
+    	    for (int count=0;count<playerCards.size();count++){
+    	    	System.out.println(i+"."+playerCards.get(i).getName());
+    	    }
+    		System.out.println("Card"+i+":");
+    	    choosenCard = keyIn.nextInt();
+    		players[i].transferCard(choosenCard, player);
+        }
+	    }
+	}
+	
+	
+	/**
+	 * Play any two other cards from your hand.
+	 */
+	private void play2Cards( )
+	{
+	    for (int count=0;count<2;count++){
+	    	System.out.println("Choose another card to play:");
+	    	new Action(chooseCard(player));
+	    }		
+	}
 }
 

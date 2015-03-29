@@ -135,7 +135,17 @@ public class Player {
 		aPlayer.addMoney(amount);
 		
 	}
-		
+
+	/**
+	 * Transfer Card to another Player
+	 * @param cardNb
+	 * @param aPlayer
+	 */
+	public void transferCard(int cardNb, Player aPlayer) {
+		aPlayer.receiveCard(this.playerCards.get(cardNb));
+		this.playerCards.remove(cardNb);
+	}
+	
 	/**
 	 * Subtracts an amount of money from the player. Returns true if successfull otherwise return false;
 	 * @param amount
