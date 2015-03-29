@@ -219,7 +219,7 @@ public class Area {
 	
 
 	/**
-	 * Add a minion to area
+	 * Add a minion to area..
 	 * @param minion
 	 */
 	public void removeMinion(Colors color)
@@ -230,6 +230,7 @@ public class Area {
 			if(minions.get(i).getColor() == color)
 				this.minions.remove(i);
 		}
+		
 	}
 	
 	/**
@@ -254,7 +255,7 @@ public class Area {
 	 */
 	public boolean removeTroubleMarker()
 	{
-		if(this.troubleMarker==true )//There's no trouble marker on this area.
+		if(this.troubleMarker==true )//There's a trouble marker on this area.
 		{
 			this.troubleMarker=false;
 			return true;

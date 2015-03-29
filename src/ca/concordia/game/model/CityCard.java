@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  * Calss City card is a type of Card. It contains the 12 different Area Cards a unique card number and it's ability.
-*@author Pascal Maniraho 
+ *@author Pascal Maniraho 
  *@author Gustavo Pereira
  *@author Bhavik Desai 
  *@author Jesus Esteban Garro Matamoros 

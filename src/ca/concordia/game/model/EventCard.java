@@ -103,10 +103,10 @@ public class EventCard extends Card {
 				misteriousMurders(currentPlayer,game);
 				break;
 			case 2:
-				
+				riots(currentPlayer,game);
 				break;
 			case 3:
-				
+				subsidence(currentPlayer,game);
 				break;
 			case 4:
 				
@@ -181,6 +181,12 @@ public class EventCard extends Card {
 		}
 	}
 	
+	/**
+	 * Function makes all players, starting with the current player, roll a die and then remove a minion from the rolled area. If an area only contains minions from the rolling player
+	 * then he must remove one of his minions.
+	 * @param currentPlayer
+	 * @param game
+	 */
 	private void misteriousMurders(Player currentPlayer,Game game)
 	{
 		int selectedIndex=-1;
@@ -216,8 +222,9 @@ public class EventCard extends Card {
 					System.out.println("Color:"+minions.get(i).getColor()+" (index: "+i+")  ");
 				}
 				selectedIndex = game.keyIn.nextInt();
-				//Update Gameboard.
-				minions.remove(selectedIndex);
+				//Update Gameboard by removing the selected minion and removing a trouble marker if one is in the area.
+				rolledArea.removeMinion(players[currentPlayerIndex].getColor());
+				rolledArea.removeTroubleMarker();
 				//Update current player's hand. Remove minion from player depending on the areaCode(Card Number).
 				players[currentPlayerIndex].removeMinionOnBoard(rolledArea.getCityCard().getCardNumber());
 			
@@ -230,8 +237,106 @@ public class EventCard extends Card {
 		}
 	}
 	
+	
+	
 	/**
-	 * Returns the next player depending on the parameters sent. Works only for the misterious Murders event. Since it depends on the player that called the function.
+	 * Function check if the board has eight or more trouble markers; if so the game ends and a winner is chosen by calculating  the player's hands.
+	 * @param currentPlayer(currentPlayer)
+	 * @param game(Game)
+	 */
+	private void riots(Player currentPlayer,Game game)
+	{
+		//Check if the board has 8 trouble makers.If so end the game.
+		Gameboard gameBoard=game.getGameBoard();
+		if(gameBoard.troubleMarkers().size()>=8)
+		{
+			System.out.println("There are eight or more trouble markers on the gameBoard. The Game is over");
+			//TODO: call end of game function that has not been written yet.
+		}else
+		{
+			System.out.println("The board does not contain eight or more trouble markers.The card does not apply. Keep Playing!!!");
+		}
+	}
+	
+	/**
+	 * Function goes through each player that has at least one building on the board and makes them pay 2$ for each one. If the player doesn't have enough funds or
+	 * he doesn't want to pay. The building is taken out of the gameboard, further the player returns the respective city card for that area.
+	 * @param currentPlayer(Player)
+	 * @param game(Game)
+	 */
+	private void subsidence(Player currentPlayer,Game game)
+	{
+		Area removeArea;
+		int affordToPay=-1;
+		String playerInput="";
+		CityCard returnCityCard;
+		//Get players
+		Player [] players=game.getPlayers();
+		
+		int currentPlayerIndex=game.getCurrentPlayer();//Get index of current player.
+		
+		//Make all players pay 2$ for each building they have on the board.
+		for(int index=0;index<game.getNumberOfPlayers();index++)
+		{
+			//Get players city cards. Since this would mean they have a building on that area.
+			ArrayList<CityCard> cityCards=players[currentPlayerIndex].getPlayerCityCard();
+			//Check If player has any cards on his/her hand.
+			if(cityCards.size()>0)
+			{
+				System.out.println("Player: "+players[currentPlayerIndex].getColor()+" you have:"+cityCards.size()+" building on the board. And have: "+players[currentPlayerIndex].getMoney()+" dollars.");
+				//Calculate how many buildings the player can pay for.
+				affordToPay= (int) Math.floor(players[currentPlayerIndex].getMoney()/cityCards.size());
+				System.out.println("Player: "+players[currentPlayerIndex].getColor()+"you can afford to pay for: "+affordToPay+" buildings." );
+				//Display all the areas the player currently has buildings on and ask if he wishes to pay for that bulding.
+				//If not remove building and take city card from player.
+				for(int j=0;j<cityCards.size();j++)
+				{
+					System.out.println("You have a bulding on Area: "+cityCards.get(j).getName()+" do you wish to pay for it? yes/no.");
+					playerInput=game.keyIn.next();
+					//Clean up input.
+					playerInput=playerInput.toLowerCase();
+					
+					if(playerInput.contains("y") && affordToPay>0)//If player entered 'yes' and he has enough funds.
+					{
+						//Take two dollars from player.
+						players[currentPlayerIndex].payMoney(2);
+						//Store two dollars in bank
+						Bank.getInstance().deposit(2);
+					}else if(affordToPay<=0 || playerInput.contains("n")) //Remove building and remove city card and update player's hand.
+					{
+						System.out.println("You can not afford to pay for this building or you don't want to. Building will be removed with the respective city card.");
+						//update Gameboard.
+						int cityCardAreaCode=cityCards.get(j).getCardNumber()-1;//-1 since city cards area codes start at 1 and we want to get the array index of areas.
+						removeArea=game.getGameBoard().getAreas().get(cityCardAreaCode);
+						removeArea.removeBuilding();
+						//update Player's hand.
+						players[currentPlayerIndex].setBuildingOnHand(players[currentPlayerIndex].getBuildingOnHand()-1);
+						
+						returnCityCard=players[currentPlayerIndex].returnCityCard(cityCards.get(j));//Remove city card from player.
+						game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
+					}
+					//Calculate how many buildings the player can pay for.
+					affordToPay= (int) Math.floor(players[currentPlayerIndex].getMoney()/cityCards.size());
+					System.out.println("Player: "+players[currentPlayerIndex].getColor()+"you can afford to pay for: "+affordToPay+" buildings." );
+				}
+				
+				
+			}else//get next player.
+			{
+				System.out.println("Player: "+players[currentPlayerIndex].getColor()+" you have no buildings, you don't have to pay anything.");
+				currentPlayerIndex=nextPlayer(currentPlayerIndex,game.getNumberOfPlayers());//Get next player.
+				continue;
+			}
+			//Transaction finished get the next building.
+			currentPlayerIndex=nextPlayer(currentPlayerIndex,game.getNumberOfPlayers());//Get next player.
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * Returns the next player depending on the parameters sent. Getting the next player  depends on the player that called the function.
 	 * @param currentPlayer(int)
 	 * @param numberOfPlayers(int)
 	 * @return int
