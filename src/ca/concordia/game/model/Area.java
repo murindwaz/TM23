@@ -221,7 +221,7 @@ public class Area {
 		
 	}
 	
-
+	//TODO: Check if we can remove the trouble marker from here as well.
 	/**
 	 * Add a minion to area. Returns true if successful otherwise it returns false.
 	 * @param minion
@@ -233,10 +233,9 @@ public class Area {
 		for(int i=0;i<minions.size();i++)
 		{
 			if(minions.get(i).getColor() == color)
-				return this.minions.remove(i);
-				 
-			
+				return this.minions.remove(i);	
 		}
+		
 		return null;
 		
 	}

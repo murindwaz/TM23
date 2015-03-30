@@ -1,6 +1,8 @@
 package ca.concordia.game.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
@@ -137,10 +139,8 @@ public class EventCard extends Card {
 				flood(currentPlayer,game);
 				break;
 			case 11:
-				//Interrupt card.
-				
+				fire(currentPlayer,game);	
 				break;
-
 			default:
 				break;
 		}
@@ -549,7 +549,7 @@ public class EventCard extends Card {
 	 * @param currentPlayer (Player)
 	 * @param game (Game)
 	 */
-	public void flood(Player currentPlayer,Game game)
+	private void flood(Player currentPlayer,Game game)
 	{
 		Area area;
 		Area moveToArea;
@@ -606,9 +606,78 @@ public class EventCard extends Card {
 			}
 		}
 	}
+	
+	/**
+	 * Fire makes a player roll a die, if the area corresponding to the rolled value has a building then it is destroyed and the player can keep rolling.
+	 * If not then the fire stops. If player keeps rolling he needs to roll the value of an area that is adjacent to the previous area rolled for the fire 
+	 * to continue and that area has to contain a building, otherwise the fire stops.
+	 * @param currentPlayer (Player)
+	 * @param game (Game)
+	 */
+	private void fire(Player currentPlayer,Game game)
+	{
+		//Make current player roll the die
+		Die die=game.getDie();
+		int [] buildingToRemove;
+		Area affectedArea=null;
+		int rolledValue=-1;
+		boolean keeprolling=true;
+		//Temporal Arraylist
+		ArrayList<Integer> temp= new ArrayList<Integer>();
+		
+		boolean isAdjacent=false;
+		while(keeprolling)
+		{
+			//check if this is the first roll.
+			if(temp.isEmpty())
+			{//is first roll
+				rolledValue=die.roll();//roll and store rolled Value.
+				System.out.println("Player: "+currentPlayer.getColor()+" Rolled Value: "+rolledValue+".");
+				affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue-1);
+			}else
+			{//is not first roll.
+				rolledValue=die.roll();//roll and store rolled Value.
+				System.out.println("Player: "+currentPlayer.getColor()+" Rolled Value: "+rolledValue+".");
+				//check if this area is adjacent to the last one.
+				isAdjacent= affectedArea.getCityCard().isAdjacent(rolledValue);
+				if(isAdjacent)
+				{
+					System.out.print("Area: "+affectedArea.getCityCard().getName()+" is adjacent to rolled area:");
+					affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue-1);
+					System.out.print(affectedArea.getCityCard().getName()+"./n");
+				}
+				else
+				{
+					keeprolling=false;
+					System.out.print("Area: "+affectedArea.getCityCard().getName()+" is NOT adjacent to rolled area:");
+					affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue-1);
+					System.out.print(affectedArea.getCityCard().getName()+". END OF FIRE./n");
+					break;//Exit loop.
+				}
+			}
+			//check if area has a building.
+			if(affectedArea.getBuilding())
+			{
+				//Add to arrayList
+				temp.add(rolledValue);
+				System.out.println("Area:"+affectedArea.getCityCard().getName()+" is affected by fire!!!!!!!"+ "  Player:"+affectedArea.getBuildingColor()+" has lost a building!!!");
+				
+			}else//If area doesn't have a building then stop rolling and exit while loop.
+				keeprolling=false;
+			
+		}
+		
+		//Copy values of affected areas(ArrayList temp) to array.
+		buildingToRemove=convertIntegers(temp);
+		
+		//Remove buildings in areas affected by the fire.
+		removeBuildingFromArea(buildingToRemove,game);
+	}
 
 	/**
-	 * Function removes a building and makes the affected player return his city card to the board depending on the values rolled.
+	 * Function removes a building and makes the affected player return his city card to the board depending on the values sent in the array.
+	 * Each value in the array  represents an area that whose building needs to be removed; if it exists. Further the GameBoard and the hand from the Player affected
+	 * are updated respectively.
 	 * @param rolledDie (int [])
 	 * @param game (Game)
 	 */
@@ -657,6 +726,22 @@ public class EventCard extends Card {
 	private  int nextPlayer(int currentPlayer,int numberOfPlayers) {
 		currentPlayer = (currentPlayer + 1) % numberOfPlayers;
 		return currentPlayer;
+	}
+	
+	/**
+	 * Converts a List of Integers to and array of int(primitive type)
+	 * @param integers (List<Integer>)
+	 * @return int[]
+	 */
+	private  int[] convertIntegers(List<Integer> integers)
+	{
+	    int[] ret = new int[integers.size()];
+	    Iterator<Integer> iterator = integers.iterator();
+	    for (int i = 0; i < ret.length; i++)
+	    {
+	        ret[i] = iterator.next().intValue();
+	    }
+	    return ret;
 	}
 	
 	/**
