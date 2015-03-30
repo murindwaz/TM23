@@ -169,10 +169,16 @@ public class Action {
 				rollDieWinorLose(4, false);
 				break;
 
+				// 67: Look at all but one of the unused Personality cards.
+			case 67:
+				lookUnusedPersonalities();
+				break;
+
 				// 58: Each player must give you either $1 or one of their cards.
 			case 58:
 				get1fromOthers();
 				break;
+
 				// 6 : Remove one minion from Unreal Estate.
 			case 6:
 				removeUnrealEstateMinion();
@@ -434,7 +440,6 @@ public class Action {
 	 * Look other player's cards and discard one
 	 */
 	private void discardOthersCard() {
-
 		ArrayList<Card> playerCards;
 		int cardNb;
 		System.out.println("Select a Player to loose a card:");
@@ -657,7 +662,6 @@ public class Action {
 	 * @param is64 (cardID)
 	 */
 	private void rollDieWinorLose(int amount, boolean is64) {
-		int choosenPlayer = 0;
 		int choosenOption = 0;
 		int choosenArea = 0;
 
@@ -669,7 +673,6 @@ public class Action {
 				bank.transferFunds(player, amount);
 			else{    // Amount from another Player
 				System.out.println("Choose a Player to get $"+amount);
-				choosenPlayer = choosePlayer();
 				players[choosePlayer()].transferMoneyto(amount, player);   
 			}
 		}
@@ -700,4 +703,15 @@ public class Action {
 		}
 
 	}	
+
+	/**
+	 *  Look at all but one of the unused Personality cards.
+	 * 
+	 */
+	private void lookUnusedPersonalities( ) {
+		ArrayList<Card> personalityCards = game.getDecks().get("personalities").getArrayDeck();
+		for (int i=1; i<personalityCards.size(); i++)
+			System.out.println(i+personalityCards.get(i).toString());
+	}
+
 }
