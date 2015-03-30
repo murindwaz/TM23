@@ -28,72 +28,74 @@ public class StatePlay implements StateLike {
 		System.out.println(player.toString());
 		// Play one of the cards, ask user for input.
 		int cardNumberInPlayerHand;
-		while (true) {
-			System.out
-					.println("Please enter the card number you wish to play(Select the number for 'Position in Player Hand'):");
-			cardNumberInPlayerHand = game.keyIn.nextInt();
-			if (cardNumberInPlayerHand > player.getPlayerCards().size() - 1) {
-				System.out.println("Incorrect input please select a number between 0 and "
-						+ (player.getPlayerCards().size() - 1));
-			} else {
-				break;
-			}
-		}
+		boolean playAnotherCard=true;
 		
-		// Get card chosen by player.
-		// Get the actions for the chosen card.
-		GreenCard chosenCard = (GreenCard) player.getPlayerCards().get(cardNumberInPlayerHand);
-		ArrayList<Symbol> actionSymbols = chosenCard.getActionsSymbols();
-
-		/** 
-		 * @todo remove the following section if there is no reason to keep this thing here.  
-		 * For testing purposes
-		 */
-		Symbol placeMinion = new Symbol(1);
-		Symbol placeBulding = new Symbol(2);
-		Symbol removePiece = new Symbol(3);
-		Symbol removeTroubleMarker = new Symbol(4);
-		Symbol takeMoneyFromBank = new Symbol(5);
-		Symbol scroll = new Symbol(6);
-		Symbol event = new Symbol(7);
-		Symbol playAnotherCard = new Symbol(8);
-		Symbol interrupt = new Symbol(9);
-
-		actionSymbols.add(placeMinion);
-		actionSymbols.add(placeBulding);
-		actionSymbols.add(removePiece);
-		actionSymbols.add(removeTroubleMarker);
-		actionSymbols.add(takeMoneyFromBank);
-		actionSymbols.add(scroll);
-		actionSymbols.add(event);
-		actionSymbols.add(playAnotherCard);
-		actionSymbols.add(interrupt);
-
-		// Execute each Symbol action sequentially.
-		String userAwnser;
-		for (int i = 0; i < actionSymbols.size(); i++) {
-			System.out.println(actionSymbols.get(i).getDescription());
-			/** 
-			 * If symbol is mandatory don't ask Player if he want's to use the symbol. 
-			 * Print out symbol description.
-			 */
-			if (actionSymbols.get(i).isMandatory) {
-				System.out.println("This action is mandatory.");
-				actionSymbols.get(i).useSymbol(player, game, cardNumberInPlayerHand);
-			} else {
-				System.out.println("Would you like to use this action(yes/no)?");
-				userAwnser = game.keyIn.next();
-				if (userAwnser.contains("y")) {
-					actionSymbols.get(i).useSymbol(player, game, cardNumberInPlayerHand);
-					/**
-					 * Display board status.
-					 */ 
-					System.out.println(gameBoard.toString());
+		while(playAnotherCard)
+		{
+			while (true) {
+				System.out.println("Please enter the card number you wish to play(Select the number for 'Position in Player Hand'):");
+				cardNumberInPlayerHand = game.keyIn.nextInt();
+				if (cardNumberInPlayerHand > player.getPlayerCards().size() - 1) {
+					System.out.println("Incorrect input please select a number between 0 and "
+							+ (player.getPlayerCards().size() - 1));
 				} else {
-					System.out.println("Action Skipped.");
+					break;
 				}
 			}
-		}
+
+			// Get card chosen by player.
+			// Get the actions for the chosen card.
+			GreenCard chosenCard = (GreenCard) player.getPlayerCards().get(cardNumberInPlayerHand);
+			ArrayList<Symbol> actionSymbols = chosenCard.getActionsSymbols();
+
+			/** 
+			 * @todo remove the following section if there is no reason to keep this thing here.  
+			 * For testing purposes
+			 */
+			Symbol placeMinion = new Symbol(1);
+			Symbol placeBulding = new Symbol(2);
+			Symbol removePiece = new Symbol(3);
+			Symbol removeTroubleMarker = new Symbol(4);
+			Symbol takeMoneyFromBank = new Symbol(5);
+			Symbol scroll = new Symbol(6);
+			Symbol event = new Symbol(7);
+			Symbol playAnotherCard2 = new Symbol(8);
+			Symbol interrupt = new Symbol(9);
+
+			actionSymbols.add(placeMinion);
+			actionSymbols.add(placeBulding);
+			actionSymbols.add(removePiece);
+			actionSymbols.add(removeTroubleMarker);
+			actionSymbols.add(takeMoneyFromBank);
+			actionSymbols.add(scroll);
+			actionSymbols.add(event);
+			actionSymbols.add(playAnotherCard2);
+			actionSymbols.add(interrupt);
+
+			// Execute each Symbol action sequentially.
+			String userAwnser;
+			for (int i = 0; i < actionSymbols.size(); i++) {
+				//Print out symbol description. 
+				System.out.println(actionSymbols.get(i).getDescription());
+	
+				 //If symbol is mandatory don't ask Player if he want's to use the symbol. 
+				if (actionSymbols.get(i).isMandatory) {
+					System.out.println("This action is mandatory.");
+					playAnotherCard=actionSymbols.get(i).useSymbol(player, game, chosenCard.getNumber());
+				} else {
+					System.out.println("Would you like to use this action(yes/no)?");
+					userAwnser = game.keyIn.next();
+					if (userAwnser.contains("y")) {
+						playAnotherCard=actionSymbols.get(i).useSymbol(player, game, chosenCard.getNumber());	
+						//Display board status.
+						System.out.println(gameBoard.toString());
+					} else {
+						System.out.println("Action Skipped.");
+					}
+				}
+			}//for
+			
+		}//while
 		/** 
 		 * Display board status.
 		 * Display the players hand.

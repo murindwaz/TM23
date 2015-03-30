@@ -102,7 +102,7 @@ public class EventCard extends Card {
 	 * @param game(Game)
 	 * @param cardID(int)
 	 */
-	public void useEventCard(Player currentPlayer,Game game, int cardID)
+	public void useEventCard(Player currentPlayer,Game game)
 	{
 		switch(this.eventCardId) {
 			case 0:
@@ -431,7 +431,7 @@ public class EventCard extends Card {
 	 * @param currentPlayer
 	 * @param game
 	 */
-	public void demonsFromDungeonDimensions(Player currentPlayer,Game game)
+	private void demonsFromDungeonDimensions(Player currentPlayer,Game game)
 	{
 		//Make current player roll the die
 		Die die=game.getDie();
@@ -750,5 +750,13 @@ public class EventCard extends Card {
 	public void setName(String name)
 	{
 		this.eventCardName=name;
+	}
+	/**
+	 * Getter: Event description or instruction.
+	 * @return String
+	 */
+	public String getInstruction()
+	{
+		return this.instruction;
 	}
 }

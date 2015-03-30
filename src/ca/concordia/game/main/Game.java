@@ -106,17 +106,9 @@ public class Game {
 	}
 
 	// Start playing game instance.
-	public void play() {
-		Map<Integer, Colors> playerDieRollMap = new HashMap<Integer, Colors>();// Will
-																				// store
-																				// the
-																				// value
-																				// rolled
-																				// depending
-																				// on
-																				// the
-																				// player's
-																				// color.
+	public void play() { 
+		Map<Integer, Colors> playerDieRollMap = new HashMap<Integer, Colors>();// Will store the value rolled depending on the player's color.
+																			
 		ArrayList<Integer> playerDieRoll = new ArrayList<Integer>();
 		int rollValue = -1;
 		// roll dice for each player to pick first player.
