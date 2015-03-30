@@ -61,11 +61,11 @@ public class Action {
 			case 88:
 				getCards(4);
 				break;
-			/**
-			 * Group2: Earn Money 2,27,90 1 for each TroubleMarker on Board
-			 * 14,40 2 for each Building on Board 61,83 3 for Minions on Isle of
-			 * God 54,101 4 from all Players 84 5 from one Player
-			 */
+				/**
+				 * Group2: Earn Money 2,27,90 1 for each TroubleMarker on Board
+				 * 14,40 2 for each Building on Board 61,83 3 for Minions on Isle of
+				 * God 54,101 4 from all Players 84 5 from one Player
+				 */
 			case 2:
 			case 27:
 			case 90:
@@ -86,19 +86,19 @@ public class Action {
 			case 84:
 				earnMoney(3, 5);
 				break;
-			/**
-			 * Group3: Pay another player then move minion 5,8,44
-			 */
+				/**
+				 * Group3: Pay another player then move minion 5,8,44
+				 */
 			case 5:
 			case 8:
 			case 44:
 				paynRemoveMinion(2, cardId);
 				break;
-			/**
-			 * Group4: Move a minion belonging to another player from one area
-			 * to an adjacent area 11,62,72 15,18,92 Your own minion, not
-			 * required to be adjacent 92 Your own minion and adjacent
-			 ***/
+				/**
+				 * Group4: Move a minion belonging to another player from one area
+				 * to an adjacent area 11,62,72 15,18,92 Your own minion, not
+				 * required to be adjacent 92 Your own minion and adjacent
+				 */
 			case 11:
 			case 62:
 			case 72:
@@ -112,12 +112,13 @@ public class Action {
 				moveMinion(true, true, true);
 				break;
 
-			// Group5: Place a minion
-			// 17,32
-			// 34 has TroubleMarker
-			// 28 has Building
-			// 31,29 inUE
-			// 46,71 removed ??
+				/** Group5: Place a minion
+				 * 17,32
+				 * 34 has TroubleMarker
+				 * 28 has Building
+				 * 31,29 inUE
+				 * 46,71 removed ??
+				 */
 			case 17:
 			case 32:
 				placeMinion(false, false, false, 1);
@@ -138,38 +139,49 @@ public class Action {
 			case 71:
 				placeMinion(false, false, false, 1);
 				break;
-			// Group6: TakeLoan
-			// 55,57
+				/** Group6: TakeLoan* 55,57
+				 */
 			case 55:
 			case 57:
 				takeLoan(10);
 				break;
 
-			// Group7: TakeCard from Player
-			// 56
+				/** Group7: TakeCard from Player: 56, 94
+				 */
 			case 56:
 			case 94:
 				takeCard();
 				break;
-			// Group8: Play two other cards
-			// 39, 63
+				/** Group8: Play two other cards: 39, 63 
+				 */
 			case 39:
 			case 63:
 				play2Cards();
 				break;
-			// 58: Each player must give you either $1 or one of their cards.
+
+				/** Group9: 64, 78
+				 * Roll die, earn or lose money/minion
+				 */
+			case 64:
+				rollDieWinorLose(3, true);
+				break;
+			case 78:
+				rollDieWinorLose(4, false);
+				break;
+
+				// 58: Each player must give you either $1 or one of their cards.
 			case 58:
 				get1fromOthers();
 				break;
-			// 6 : Remove one minion from Unreal Estate.
+				// 6 : Remove one minion from Unreal Estate.
 			case 6:
 				removeUnrealEstateMinion();
 				break;
-			// 9 : Exchange minions position
+				// 9 : Exchange minions position
 			case 9:
 				exchangeMinions();
 				break;
-			// 10 Look other player's cards and discard one
+				// 10 Look other player's cards and discard one
 			case 10:
 				discardOthersCard();
 				// 12: Roll the die twice and remove one minion of your choice
@@ -177,7 +189,7 @@ public class Action {
 			case 12:
 				rollnRemoveMinion();
 				break;
-			// 13: Exchange your hand with that of another player.
+				// 13: Exchange your hand with that of another player.
 			case 13:
 				exchangeCards();
 				break;
@@ -188,6 +200,8 @@ public class Action {
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////User INPUT methods
+
 	/**
 	 * Choose a Player
 	 * 
@@ -195,12 +209,20 @@ public class Action {
 	 */
 	private int choosePlayer() {
 		int choosenPlayer = 0;
-		for (int i = 0; i < game.numberOfPlayers; i++) {
-			if (game.currentPlayer != i) {
-				System.out.println(i + "." + players[i].getPersonality().getName() + " " + players[i].getColor() + ",");
+		while(true){
+			for (int i = 0; i < game.numberOfPlayers; i++) {
+				if (game.currentPlayer != i) {
+					System.out.println(i + "." + players[i].getPersonality().getName() + " " + players[i].getColor() + ",");
+				}
 			}
+			choosenPlayer = keyIn.nextInt();
+			if (players[choosenPlayer]==null) {
+				System.out.println("Not a valid choice. Please enter Player again:");
+				continue;
+			}
+			else
+				break;
 		}
-		choosenPlayer = keyIn.nextInt();
 
 		return choosenPlayer;
 	}
@@ -213,15 +235,22 @@ public class Action {
 	 */
 	private int chooseCard(Player aPlayer) {
 		int choosenCard;
-
 		ArrayList<Card> playerCards;
 		playerCards = aPlayer.getPlayerCards();
 
-		for (int i = 0; i < playerCards.size(); i++) {
-			System.out.println(i + "." + playerCards.get(i).getName());
-		}
-		choosenCard = keyIn.nextInt();
+		while(true){
+			for (int i = 0; i < playerCards.size(); i++) {
+				System.out.println(i + "." + playerCards.get(i).getName());
+			}
+			choosenCard = keyIn.nextInt();
 
+			if (playerCards.get(choosenCard)==null) {
+				System.out.println("Not a valid choice. Please choose Card again:");
+				continue;
+			}
+			else
+				break;
+		}
 		return choosenCard;
 	}
 
@@ -234,23 +263,39 @@ public class Action {
 	 * @return choosenArea
 	 */
 	private int chooseArea(boolean hasMinions, boolean hasTroubleMarker, Area aArea) {
+		int choosenArea;
+		int areas[] = new int[0];
 
-		for (int i = 0; i < 12; i++) {
-			if (hasMinions)
-				if (gameBoard.getAreas().get(i).getMinions().isEmpty())
-					continue;
-			if (aArea != null)
-				if (aArea.getCityCard().getAdjacentAreas().get(i) == null)
-					continue;
-			if (hasTroubleMarker)
-				if (gameBoard.troubleMarkersAreas().get(i) == null)
-					continue;
-			System.out.println(i + "." + gameBoard.getAreas().get(i).toString());
+		while(true){
+			for (int i = 0; i < 12; i++) {
+				areas[i] = 99; //not valid
+				if (hasMinions)
+					if (gameBoard.getAreas().get(i).getMinions().isEmpty())
+						continue;
+				if (aArea != null)
+					if (aArea.getCityCard().getAdjacentAreas().get(i) == null)
+						continue;
+				if (hasTroubleMarker)
+					if (gameBoard.troubleMarkersAreas().get(i) == null)
+						continue;
+				System.out.println(i + "." + gameBoard.getAreas().get(i).toString());
+				areas[i] = i; //valid
+			}
+			choosenArea = keyIn.nextInt();
+
+			if (areas[choosenArea]!=choosenArea) {
+				System.out.println("Not a valid choice. Please choose Area again:");
+				continue;
+			}
+			else
+				break;
 		}
-		return keyIn.nextInt();
+
+		return choosenArea;
 
 	}
 
+	//////////////////////////////////////////////////////////////////////////Action methods
 	/**
 	 * Add card to player playing cards.
 	 * 
@@ -601,4 +646,58 @@ public class Action {
 			new Action(chooseCard(player));
 		}
 	}
+
+	//78: Roll the die. On a roll of '7' or more you take $3 from a player of your choice. 
+	//On a roll of a '1' you must remove one of your minions from the board. All other results have no effect.
+	//64: Roll the die. On a roll of '7' or more you take $4 from the bank. 
+	//On a roll of' l' you must pay $2 to the bank or remove one of your minions from the board. All other results have no effect.
+	/**
+	 * 	Roll the die. On a roll of '7' or more you take @amount from a player of your choice or bank.
+	 * @param amount
+	 * @param is64 (cardID)
+	 */
+	private void rollDieWinorLose(int amount, boolean is64) {
+		int choosenPlayer = 0;
+		int choosenOption = 0;
+		int choosenArea = 0;
+
+		rollValue = die.roll();
+		System.out.println("Rolling the die...: "+rollValue);
+
+		if ( rollValue >= 7 ){
+			if (is64) //Amount from the Bank
+				bank.transferFunds(player, amount);
+			else{    // Amount from another Player
+				System.out.println("Choose a Player to get $"+amount);
+				choosenPlayer = choosePlayer();
+				players[choosePlayer()].transferMoneyto(amount, player);   
+			}
+		}
+
+		if ( rollValue == 1) {
+			if (is64) {
+				System.out.println("Choose either:");
+				System.out.println("1. Pay $2 to the bank or;");
+				System.out.println("2. Remove one of your minions; :");
+				while(true){
+					choosenOption = keyIn.nextInt();
+					if (choosenOption != 1 && choosenOption != 2){
+						System.out.println("Not a valid choice. Choose again:");
+						continue;
+					}
+					else
+						break;	
+				}
+			}	
+			if (is64 == true && choosenOption == 1 && player.payMoney(2)==true)
+				bank.deposit(2);
+			else{
+				System.out.println("Choose Area:");
+				choosenArea = chooseArea(true, false, null);
+				gameBoard.getAreas().get(choosenArea).removeMinion(player.color);
+
+			}
+		}
+
+	}	
 }
