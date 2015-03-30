@@ -21,7 +21,7 @@ public class CityCard extends Card {
 	private ArrayList<Integer> adjacentAreas; // Contains adjacent area codes
 												// referencing an area code.
 	private int buildingCost;
-	public Boolean doesFlood = false;
+	private boolean doesFlood = false;
 
 	/**
 	 * Constructor: Depending on the integer sent it sets the name and ability
@@ -69,6 +69,7 @@ public class CityCard extends Card {
 			this.buildingCost = 18;
 			temp = new Integer[] { 2, 3, 5, 6, 10 };
 			this.adjacentAreas.addAll(Arrays.asList(temp));
+			this.doesFlood = true;
 			break;
 		case 4:
 			this.setName("The Scours");
@@ -109,6 +110,7 @@ public class CityCard extends Card {
 			this.buildingCost = 12;
 			temp = new Integer[] { 8, 10, 11 };
 			this.adjacentAreas.addAll(Arrays.asList(temp));
+			this.doesFlood = true;
 			break;
 		case 9:
 			this.setName("Isle of Gods");
@@ -150,9 +152,10 @@ public class CityCard extends Card {
 		super(true, false);
 		this.setName(name);
 	}
+	
 
 	/**
-	 * getter Unique card Number.
+	 * getter: Unique card Number.
 	 * 
 	 * @return int
 	 */
@@ -161,12 +164,21 @@ public class CityCard extends Card {
 	}
 
 	/**
-	 * getter cost of putting a building.
+	 * getter: cost of putting a building.
 	 * 
 	 * @return int
 	 */
 	public int getBuldingCost() {
 		return this.buildingCost;
+	}
+	
+	/**
+	 * getter: returns of the  the area can get flooded.
+	 * @return boolean
+	 */
+	public boolean getDoesFlood()
+	{
+		return this.doesFlood;
 	}
 
 	/**
@@ -187,5 +199,7 @@ public class CityCard extends Card {
 	public ArrayList<Integer> getAdjacentAreas() {
 		return this.adjacentAreas;
 	}
+	
+	
 
 }

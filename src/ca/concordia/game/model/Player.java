@@ -244,7 +244,7 @@ public class Player {
 	 */
 	public boolean removeMinionOnBoard(int areaCode)
 	{
-		if(this.minionsOnAreas[areaCode]>0)
+		if(this.minionsOnAreas[areaCode-1]>0)
 		{
 			this.minionsOnHand++;
 			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]-1;
@@ -255,18 +255,17 @@ public class Player {
 	
 	/**
 	 * Move a minion from one area to another.
-	 * @param oldAreaCode
-	 * @param newAreaCode
+	 * @param oldAreaCode(int)
+	 * @param newAreaCode(int)
 	 * @return boolean
 	 */
 	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode)
 	{
-		if(this.minionsOnAreas[oldAreaCode-1] >0)
-		{
-			this.minionsOnAreas[oldAreaCode-1]=this.minionsOnAreas[oldAreaCode-1]-1;
-			this.minionsOnAreas[newAreaCode-1]=this.minionsOnAreas[newAreaCode-1]+1;
+		boolean check=removeMinionOnBoard(oldAreaCode);
+		boolean check2=putNewMinionOnBoard(newAreaCode);
+		if(check && check2)
 			return true;
-		}else
+		else
 			return false;
 	}
 	

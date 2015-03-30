@@ -71,6 +71,8 @@ public class Area {
 	}
 	
 	
+	
+	
 	/**
 	 * Checks if the color of a player controls the area.Returns true if it does otherwise it returns false.
 	 * @param color(Colors)
@@ -225,18 +227,17 @@ public class Area {
 	 * @param minion
 	 * @return boolean
 	 */
-	public boolean removeMinion(Colors color)
+	public Piece removeMinion(Colors color)
 	{
 		//this.minions.remove(minion);
 		for(int i=0;i<minions.size();i++)
 		{
 			if(minions.get(i).getColor() == color)
-			{
-				this.minions.remove(i);
-				return true;
-			}
+				return this.minions.remove(i);
+				 
+			
 		}
-		return false;
+		return null;
 		
 	}
 	
