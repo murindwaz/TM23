@@ -94,6 +94,12 @@ public class EventCard extends Card {
 		}
 	}
 	
+	/**
+	 * Function executes the correct method depending on the event card that called it.
+	 * @param currentPlayer(Player)
+	 * @param game(Game)
+	 * @param cardID(int)
+	 */
 	public void useEventCard(Player currentPlayer,Game game, int cardID)
 	{
 		switch(this.eventCardId) {
@@ -123,15 +129,12 @@ public class EventCard extends Card {
 				break;
 			case 8:
 				earthquake(currentPlayer,game);
-				
 				break;
 			case 9:
-				//Interrupt card.
-				
+				explosion(currentPlayer,game);
 				break;
 			case 10:
-				//Interrupt card.
-				
+				flood(currentPlayer,game);
 				break;
 			case 11:
 				//Interrupt card.
@@ -497,12 +500,12 @@ public class EventCard extends Card {
 	}
 	
 	/**
-	 * Earthquake makes the calling player roll a die twice and depending on the values rolled two areas get their buildings 
+	 * Earthquake makes the calling player roll a die twice and depending on the values rolled two areas gets their buildings 
 	 * removed and the affected player return their city cards to the board. If there are no buildings on the areas affected nothing happens.
 	 * @param currentPlayer(Player)
 	 * @param game(Game)
 	 */
-	public void earthquake(Player currentPlayer,Game game)
+	private void earthquake(Player currentPlayer,Game game)
 	{
 		
 		//Make current player roll the die
@@ -516,6 +519,64 @@ public class EventCard extends Card {
 		}
 		//Check if the areas affected have buildings on them, if so remove them along with the city card.
 		removeBuildingFromArea(rolledDie,game);
+	}
+	
+	/**
+	 * Explosion makes the calling player roll a die once and depending on the values rolled one areas gets their building 
+	 * removed and the affected player return their city cards to the board. If there are no buildings on the area affected nothing happens.
+	 * @param currentPlayer(Player)
+	 * @param game(Game)
+	 */
+	private void explosion(Player currentPlayer,Game game)
+	{
+		//Make current player roll the die
+		Die die=game.getDie();
+		int [] rolledDie=new int[1];
+		//Roll die four times and store results.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			rolledDie[i]=die.roll();
+			System.out.print("Player: "+currentPlayer.getColor()+" Rolled Value: "+rolledDie[i]+"  ");
+		}
+		//Check if the areas affected have buildings on them, if so remove them along with the city card.
+		removeBuildingFromArea(rolledDie,game);
+	}
+	
+	public void flood(Player currentPlayer,Game game)
+	{
+		Area area;
+		ArrayList<Piece>minions;
+		//Make current player roll the die
+		Die die=game.getDie();
+		int [] rolledDie=new int[2];
+		//Roll die four times and store results.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			rolledDie[i]=die.roll();
+			System.out.print("Player: "+currentPlayer.getColor()+" Rolled Value: "+rolledDie[i]+"  ");
+		}
+		//Make players move their minions to adjacent areas, from the affected areas.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			//Get affected Area.
+			area=game.getGameBoard().getAreaByCityCard(rolledDie[0]-1);//-1 it's an arraylist and index starts at 0;
+			if(area.getCityCard().getDoesFlood())//check if the area can be flooded.
+			{
+				System.out.println("Area: "+area.getCityCard().getName()+" is got flooded by the river...");
+				
+				minions=area.getMinions();
+				//Move each minion to adjacent areas.
+				for(int j=0;j<minions.size();j++)
+				{
+					
+				}
+				
+				
+			}else
+			{
+				System.out.println("Area: "+area.getCityCard().getName()+" is not affected by the flood, nothing happens.");
+			}
+		}
 	}
 
 	/**

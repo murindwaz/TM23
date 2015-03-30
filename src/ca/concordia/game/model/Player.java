@@ -255,8 +255,8 @@ public class Player {
 	
 	/**
 	 * Move a minion from one area to another.
-	 * @param oldAreaCode
-	 * @param newAreaCode
+	 * @param oldAreaCode(int)
+	 * @param newAreaCode(int)
 	 * @return boolean
 	 */
 	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode)
