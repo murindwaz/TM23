@@ -408,7 +408,8 @@ public class EventCard extends Card {
 		Area rolledArea=gameBoard.getAreaByCityCard(valueDie);//Get respective area.
 		
 		//Try to remove minion. 
-		if(rolledArea.removeMinion(players[currentPlayerIndex].getColor()))
+		Piece removedminion=rolledArea.removeMinion(players[currentPlayerIndex].getColor());
+		if(removedminion != null)
 		{
 			System.out.println("A minion belonging to Player: "+players[currentPlayerIndex].getColor()+" on area: "+rolledArea.getCityCard().getName()+" has been removed.");
 			//update players hand.
@@ -542,10 +543,21 @@ public class EventCard extends Card {
 		removeBuildingFromArea(rolledDie,game);
 	}
 	
+	/**
+	 * Flood makes the calling player roll a die twice, depending on the values rolled the corresponding areas get flooded; only if it is adjacent to the river.
+	 * All the minions have to be removed from this area and put on an adjacent area to the affected area.
+	 * @param currentPlayer (Player)
+	 * @param game (Game)
+	 */
 	public void flood(Player currentPlayer,Game game)
 	{
 		Area area;
+		Area moveToArea;
 		ArrayList<Piece>minions;
+		Colors color;
+		Player player;//AffectedPlayer
+		Piece removedMinion;
+		int areaMoveInt=-1;
 		//Make current player roll the die
 		Die die=game.getDie();
 		int [] rolledDie=new int[2];
@@ -562,13 +574,29 @@ public class EventCard extends Card {
 			area=game.getGameBoard().getAreaByCityCard(rolledDie[0]-1);//-1 it's an arraylist and index starts at 0;
 			if(area.getCityCard().getDoesFlood())//check if the area can be flooded.
 			{
-				System.out.println("Area: "+area.getCityCard().getName()+" is got flooded by the river...");
+				System.out.println("Area: "+area.getCityCard().getName()+"  got flooded by the river...");
 				
 				minions=area.getMinions();
 				//Move each minion to adjacent areas.
-				for(int j=0;j<minions.size();j++)
+				for(int j=0;j < minions.size();j++)
 				{
+					color = minions.get(j).getColor();
+					player=game.getPlayerByColor(color);
+					System.out.println("Player:"+player.getColor()+" please select the index of the area you wish to move your minions to:");
+					//Display adjacent areas to current affected area.
+					game.getGameBoard().displayAdjacentAreas(area);
+					areaMoveInt=game.keyIn.nextInt();//Get input from player.
+					//Get area where player choose to move minion to.
+					moveToArea=game.getGameBoard().getAreaByCityCard(areaMoveInt-1);//-1 Since we area accessing an array that starts at 0.
 					
+					//remove minion from flooded area and move it to new area.
+					removedMinion=area.removeMinion(color);//Remove
+					moveToArea.addMinion(removedMinion);//Add
+					
+					//Update Players hand.
+					player.moveMinionToNewArea(area.getCityCard().getCardNumber(), areaMoveInt);
+					
+					System.out.println("Minion: "+removedMinion.getColor()+" was moved from: "+area.getCityCard().getName()+" to:"+moveToArea.getCityCard().getName());
 				}
 				
 				

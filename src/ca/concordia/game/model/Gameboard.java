@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 //Packages
 import ca.concordia.game.main.Game;
 import ca.concordia.game.common.common;
@@ -56,6 +57,25 @@ public class Gameboard {
 			this.areas.get(6).addMinion(new Piece(players[i].getColor()));
 		}
 
+	}
+	
+	//TODO: Check if it works.Check indexes.
+	/**
+	 * Displays all the areas that are adjacent to the area sent as an argument.
+	 * @param area(Area)
+	 */
+	public void displayAdjacentAreas(Area area)
+	{
+		int cardCode;
+		Area adjArea;
+		System.out.println("Area: "+area.getCityCard().getName()+" is adjacent to:");
+		//Go trough all adjacent areas.
+		for(int i=0; i<area.getCityCard().getAdjacentAreas().size();i++)
+		{
+			cardCode=area.getCityCard().getAdjacentAreas().get(i);
+			adjArea=this.getAreaByCityCard(cardCode-1);//-1 since we are accesing an array list that starts at 0;
+			System.out.print(adjArea.getCityCard().getName()+"("+cardCode+")"+" ");
+		}
 	}
 	
 	/**

@@ -152,6 +152,7 @@ public class CityCard extends Card {
 		super(true, false);
 		this.setName(name);
 	}
+	
 
 	/**
 	 * getter: Unique card Number.
@@ -198,5 +199,7 @@ public class CityCard extends Card {
 	public ArrayList<Integer> getAdjacentAreas() {
 		return this.adjacentAreas;
 	}
+	
+	
 
 }
