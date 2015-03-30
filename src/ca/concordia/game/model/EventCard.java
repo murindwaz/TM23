@@ -423,6 +423,11 @@ public class EventCard extends Card {
 		
 	}
 	
+	/**
+	 * Function makes player roll the die four times and depending on the rolled value demons area added to the respective areas.
+	 * @param currentPlayer
+	 * @param game
+	 */
 	public void demonsFromDungeonDimensions(Player currentPlayer,Game game)
 	{
 		//Make current player roll the die
