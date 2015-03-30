@@ -122,7 +122,7 @@ public class EventCard extends Card {
 				dragon(currentPlayer,game);
 				break;
 			case 8:
-				//Interrupt card.
+				earthquake(currentPlayer,game);
 				
 				break;
 			case 9:
@@ -459,12 +459,13 @@ public class EventCard extends Card {
 		
 		Colors color;
 		Player player;
+		int [] valueRolled=new int[1];
 		
 		//Make current player roll the die
 		Die die=game.getDie();
-		int valueRolled=die.roll();
+		valueRolled[0]=die.roll();
 		//Get affected Area.
-		Area area=game.getGameBoard().getAreaByCityCard(valueRolled-1);//-1 it's an arraylist and index starts at 0;
+		Area area=game.getGameBoard().getAreaByCityCard(valueRolled[0]-1);//-1 it's an arraylist and index starts at 0;
 		
 		System.out.println("Player: "+currentPlayer.getColor()+" rolled:"+valueRolled+". Area: "+area.getCityCard().getName()+" will get attacked by a dragon...");
 		
@@ -487,24 +488,76 @@ public class EventCard extends Card {
 			area.removeMinion(color); //TODO:Check if returned value is true.
 			//Update Player
 			player=game.getPlayerByColor(color);
-			player.removeMinionOnBoard(valueRolled);
+			player.removeMinionOnBoard(valueRolled[i]);
 		}
 		
-		//Remove building from board.
-		color= area.getBuildingColor();
-		area.removeBuilding();
-		//Add building to players hand.
-		player=game.getPlayerByColor(color);
-		player.setBuildingOnHand(player.getBuildingOnHand()-1);
-		CityCard cityCard=player.getCCByCardNumber(valueRolled);
-		
-		//Take city Card from player and return it to the gameboard.
-		CityCard returnCityCard=player.returnCityCard(cityCard);//Remove city card from player.
-		game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
+		//Remove building and make affected player return the respective city card to the board.
+		this.removeBuildingFromArea(valueRolled, game);
 		
 	}
 	
+	/**
+	 * Earthquake makes the calling player roll a die twice and depending on the values rolled two areas get their buildings 
+	 * removed and the affected player return their city cards to the board. If there are no buildings on the areas affected nothing happens.
+	 * @param currentPlayer(Player)
+	 * @param game(Game)
+	 */
+	public void earthquake(Player currentPlayer,Game game)
+	{
+		
+		//Make current player roll the die
+		Die die=game.getDie();
+		int [] rolledDie=new int[2];
+		//Roll die four times and store results.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			rolledDie[i]=die.roll();
+			System.out.print("Player: "+currentPlayer.getColor()+" Rolled Value: "+rolledDie[i]+"  ");
+		}
+		//Check if the areas affected have buildings on them, if so remove them along with the city card.
+		removeBuildingFromArea(rolledDie,game);
+	}
 
+	/**
+	 * Function removes a building and makes the affected player return his city card to the board depending on the values rolled.
+	 * @param rolledDie (int [])
+	 * @param game (Game)
+	 */
+	private void removeBuildingFromArea(int []rolledDie,Game game)
+	{
+		Area area;
+		boolean check=false;
+		Colors color;
+		Player player;//AffectedPlayer
+		//Check if the areas affected have buildings on them, if so remove them along with the city card.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			//Get affected Area.
+			area=game.getGameBoard().getAreaByCityCard(rolledDie[i]-1);//-1 it's an arraylist and index starts at 0;
+			check=area.getBuilding();
+			if(check)
+			{//Area contains building.
+				color=area.getBuildingColor();
+				player=game.getPlayerByColor(color);//Get player affected(owner of building)
+
+				area.removeBuilding();//Remove building and set color to none.
+
+				//Add building to players hand.
+				player.setBuildingOnHand(player.getBuildingOnHand()-1);
+				
+				CityCard cityCard=player.getCCByCardNumber(rolledDie[i]);
+
+				//Take city Card from player and return it to the gameboard.
+				CityCard returnCityCard=player.returnCityCard(cityCard);//Remove city card from player.
+				game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
+				System.out.println("Player:"+player.getColor()+" had his building and city card removed, from area: "+area.getCityCard().getName());
+			}
+			else
+			{
+				System.out.println("There is no building on area: "+area.getCityCard().getName());
+			}
+		}
+	}
 	
 	/**
 	 * Returns the next player depending on the parameters sent. Getting the next player  depends on the player that called the function.
