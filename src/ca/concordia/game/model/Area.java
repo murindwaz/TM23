@@ -307,7 +307,8 @@ public class Area {
 
 	/**
 	 * Add or remove demon to area. If the argument is 1 then it will add a demon else if it is 2 it will remove a demon if possible.
-	 * Will return a boolean depending on weather the action was successful
+	 * Will return a boolean depending on weather the action was successful.further it will add a trouble marker even if there are no minions or trolls
+	 * in the area.
 	 * @param addRemove
 	 * @return boolean
 	 */
@@ -316,6 +317,9 @@ public class Area {
 		if(addRemove==1)//add demon
 		{
 			this.demon++;
+			boolean check=this.addTroubleMarker();
+			if(check)
+				System.out.println("Added a trouble marker.");
 			return true;
 		}else if (addRemove==2)//remove demon if possible
 		{

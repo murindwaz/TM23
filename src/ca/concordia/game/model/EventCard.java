@@ -344,15 +344,22 @@ public class EventCard extends Card {
 		int [] rolledDie=new int[3];
 		//Roll die three times and store results.
 		for(int i=0;i<rolledDie.length;i++)
+		{
 			rolledDie[i]=die.roll();
+			System.out.print("Rolled Value: "+rolledDie[i]+"  ");
+		}
 		
 		ArrayList<Area> areas=game.getGameBoard().getAreas();
 		
+		System.out.println();
 		//Add trolls to the required areas.
 		for(int i=0;i<rolledDie.length;i++)
 		{
 			areas.get(rolledDie[i]-1).addRemoveTroll(1);//-1 since the array list starts at 0;
+			System.out.print("Troll added to area : "+areas.get(rolledDie[i]-1).getCityCard().getName()+"  ");
 		}
+		
+		
 	}
 	
 	/**
@@ -418,7 +425,22 @@ public class EventCard extends Card {
 	
 	public void demonsFromDungeonDimensions(Player currentPlayer,Game game)
 	{
-		
+		//Make current player roll the die
+		Die die=game.getDie();
+		int [] rolledDie=new int[4];
+		//Roll die four times and store results.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			rolledDie[i]=die.roll();
+			System.out.print("Rolled Value: "+rolledDie[i]+"  ");
+		}
+		ArrayList<Area> areas=game.getGameBoard().getAreas();
+
+		//Add trolls to the required areas.
+		for(int i=0;i<rolledDie.length;i++)
+		{
+			areas.get(rolledDie[i]-1).addRemoveDemon(1);//-1 since the array list starts at 0;
+		}
 	}
 	
 	/**
