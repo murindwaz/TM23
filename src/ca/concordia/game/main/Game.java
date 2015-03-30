@@ -465,9 +465,7 @@ public class Game {
 
 	/**
 	 * Get a Player using a color.
-	 * 
-	 * @param color
-	 *            (String)
+	 * @param color (Color)
 	 * @return Player
 	 */
 	public Player getPlayerByColor(Colors color) {

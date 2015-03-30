@@ -392,6 +392,7 @@ public class Player {
 		return null;
 	}
 	
+	
 	/**
 	 * Getter money
 	 * @return

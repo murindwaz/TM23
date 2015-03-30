@@ -2,6 +2,7 @@ package ca.concordia.game.model;
 
 import java.util.ArrayList;
 
+import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
 import ca.concordia.game.util.Configuration;
 
@@ -116,11 +117,9 @@ public class EventCard extends Card {
 				break;
 			case 6:
 				demonsFromDungeonDimensions(currentPlayer,game);
-			
 				break;
 			case 7:
-				//Play another card.
-				
+				dragon(currentPlayer,game);
 				break;
 			case 8:
 				//Interrupt card.
@@ -410,7 +409,7 @@ public class EventCard extends Card {
 		{
 			System.out.println("A minion belonging to Player: "+players[currentPlayerIndex].getColor()+" on area: "+rolledArea.getCityCard().getName()+" has been removed.");
 			//update players hand.
-			players[currentPlayerIndex].removeMinionOnBoard(valueDie-1);//-1 since it's using an array that start on 0.
+			players[currentPlayerIndex].removeMinionOnBoard(valueDie);
 		}
 		else
 			System.out.println("Player: "+players[currentPlayerIndex].getColor()+" didn't have any minions on area: "+rolledArea.getCityCard().getName()+ " nothing was removed.");
@@ -447,6 +446,65 @@ public class EventCard extends Card {
 			areas.get(rolledDie[i]-1).addRemoveDemon(1);//-1 since the array list starts at 0;
 		}
 	}
+	
+	/**
+	 * Dragon makes a player roll a die. the area that corresponds to the rolled value will have to remove all minions,demons,trolls,
+	 * trouble markers and building if they exist. The city card owned by the owner of the destroyed building will be returned to the
+	 * gameboard as well.
+	 * @param currentPlayer(Player)
+	 * @param game(Game)
+	 */
+	private void dragon(Player currentPlayer,Game game)
+	{
+		
+		Colors color;
+		Player player;
+		
+		//Make current player roll the die
+		Die die=game.getDie();
+		int valueRolled=die.roll();
+		//Get affected Area.
+		Area area=game.getGameBoard().getAreaByCityCard(valueRolled-1);//-1 it's an arraylist and index starts at 0;
+		
+		System.out.println("Player: "+currentPlayer.getColor()+" rolled:"+valueRolled+". Area: "+area.getCityCard().getName()+" will get attacked by a dragon...");
+		
+		//Remove Trolls and demons from area.
+		for(int i=0;i<area.getTroll();i++)
+		{
+			area.addRemoveTroll(1);
+		}
+		for(int i=0;i<area.getDemon();i++)
+		{
+			area.addRemoveDemon(1);
+		}
+		//Remove trouble marker if it exists.
+		area.removeTroubleMarker();
+		//Remove minions
+		for(int i=0;i<area.getMinions().size();i++)
+		{
+			color=area.getMinions().get(i).getColor();
+			//Update Area
+			area.removeMinion(color); //TODO:Check if returned value is true.
+			//Update Player
+			player=game.getPlayerByColor(color);
+			player.removeMinionOnBoard(valueRolled);
+		}
+		
+		//Remove building from board.
+		color= area.getBuildingColor();
+		area.removeBuilding();
+		//Add building to players hand.
+		player=game.getPlayerByColor(color);
+		player.setBuildingOnHand(player.getBuildingOnHand()-1);
+		CityCard cityCard=player.getCCByCardNumber(valueRolled);
+		
+		//Take city Card from player and return it to the gameboard.
+		CityCard returnCityCard=player.returnCityCard(cityCard);//Remove city card from player.
+		game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
+		
+	}
+	
+
 	
 	/**
 	 * Returns the next player depending on the parameters sent. Getting the next player  depends on the player that called the function.

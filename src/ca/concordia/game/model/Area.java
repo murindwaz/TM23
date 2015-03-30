@@ -17,6 +17,8 @@ import ca.concordia.game.common.common.Colors;
  * @author Diego Pizarro
  */
 
+//TODO: Come up with a way to set restrictions on area when a demon is on it.
+
 public class Area {
 	
 	private CityCard cityCard;//A city card belongs to an Area.
@@ -221,6 +223,7 @@ public class Area {
 	/**
 	 * Add a minion to area. Returns true if successful otherwise it returns false.
 	 * @param minion
+	 * @return boolean
 	 */
 	public boolean removeMinion(Colors color)
 	{
@@ -289,7 +292,8 @@ public class Area {
 	
 
 	/**
-	 * Add Bulding to area if possible(Only one Bulding is allowed per area). Return true if successful else return false.
+	 * Add Building to area if possible(Only one Building is allowed per area).Also remove color from building.
+	 *  Return true if successful else return false.
 	 * @return boolean
 	 */
 	public boolean removeBuilding()
@@ -297,6 +301,7 @@ public class Area {
 		if(this.building==true)//There's no trouble marker on this area.
 		{
 			this.building=false;
+			this.buildingColor=Colors.NONE;
 			return true;
 		}else
 		{//A trouble marker already exists on this area.
