@@ -348,9 +348,9 @@ public class Player {
 		for(int i=0 ; i<playerCards.size();i++)
 		{
 			Card card = playerCards.get(i);
-			BrownCard bCard = new BrownCard(0);
-			GreenCard gCard= new GreenCard(0);
-			if(card.getClass().equals(bCard.getClass())){//The card is of type BrownCard, convert to brown card.
+			BrownCard bCard ;
+			GreenCard gCard;
+			if(card.getClass().equals("BrownCard")){//The card is of type BrownCard, convert to brown card.
 				bCard = (BrownCard) card;
 				info3=info3+ "Brown-"+bCard.getNumber()+" ";
 			}else//The card is of type GreenCard, convert to green card.
