@@ -60,14 +60,16 @@ public class Symbol {
 	 * @param currentPlayer
 	 * @param game
 	 */
-	public void useSymbol(Player currentPlayer,Game game, int cardID)
+	public boolean useSymbol(Player currentPlayer,Game game, int cardID)
 	{
+		boolean playAnotherCard=false;
 		switch(this.symbolId) {
 			case 1:
 				placeMinionAction(currentPlayer,game);
 				break;
 			case 2:
 				placeBuilding(currentPlayer,game);
+				
 				break;
 			case 3:
 				removePiece(currentPlayer,game);
@@ -79,23 +81,25 @@ public class Symbol {
 				takeMoneyFromBank(currentPlayer,game);
 				break;				
 			case 6:
-			new Action(cardID);
+				new Action(cardID);
 				break;
 			case 7:
 				//Random event.
-			
+				randomEvent(currentPlayer,game);
 				break;
 			case 8:
 				//Play another card.
-				
+				playAnotherCard=playAnotherCard(currentPlayer,game);
 				break;
 			case 9:
 				//Interrupt card.
-				
+				interruptCard(currentPlayer,game,cardID);
 				break;
 			default:
 				break;
 		}
+		
+		return playAnotherCard;
 	}
 	
 	
@@ -104,7 +108,7 @@ public class Symbol {
 	}
 	
 	/*
-	 * To do: make the amount to take a variable that changes depending to which card it belongs to.
+	 * TODO: make the amount to take a variable that changes depending to which card it belongs to.
 	 */
 	/**
 	 * Take a certain amount of moeny from the bank, if the bank has enough funds.
@@ -395,6 +399,56 @@ public class Symbol {
 		areas.get(selectedCardNumber).addMinion(new Piece(currentPlayer.getColor()));
 		
 		return true;
+	}
+	
+	/**
+	 * randomEvent function makes the player draw an event card and execute the proper action depending on the card drawn.
+	 * It calls the function useEventCard() which calls the right event inside class eventCard.
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 */
+	private boolean randomEvent(Player currentPlayer,Game game)
+	{
+		//make player draw an event Card.
+		Deck events=game.getEspecificDeck("events");
+		
+		if(events.getSizeDeck()<=0)
+		{
+			System.out.println("Event Card is empty.");
+			return false;
+		}else
+		{
+			//Get top event card.
+			EventCard eventCard=(EventCard) events.getCard();
+			System.out.println("Player:"+currentPlayer.getColor()+" draw event card: "+eventCard.getName()+".");
+			System.out.println("Description: "+eventCard.getInstruction());
+			//Execute event card function depending on the card drawn.
+			eventCard.useEventCard(currentPlayer, game);
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Function returns a boolean to signal that this event has been called. The action will be handled in the player's play state.
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 */
+	private boolean playAnotherCard(Player currentPlayer,Game game)
+	{
+		System.out.println("Play another card...");
+		return true;
+	}
+	
+	/**
+	 * Function calls class action with the interrupt card's ID so the right action can be perform.
+	 * @param currentPlayer(Player)
+	 * @param game (Game)
+	 * @param cardID(int)
+	 */
+	private void interruptCard(Player currentPlayer,Game game,int cardID)
+	{
+		new Action(cardID);//Perform the corresponding action from the card.
 	}
 	
 	/**

@@ -73,14 +73,14 @@ public class Deck {
 		case GREEN_CARDS_DECK:
 			//The green-bordered player deck has 48 cards:
 			this.cards = new ArrayDeque<Card>();
-			for (int i = 1; i <= 48; i++) {
+			for (int i = 54; i <= 101; i++) {
 				this.cards.add(new GreenCard(i));
 			}
 			break;
 		case BROWN_CARDS_DECK:
 			//The brown-bordered player deck has 53 cards:
 			this.cards = new ArrayDeque<Card>();
-			for (int i = 49; i <= 101; i++) {
+			for (int i = 1; i <= 53; i++) {
 				this.cards.add(new BrownCard(i));
 			}
 			break;

@@ -2,6 +2,7 @@ package ca.concordia.game.model;
 
 import java.util.ArrayList;
 
+import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.util.*;
 
 /**
@@ -16,7 +17,7 @@ import ca.concordia.game.util.*;
  */
 public class GreenCard extends Card {
 	
-	private String color;
+	private Colors color;
 	private int number;
 	private String name;
 	private ArrayList<Symbol> symbols;
@@ -30,10 +31,10 @@ public class GreenCard extends Card {
 		//City Cards are always Visible!
 		super(false,false);
 		this.symbols = new ArrayList<Symbol>();
-		this.color="GREEN";
+		this.color=Colors.GREEN;
 		this.number=i;
 		this.name = CardLoader.getInstance().nameForCard(i,"G");		
-		this.especialAbility = new Action(i);
+		//this.especialAbility = new Action(i);
 	}	
 	
 	/**
@@ -42,7 +43,7 @@ public class GreenCard extends Card {
 	 * @param name
 	 * @param color
 	 */
-	public GreenCard( int number, String name, String color){
+	public GreenCard( int number, String name, Colors color){
 		this( number ); 
 		this.number = number; 
 		this.name = name;

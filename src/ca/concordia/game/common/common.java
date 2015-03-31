@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class common {
 	public enum Colors {
-		RED("RED"), BLUE("BLUE"), YELLOW("YELLOW"), GREEN("GREEN"), NONE("NONE");
+		RED("RED"), BLUE("BLUE"), YELLOW("YELLOW"), GREEN("GREEN"), BROWN("BROWN"),NONE("NONE");
 		
 		private final String stringValue;
 		
@@ -14,6 +14,7 @@ public class common {
 				case "BLUE":
 				case "YELLOW":
 				case "GREEN":
+				case "BROWN":
 					stringValue = color.toUpperCase();
 					break;
 				default:
@@ -32,7 +33,7 @@ public class common {
 		
 		//Return the Colors based on an index.
 		public static Colors colorForIndex(int i) {
-			switch(i%4) {
+			switch(i%5) {
 				case 0:
 					return Colors.BLUE;
 				case 1:
@@ -41,6 +42,8 @@ public class common {
 					return Colors.YELLOW;
 				case 3:
 					return Colors.RED;
+				case 4:
+					return Colors.BROWN;
 			}
 			
 			return Colors.NONE;
@@ -57,6 +60,8 @@ public class common {
 				return Colors.YELLOW;
 			case "GREEN":
 				return Colors.GREEN;
+			case "BROWN":
+				return Colors.BROWN;
 			default:
 				return Colors.NONE;
 			}
@@ -78,6 +83,7 @@ public class common {
 			case "GREEN":
 					resp = Color.GREEN;
 					break;
+			//TODO:add Brown Color
 			}
 			return resp;
 		}		

@@ -55,7 +55,9 @@ public class CardLoader {
 			 * @todo parse and add greenCards
 			 */
 			mcards.put( new Integer(index) , data );
+			//System.out.println("Index: "+index+" Data:"+data);
 		}
+		
 	}
 	
 	public String nameForCard(int i, String type) {
@@ -68,7 +70,7 @@ public class CardLoader {
 				break;
 			case "G":
 				if(i < 49) {
-					tmp = cards.get(i+52);
+					tmp = mcards.get(i+53);
 				} else {
 					return "NO NAME FOR CARD WITH INDEX " + i;
 				}
@@ -95,12 +97,12 @@ public class CardLoader {
 		switch(type) {
 			case "B":
 				if (i > 0) {
-					tmp = cards.get(i-1);
+					tmp = mcards.get(i-1);
 				}
 				break;
 			case "G":
 				if(i < 49) {
-					tmp = cards.get(i+52);
+					tmp = mcards.get(i+52);
 				} else {
 					return "NO ABILITY FOR CARD WITH INDEX " + i;
 				}

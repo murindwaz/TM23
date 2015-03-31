@@ -41,7 +41,6 @@ public class Game {
 	public int currentPlayer;
 	public int numberOfPlayers;
 	private Player[] players;
-
 	/**
 	 * This function initialiazes a new Game - Since the current player is not
 	 * yet detemined, it sets currentPlayer to -1 - Creates a new Instance of
@@ -66,6 +65,7 @@ public class Game {
 			 */
 		}
 
+		
 		// Close Scanner object
 		// keyIn.close();//Don't close until done using in whole proyect.
 		this.decks = new HashMap<String, Deck>();
