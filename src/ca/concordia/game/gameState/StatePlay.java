@@ -52,6 +52,7 @@ public class StatePlay implements StateLike {
 			 * @todo remove the following section if there is no reason to keep this thing here.  
 			 * For testing purposes
 			 */
+			/*
 			Symbol placeMinion = new Symbol(1);
 			Symbol placeBulding = new Symbol(2);
 			Symbol removePiece = new Symbol(3);
@@ -71,7 +72,9 @@ public class StatePlay implements StateLike {
 			actionSymbols.add(event);
 			actionSymbols.add(playAnotherCard2);
 			actionSymbols.add(interrupt);
-
+			 */
+			
+			
 			// Execute each Symbol action sequentially.
 			String userAwnser;
 			for (int i = 0; i < actionSymbols.size(); i++) {
@@ -79,7 +82,7 @@ public class StatePlay implements StateLike {
 				System.out.println(actionSymbols.get(i).getDescription());
 	
 				 //If symbol is mandatory don't ask Player if he want's to use the symbol. 
-				if (actionSymbols.get(i).isMandatory) {
+				if (actionSymbols.get(i).getIsMandatory()) {
 					System.out.println("This action is mandatory.");
 					playAnotherCard=actionSymbols.get(i).useSymbol(player, game, chosenCard.getNumber());
 				} else {
