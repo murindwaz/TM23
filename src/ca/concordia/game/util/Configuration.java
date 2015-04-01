@@ -33,7 +33,111 @@ public class Configuration {
 	public static String AREA_NAP_HILL = "Nap Hill";
 
 	
-	
+	/**
+	 * Card IDs 
+	 */
+	public static int BROWN_CARD_1_SERGEANT_CHEERY_LITTLEBOTTOM = 1;
+	public static int BROWN_CARD_2_OTTO_CHRIEK = 2;
+	public static int BROWN_CARD_3_THE_CLACKS = 3;
+	public static int BROWN_CARD_4_SERGEANT_COLON = 4;
+	public static int BROWN_CARD_5_COSMO_LAVISH  = 5;
+	public static int BROWN_CARD_6_THE_DEAN  = 6;
+	public static int BROWN_CARD_7_HELLO = 7;
+	public static int BROWN_CARD_8_BURLEIGH_STRONGINTHEARM  = 8;
+	public static int BROWN_CARD_9_THE_BURSAR = 9;
+	public static int BROWN_CARD_10_CABLE_STREET_PARTICULARS = 10;
+	public static int BROWN_CARD_11_CANTING_CREW  = 11;
+	public static int BROWN_CARD_12_CARCER = 12;
+	public static int BROWN_CARD_13_THE_CHAIR_OF_INDEFINITE_STUDIES  = 13;
+	public static int BROWN_CARD_14_SIR_CHARLES_LAVATORY = 14;
+	public static int BROWN_CARD_15_DORFL = 15;
+	public static int BROWN_CARD_16_SERGEANT_DETRITUS = 16;
+	public static int BROWN_CARD_17_DEEP_DWARVES = 17;
+	public static int BROWN_CARD_18_ADORA_BELLE_DEARHEART = 18;
+	public static int BROWN_CARD_19_THE_ALCHEMISTS_GUILD = 19;
+	public static int BROWN_CARD_20_THE_AUDITORS = 20;
+	public static int BROWN_CARD_21_BUGGY_SWIRES = 21;
+	public static int BROWN_CARD_22_SUSAN = 22;
+	public static int BROWN_CARD_23_SYBIL_VIMES = 23;
+	public static int BROWN_CARD_24_MR_TEATIME = 24;
+	public static int BROWN_CARD_25_THE_WATCH = 25;
+	public static int BROWN_CARD_26_WEE_MAD_ARTHUR = 26;
+	public static int BROWN_CARD_27_WILLIAM_DE_WORDE = 27;
+	public static int BROWN_CARD_28_WILLIKINS = 28;
+	public static int BROWN_CARD_29_ARCHCHANCELLOR_RIDCULLY = 29;
+	public static int BROWN_CARD_30_RUBY = 30;
+	public static int BROWN_CARD_31_THE_SENIOR_WRANGLER = 31;
+	public static int BROWN_CARD_32_MR_SHINE = 32;
+	public static int BROWN_CARD_33_MR_SLANT = 33;
+	public static int BROWN_CARD_34_THE_SMOKING_GNU = 34;
+	public static int BROWN_CARD_35_STANLEY = 35;
+	public static int BROWN_CARD_36_MOIST_VON_LIPWIG = 36;
+	public static int BROWN_CARD_37_DOCTOR_MOSSY_LAWN = 37;
+	public static int BROWN_CARD_38_PATRICIANS_PALACE = 38;
+	public static int BROWN_CARD_39_PONDER_STIBBONS  = 39;
+	public static int BROWN_CARD_40_THE_POST_OFFICE  = 40;
+	public static int BROWN_CARD_41_REACHER_GILT  = 41;
+	public static int BROWN_CARD_42_PROFESSOR_OF_RECENT_RUNES = 42;
+	public static int BROWN_CARD_43_DOCTOR_HIX = 43;
+	public static int BROWN_CARD_44_HOBSONSS_LIVERY_STABLE  = 44;
+	public static int BROWN_CARD_45_HUBERT = 45;
+	public static int BROWN_CARD_46_IGOR = 46;
+	public static int BROWN_CARD_47_THE_LUGGAGE = 47;
+	public static int BROWN_CARD_48_THE_MOB  = 48;
+	public static int BROWN_CARD_49_LORD_DOWNEY = 49;
+	public static int BROWN_CARD_50_DWARVES = 50;
+	public static int BROWN_CARD_51_EDWARDD_EATH = 51;
+	public static int BROWN_CARD_52_ERROL = 52;
+	public static int BROWN_CARD_53_GARGOYLES = 53;
+	public static int GREEN_CARD_54_MR_BOGGIS = 54;
+	public static int GREEN_CARD_55_MR_BENT = 55;
+	public static int GREEN_CARD_56_THE_BEGGARS_GUILD = 56;
+	public static int GREEN_CARD_57_THE_BANK_OF_ANKH_MORPORK = 57;
+	public static int GREEN_CARD_58_THE_ANKH_MORPORK_SUNSHINE_DRAGON_SANCTUARY  = 58;
+	public static int GREEN_CARD_59_SERGEANT_ANGUA = 59;
+	public static int GREEN_CARD_60_THE_AGONY_AUNTS = 60;
+	public static int GREEN_CARD_61_THE_DYSK = 61;
+	public static int GREEN_CARD_62_THE_DUCKMAN = 62;
+	public static int GREEN_CARD_63_DRUMKNOTT = 63;
+	public static int GREEN_CARD_64_CMOT_DIBBLER = 64;
+	public static int GREEN_CARD_65_DR_CRUCES = 65;
+	public static int GREEN_CARD_66_CAPTAIN_CARROT = 66;
+	public static int GREEN_CARD_67_MRS_CAKE = 67;
+	public static int GREEN_CARD_68_GROAT = 68;
+	public static int GREEN_CARD_69_GIMLETS_DWARF_DELICATESSEN  = 69;
+	public static int GREEN_CARD_70_GASPODE = 70;
+	public static int GREEN_CARD_71_FRESH_START_CLUB = 71;
+	public static int GREEN_CARD_72_FOUL_OLE_RON = 72;
+	public static int GREEN_CARD_73_THE_FOOLS_GUILD = 73;
+	public static int GREEN_CARD_74_THE_FIRE_BRIGADE = 74;
+	public static int GREEN_CARD_75_INIGO_SKIMMER = 75;
+	public static int GREEN_CARD_76_HISTORY_MONKS = 76;
+	public static int GREEN_CARD_77_HEX = 77;
+	public static int GREEN_CARD_78_HEREN_NOW = 78;
+	public static int GREEN_CARD_79_HARRY_KING = 79;
+	public static int GREEN_CARD_80_HARGAS_HOUSE_OF_RIBS = 80;
+	public static int GREEN_CARD_81_MR_GRYLE = 81;
+	public static int GREEN_CARD_82_THE_PEELED_NUTS = 82;
+	public static int GREEN_CARD_83_THE_OPERA_HOUSE = 83;
+	public static int GREEN_CARD_84_NOBBY_NOBBS = 84;
+	public static int GREEN_CARD_85_MODO = 85;
+	public static int GREEN_CARD_86_THE_MENDED_DRUM = 86;
+	public static int GREEN_CARD_87_LIBRARIAN = 87;
+	public static int GREEN_CARD_88_LEONARD_OF_QUIRM = 88;
+	public static int GREEN_CARD_89_SHONKY_SHOP = 89;
+	public static int GREEN_CARD_90_SACHARISSA_CRIPSLOCK = 90;
+	public static int GREEN_CARD_91_ROSIE_PALM = 91;
+	public static int GREEN_CARD_92_RINCEWIND = 92;
+	public static int GREEN_CARD_93_THE_ROYAL_MINT = 93;
+	public static int GREEN_CARD_94_QUEEN_MOLLY = 94;
+	public static int GREEN_CARD_95_PINK_PUSSYCAT_CLUB = 95;
+	public static int GREEN_CARD_96_ZORGO_THE_RETRO_PHRENOLOGIST  = 96;
+	public static int GREEN_CARD_97_DR_WHITEFACE = 97;
+	public static int GREEN_CARD_98_WALLACE_SONKY = 98;
+	public static int GREEN_CARD_99_THE_SEAMSTRESSES_GUILD  = 99;
+	public static int GREEN_CARD_100_MR_PIN_MR_TULIP  = 100;
+	public static int GREEN_CARD_101_THE_THIEVES_GUILD = 101;
+
 	/**
 	 * Following configuration goes to EventCard and EventCards usage. 
 	 */
