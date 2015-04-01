@@ -10,16 +10,18 @@ import ca.concordia.game.main.Game;
 public class Symbol {
 	
 	private int symbolId;
-	public boolean isMandatory;
+	private boolean isMandatory;
 	private String description;
+	private int moneyToTake;
 	/**
-	 * Constructor: initilializes a symbol according to it's ID.
+	 * Constructor: initilializes a symbol according to it's ID. If it is case 5(take money from bank) then the amount of money to take will be set. Otherwise money to take will always be negative.
 	 * @param symbolId
 	 */
-	public Symbol(int symbolId)
+	public Symbol(int symbolId,int money)
 	{
 		this.symbolId=symbolId;
 		this.isMandatory=false;
+		this.moneyToTake=-1;
 		
 		switch(symbolId) {
 			case 1:
@@ -36,6 +38,7 @@ public class Symbol {
 				break;
 			case 5:
 				this.description="Take money indicated in the card.";
+				this.moneyToTake=money;
 				break;
 			case 6:
 				this.description="Perform the action described in the text at the bottom of the card.";
@@ -117,15 +120,13 @@ public class Symbol {
 	 * @param game (Game)
 	 */
 	private boolean takeMoneyFromBank(Player currentPlayer,Game game)
-	{
-		//Amost all 
-		int amountToTake=2;
+	{ 
 		Bank bank=Bank.getInstance();
 		
 		//Check if bank has enough money.
-		boolean check=bank.hasEnoughFunds(amountToTake);
+		boolean check=bank.hasEnoughFunds(this.moneyToTake);
 		if(check)
-			bank.transferFunds(currentPlayer, amountToTake);
+			bank.transferFunds(currentPlayer, this.moneyToTake);
 		else
 			System.out.println("Bank Doesn't have enough funds...Sorry; Bank funds:"+bank.getTotal());
 		
@@ -474,6 +475,14 @@ public class Symbol {
 	      str = str.substring(0, str.length()-1);
 	    }
 	    return str;
+	}
+	/**
+	 * Getter: for boolean isMandatory. Tells whether a symbol is mandatory to play.
+	 * @return boolean
+	 */
+	public boolean getIsMandatory()
+	{
+		return this.isMandatory;
 	}
 
 }
