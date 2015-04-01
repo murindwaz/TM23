@@ -54,11 +54,11 @@ public class CardLoader {
 			int number = index; 
 			String name = extracted[2]; 
 			Colors color = extracted[1] == "B" ? Colors.BROWN : Colors.GREEN; 
-			String ability = extracted[5];
+			String ability = extracted.length >= 6 ? extracted[5] : "";
 			if( color == Colors.BROWN ){
-				brownCards.put(new Integer(index), new BrownCard(index, name, color));
+				//brownCards.put(new Integer(index), new BrownCard(index, name, color, ability));
 			}else{
-				greenCards.put(new Integer(index), new GreenCard(index, name, color));
+				//greenCards.put(new Integer(index), new GreenCard(index, name, color, ability));
 			}
 			mcards.put( new Integer(index) , data );
 		}
