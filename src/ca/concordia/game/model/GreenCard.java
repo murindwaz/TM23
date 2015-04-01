@@ -47,37 +47,37 @@ public class GreenCard extends Card {
 		this.name = CardLoader.getInstance().nameForCard(i,'G');		
 		this.especialAbility = CardLoader.getInstance().abilityForCard(i, 'G');
 		temp = CardLoader.getInstance().symbolsForCard(i, 'G');
-		//System.out.println(temp);
 		//check that the card has content for symbols.And that the card has symbols.
-		if(temp.length()>0 && !temp.equals("NO Symbols AVAILABLE"))
-			for(int j=0;j<temp.length();j++)
-			{
-				//If the last symbol was 'M' then the next character will represent the amount of money the player can take.For symbol 5(Take money from bank)
-				if(symbolId.equals("M"))
-				{
+		if(temp.length()>0 && !temp.equals("NO Symbols AVAILABLE")){
+			for(int j=0;j<temp.length();j++){
+				/**
+				 * If the last symbol was 'M' then the next character will represent the amount of money the player can take.
+				 * For symbol 5(Take money from bank)**/
+				if(symbolId.equals("M")){
 					symbolId= Character.toString(temp.charAt(j));//Get money for player to take.
 					this.symbols.add(new Symbol(moneyIdSymbol,moneyIdSymbol));
-				}
-				else
-				{
+				} else {
 					symbolId=Character.toString(temp.charAt(j));//Get Symbols ID.
 					takeMoney=false;
 				}
-
-
-				if(symbolId.equals("M") )
-				{//The symbol is of type 5(Taking money from the bank).
-					moneyIdSymbol=5;
-					takeMoney=true;
-				}else if(takeMoney==false && !symbolId.equals("M"))
-				{//The symbol has another type from 5(taking money), so add it to the symbol array.
-					//System.out.println(symbolId);
+				if(symbolId.equals("M") ){
+					/**
+					 * The symbol is of type 5(Taking money from the bank).
+					 */
+					moneyIdSymbol	=	5;
+					takeMoney	=	true;
+				}else if( takeMoney == false && !symbolId.equals("M") ){
+					/**
+					 * The symbol has another type from 5(taking money), so add it to the symbol array.
+					 * System.out.println(symbolId);
+					 */
 					int symbol=Integer.parseInt(symbolId);
 					this.symbols.add(new Symbol(symbol,-1));
 				}
 			}
-		else
+		}else{
 			System.out.println("Error the symbol Card is empty!!!!");
+		}
 	}	
 	
 	/**

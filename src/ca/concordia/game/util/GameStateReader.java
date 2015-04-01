@@ -24,9 +24,7 @@ public class GameStateReader {
 	 * @return
 	 */
 	public Game read(){
-		//read the content of filePath, and parse the content using GameStateParser
-		//BufferedString buffer = new BufferedReader( new File(filePath) );
-		return new Game();
+		return Game.getInstance();
 	}
 
 }

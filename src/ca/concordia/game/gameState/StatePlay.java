@@ -49,7 +49,7 @@ public class StatePlay implements StateLike {
 				//Print out symbol description. 
 				System.out.println(symbol.getDescription());
 				 //If symbol is mandatory don't ask Player if he want's to use the symbol. 
-				if (symbol.isMandatory) {
+				if( symbol.getIsMandatory() ){
 					System.out.println("This action is mandatory.");
 					playAnotherCard	= actionSymbols.get(i).useSymbol(player, game, chosenCard.getNumber());
 				} else {
