@@ -10,50 +10,51 @@ import ca.concordia.game.main.Game;
 public class Symbol {
 
 	private int symbolId;
-	public boolean isMandatory;
+	private boolean isMandatory;
 	private String description;
 
+	private int moneyToTake;
 	/**
-	 * Constructor: initilializes a symbol according to it's ID.
-	 * 
+	 * Constructor: initilializes a symbol according to it's ID. If it is case 5(take money from bank) then the amount of money to take will be set. Otherwise money to take will always be negative.
 	 * @param symbolId
 	 */
-	public Symbol(int symbolId) {
-		this.symbolId = symbolId;
-		this.isMandatory = false;
-
-		switch (symbolId) {
-		case 1:
-			this.description = "Place a minion in adjacent are where one possesses a minion.";
-			break;
-		case 2:
-			this.description = "Place a building, where one possesses a minion and there's no trouble markers in the area.";
-			break;
-		case 3:
-			this.description = "Remove a minion where there's a trouble marker.Remove the trouble marker as well.";
-			break;
-		case 4:
-			this.description = "Remove a trouble marker from the board.";
-			break;
-		case 5:
-			this.description = "Take money indicated in the card.";
-			break;
-		case 6:
-			this.description = "Perform the action described in the text at the bottom of the card.";
-			break;
-		case 7:
-			this.description = "Take a random event card and see effects.";
-			this.isMandatory = true;
-			break;
-		case 8:
-			this.description = "Play another card";
-			break;
-		case 9:
-			this.description = "Iterrupt Card(Can be used at any point in the game.)";
-			break;
-		default:
-			System.out.println("Symbol Id doesn't exist.");
-			break;
+	public Symbol(int symbolId,int money){
+		this.symbolId		=	symbolId;
+		this.isMandatory	=	false;
+		this.moneyToTake	=	-1;
+		switch(symbolId) {
+			case 1:
+				this.description="Place a minion in adjacent are where one possesses a minion.";
+				break;
+			case 2:
+				this.description="Place a building, where one possesses a minion and there's no trouble markers in the area.";
+				break;
+			case 3:
+				this.description="Remove a minion where there's a trouble marker.Remove the trouble marker as well.";
+				break;
+			case 4:
+				this.description="Remove a trouble marker from the board.";
+				break;
+			case 5:
+				this.description="Take money indicated in the card.";
+				this.moneyToTake=money;
+				break;
+			case 6:
+				this.description="Perform the action described in the text at the bottom of the card.";
+				break;
+			case 7:
+				this.description="Take a random event card and see effects.";
+				this.isMandatory=true;
+				break;
+			case 8:
+				this.description="Play another card";
+				break;
+			case 9:
+				this.description="Iterrupt Card(Can be used at any point in the game.)";
+				break;
+			default:
+				System.out.println("Symbol Id doesn't exist.");
+				break;
 		}
 	}
 
@@ -114,27 +115,21 @@ public class Symbol {
 	 * card it belongs to.
 	 */
 	/**
-	 * Take a certain amount of moeny from the bank, if the bank has enough
-	 * funds.
-	 * 
+	 * Take a certain amount of moeny from the bank, if the bank has enough funds.
 	 * @param currentPlayer
-	 * @param currentPlayer
-	 *            (Player)
-	 * @param game
-	 *            (Game)
+	 * @param currentPlayer (Player)
+	 * @param game (Game)
 	 */
 	private boolean takeMoneyFromBank(Player currentPlayer, Game game) {
 		// Amost all
 		int amountToTake = 2;
 		Bank bank = Bank.getInstance();
-
 		// Check if bank has enough money.
 		boolean check = bank.hasEnoughFunds(amountToTake);
 		if (check)
 			bank.transferFunds(currentPlayer, amountToTake);
 		else
 			System.out.println("Bank Doesn't have enough funds...Sorry; Bank funds:" + bank.getTotal());
-
 		return true;
 	}
 
@@ -189,8 +184,8 @@ public class Symbol {
 		Gameboard gameBoard = game.getGameBoard();
 		// Get all the areas that contain a trouble marker.
 		ArrayList<Area> troubleMarkersAreas = gameBoard.troubleMarkersAreas();
-		ArrayList<Piece> possibleVictims;// will contain the minions that can be
-											// assassinated per area.
+		// will contain the minions that can be assassinated per area.
+		ArrayList<Piece> possibleVictims;
 		System.out.println("The following are areas with trouble markers:");
 		// Display minions,trolls and demosn in an area
 		for (int i = 0; i < troubleMarkersAreas.size(); i++) {
@@ -238,9 +233,7 @@ public class Symbol {
 
 		} else if (type == 2) {
 			// remove a troll
-			boolean check = gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);// 2
-																							// for
-																							// removing
+			boolean check = gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);
 			if (!check) {
 				System.out
 						.println("An error has occured(While removing a troll from the Board): Can't Remove it(Check Logic).");
@@ -248,8 +241,6 @@ public class Symbol {
 		} else if (type == 3) {
 			// remove a demon
 			boolean check = gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);// 2
-																							// for
-																							// removing
 			if (!check) {
 				System.out
 						.println("An error has occured(While removing a demon from the Board): Can't Remove it(Check Logic).");
@@ -279,15 +270,7 @@ public class Symbol {
 	 *            (Game)
 	 */
 	private boolean placeBuilding(Player currentPlayer, Game game) {
-		ArrayList<Integer> possibleAreas = new ArrayList<Integer>();// Will
-																	// contain
-																	// the
-																	// possible
-																	// areas a
-																	// player
-																	// can put a
-																	// bulding
-																	// on.
+		ArrayList<Integer> possibleAreas = new ArrayList<Integer>();
 		// Get the minion on the board for the calling player.
 		int[] playerMinionsOnBoard;
 		playerMinionsOnBoard = currentPlayer.getMinionsOnArea();
@@ -295,19 +278,11 @@ public class Symbol {
 		// Get gameboard areas.
 		Gameboard gameBoard = game.getGameBoard();
 		ArrayList<Area> areas = gameBoard.getAreas();
-
 		System.out.println("Player: " + currentPlayer.getColor() + " you can put a building in the following areas:");
-
 		// Find possible areas to put a Bulding on.
 		for (int i = 0; i < playerMinionsOnBoard.length; i++) {
 			if (playerMinionsOnBoard[i] > 0 && areas.get(i).getTroubleMarker() != true
-					&& areas.get(i).getBuilding() != true)// player has at least
-															// one minion in the
-															// area and the area
-															// doesn't have a
-															// trouble maker or
-															// another Building.
-			{
+					&& areas.get(i).getBuilding() != true){
 				Area areaWithminion = areas.get(i);
 				// Add this area as a possible option to put bulding on.
 				possibleAreas.add(areaWithminion.getCityCard().getCardNumber());
@@ -352,17 +327,7 @@ public class Symbol {
 		// Player has to be given the corresponding city card,a building has to
 		// be taken from his/her hand, money has to be updated.
 		currentPlayer.getPlayerCityCard()
-				.add(gameBoard.deleteCardFromDeck(areas.get(selectedCardNumber).getCityCard()));// Add
-																								// city
-																								// card
-																								// to
-																								// player
-																								// and
-																								// delete
-																								// it
-																								// from
-																								// the
-																								// gameBoard
+				.add(gameBoard.deleteCardFromDeck(areas.get(selectedCardNumber).getCityCard()));
 
 		int buildingOnHand = currentPlayer.getBuildingOnHand();
 		buildingOnHand--;
@@ -545,6 +510,14 @@ public class Symbol {
 			str = str.substring(0, str.length() - 1);
 		}
 		return str;
+	}
+	/**
+	 * Getter: for boolean isMandatory. Tells whether a symbol is mandatory to play.
+	 * @return boolean
+	 */
+	public boolean getIsMandatory()
+	{
+		return this.isMandatory;
 	}
 
 }

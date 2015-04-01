@@ -13,6 +13,7 @@ import ca.concordia.game.model.GreenCard;
 public class CardLoader {
 	private static CardLoader instance = null;
 	private ArrayList<String> cards;
+	private String temp;
 	/**
 	 * The first card, works with raw string, and the second works with real objects
 	 * Using the Map<Integer, String>
@@ -63,63 +64,76 @@ public class CardLoader {
 		}
 	}
 	
-	public String nameForCard(int i, String type) {
-		String tmp = "";
-		switch(type) {
-			case "B":
-				if(i > 0) {
-					tmp = mcards.get( i - 1 );
-				}
-				break;
-			case "G":
-				if(i < 49) {
-					tmp = mcards.get(i+53);
-				} else {
-					return "NO NAME FOR CARD WITH INDEX " + i;
-				}
-				break;
-			default:
-				break;
-		}
-		
+
+	public String nameForCard(int i, char type){
+		temp = "";
+		getCard(i,type);//Get card.
+		if(temp.contains("Index doesn't exist:"))
+			return temp;
 		String resp = "NO NAME AVAILABLE";
-		if( tmp.isEmpty() ){
+		if( temp.isEmpty() ){
 			return resp;
 		}
-		String[] arr = tmp.split("\\|");
+		String[] arr = temp.split("\\|");
 		if( arr.length > 2 ){
 			resp = arr[2]; 
 		}
-		
 		return resp;
 	}
 	
-	public String abilityForCard(int i,String type) {
-		
-		String tmp = "";
+	public String abilityForCard(int i,char type){
+		temp = "";
+		getCard(i,type);//Get card.
+		if(temp.contains("Index doesn't exist:")){ 
+			return temp; 
+		}
+		String resp = "NO ABILITY AVAILABLE";
+		String[] arr = temp.split("\\|");
+		if( arr.length > 5 ){
+			resp = arr[5]; 
+		}	
+		return resp;
+	}
+	
+	public String symbolsForCard(int i,char type){
+		temp = "";
+		getCard(i,type);//Get card.
+		if(temp.contains("Index doesn't exist:")){ 
+			return temp; 
+		}
+		String resp = "NO Symbols AVAILABLE";
+		String[] arr = temp.split("\\|");
+		if(arr.length > 4){
+			resp = arr[4]; 
+		}
+		return resp;
+	}
+	
+	/**
+	 * GetCard returns the respective card information based on the card id(i) and the type of the card(type).
+	 * @param i(int)
+	 * @param type(String)
+	 * @return String
+	 */
+	private void getCard(int i,char type) {
+		temp = "";
 		switch(type) {
-			case "B":
+			case 'B':
 				if (i > 0) {
-					tmp = mcards.get( i - 1 );
+					temp = mcards.get( i );
 				}
 				break;
-			case "G":
-				if(i < 49) {
-					tmp = mcards.get(i+52);
+			case 'G':
+				if(i >= 54) {
+					temp = mcards.get(i);
 				} else {
-					return "NO ABILITY FOR CARD WITH INDEX " + i;
+					temp= "Index doesn't exist:  " + i;
 				}
 				break;
 			default:
 				break;
 		}
 		
-		String resp = "NO ABILITY AVAILABLE";
-		String[] arr = tmp.split("\\|");
-		if(arr.length > 5)
-			resp = arr[5]; 
-
-		return resp;
 	}
 
 }

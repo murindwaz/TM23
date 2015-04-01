@@ -28,7 +28,7 @@ public class GameModelTest {
 	
 	
 	@Test public void cardLoaderCanInitializeCards(){
-		String BROWN = "B"; 
+		char BROWN = 'B'; 
 		assertEquals("The Card loader can get a card at position 1 ::", "Sergeant Cheery Littlebottom",CardLoader.getInstance().nameForCard(1, BROWN).trim());
 		assertEquals("The Card loader can get a card at position 2 ::", "Otto Chriek",CardLoader.getInstance().nameForCard(2, BROWN).trim());
 		assertEquals("The Card loader can get a card at position 3 ::", "The Clacks",CardLoader.getInstance().nameForCard(3, BROWN).trim());
