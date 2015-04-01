@@ -90,7 +90,7 @@ public class BrownCard extends Card {
 	
 	/**
 	 * Getter
-	 * @return
+	 * @return int
 	 */
 	public int getNumber(){
 		return this.number;
@@ -98,7 +98,7 @@ public class BrownCard extends Card {
 	
 	/**
 	 * Getter
-	 * @return
+	 * @return String
 	 */
 	public String getName(){
 		return this.name;
@@ -106,42 +106,81 @@ public class BrownCard extends Card {
 	
 	/**
 	 * Getter
-	 * @return
+	 * @return String
 	 */
 	public String getAbility(){
-		return this.especialAbility;
+		return this.especialAbility.toString();
 	}
 
+	/**
+	 * 
+	 * @return Colors
+	 */
 	public Colors getColor() {
 		return color;
 	}
 
+	/**
+	 * 
+	 * @param color
+	 */
 	public void setColor(Colors color) {
 		this.color = color;
 	}
 
+	/**
+	 * 
+	 * @return ArrayList<Symbol>
+	 */
 	public ArrayList<Symbol> getSymbols() {
 		return symbols;
 	}
 
+	/**
+	 * 
+	 * @param symbols
+	 */
 	public void setSymbols(ArrayList<Symbol> symbols) {
 		this.symbols = symbols;
 	}
 
+	/**
+	 * 
+	 * @return String
+	 */
 	public String getEspecialAbility() {
 		return especialAbility;
 	}
 
+	/**
+	 * 
+	 * @param especialAbility
+	 */
 	public void setEspecialAbility(String especialAbility) {
 		this.especialAbility = especialAbility;
 	}
 
+	/**
+	 * Setter: setNumber
+	 * @param number
+	 */
 	public void setNumber(int number) {
 		this.number = number;
 	}
 
+	/**
+	 * Setter: SetName
+	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * ToString method for BrownCard. Returns a list with the color,ID,name and description on the card.
+	 */
+	public String toString()
+	{
+		return this.color+". ID:"+this.number+" "+this.name+". Description:"+this.especialAbility;
 	}
 	
 	

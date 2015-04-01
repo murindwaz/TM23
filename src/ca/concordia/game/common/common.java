@@ -3,6 +3,11 @@ package ca.concordia.game.common;
 import java.awt.Color;
 
 public class common {
+	
+	//Minimum number of cards a player can have.
+	public static final int numberOfCard=5;
+	
+	
 	public enum Colors {
 		RED("RED"), BLUE("BLUE"), YELLOW("YELLOW"), GREEN("GREEN"), BROWN("BROWN"),NONE("NONE");
 		

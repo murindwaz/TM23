@@ -22,6 +22,8 @@ public class StatePlay implements StateLike {
 		int cardNumberInPlayerHand;
 		boolean playAnotherCard	=	true;
 
+		
+		Deck discardDeck=null;
 		// Display Gameboard Status.
 		System.out.println(gameBoard.toString());
 		System.out.println(player.toString());
@@ -69,7 +71,7 @@ public class StatePlay implements StateLike {
 			}//for
 			//After using card. Discard it to the discard deck.
 			//PutCard in discardDeck.
-			Deck discardDeck=game.getEspecificDeck("discard");
+			discardDeck=game.getEspecificDeck("discard");
 			discardDeck.putCard(chosenCard);
 			boolean check=player.removePlayerCard(chosenCard);
 			if(check)
@@ -78,6 +80,8 @@ public class StatePlay implements StateLike {
 			}
 			
 		}//while
+		
+		//discardDeck.displayCardsinDeck(1);//Print Discard Deck(For debugging purposes).
 		/** 
 		 * Display board status.
 		 * Display the players hand.

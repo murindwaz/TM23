@@ -3,6 +3,7 @@ package ca.concordia.game.model;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -164,5 +165,21 @@ public class Deck {
 		for (int i = 0; i < num; i++) {
 			aPlayer.receiveCard(cards.pop());
 		}
+	}
+	
+	/**
+	 * Displays a number of cards in the deck, the number is specified sent as an argument.
+	 * @param howMany(int)
+	 */
+	public void displayCardsinDeck(int howMany)
+	{
+		int counter=1;
+		for(Iterator itr = this.cards.iterator();itr.hasNext();)  {
+			
+			System.out.println(itr.next().toString());
+			if(counter==howMany)
+				break;
+	        counter++;
+	      }
 	}
 }
