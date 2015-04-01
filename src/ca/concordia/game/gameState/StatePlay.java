@@ -3,6 +3,7 @@ package ca.concordia.game.gameState;
 import java.util.ArrayList;
 
 import ca.concordia.game.main.Game;
+import ca.concordia.game.model.Deck;
 import ca.concordia.game.model.Gameboard;
 import ca.concordia.game.model.GreenCard;
 import ca.concordia.game.model.Player;
@@ -66,6 +67,16 @@ public class StatePlay implements StateLike {
 					}
 				}
 			}//for
+			//After using card. Discard it to the discard deck.
+			//PutCard in discardDeck.
+			Deck discardDeck=game.getEspecificDeck("discard");
+			discardDeck.putCard(chosenCard);
+			boolean check=player.removePlayerCard(chosenCard);
+			if(check)
+			{
+				System.out.println("Card Was put to discard deck and removed from player's hand.");
+			}
+			
 		}//while
 		/** 
 		 * Display board status.

@@ -80,6 +80,48 @@ public class Player {
 	}
 	
 	/**
+	 * RemovePlayerCard removes a card from a Player's ArrayList of cards. Returns true if successful otherwise returns false.Returns false also
+	 * if the card was not of type GreenCard or BrownCard.
+	 * @param card(Card)
+	 * @return boolean
+	 */
+	public boolean removePlayerCard(Card card)
+	{
+		boolean check=false;
+		
+		//Check type of card and remove it from player's hand.
+		String CardType=card.getClass().toString();
+		
+		if(CardType.contains("BrownCard"))
+		{
+			BrownCard bCard=(BrownCard)card;
+			check=this.playerCards.remove(bCard);
+			if(check)
+			{
+				return true;
+			}else
+			{
+				System.out.println("Brown Card: Could not be removed.(Class Player)");
+				return false;
+			}
+		}else if(CardType.contains("GreenCard"))
+		{
+			GreenCard gCard=(GreenCard)card;
+			check=this.playerCards.remove(gCard);
+			if(check)
+			{
+				return true;
+			}else
+			{
+				System.out.println("Green Card: Could not be removed.(Class Player)");
+				return false;
+			}
+		}
+		System.out.println("Fatal Error: Card's type is not GreenCard or BrownCard.(Class Player-Fucntion removePlayerCard)");
+		return false;
+	}
+	
+	/**
 	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the
 	 * player may have.
 	 * @return int
@@ -334,60 +376,7 @@ public class Player {
 				
 	}
 
-	/**
-	 * ToString Method for class Player.
-	 */
-	@Override
-	public String toString()
-	{
-		String info="Money: "+this.money+ " Playing as: "+ this.personality.getName()+ " Using Color:"+this.color +"." +"\n";
-		String info2= "Currently Holding "+ this.minionsOnHand+" minions and "+this.buildingOnHand+ " Buildings on hand."+"\n";
-		String info3="Playing Cards:"+"\n";
-		String info4="City Playing Cards:"+"\n";
-		//player Cards
-		for(int i = 0 ; i<playerCards.size();i++){
-			Card card = playerCards.get(i);
-			BrownCard bCard = new BrownCard(1);
-			GreenCard gCard= new GreenCard(54);
-			if(card.getClass().equals(bCard.getClass())){//The card is of type BrownCard, convert to brown card.
-				bCard = (BrownCard) card;
-				info3=info3+ "Brown-"+bCard.getName()+"(ID:"+bCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
-				info3=info3+"Card Description:"+bCard.getAbility()+"\n";
-				info3=info3+"Symbols On Card:\n";
-				//Add information for each symbol in the current card.
-				for(int j=0;j<bCard.getSymbols().size();j++)
-				{
-					info3=info3+"ID:("+bCard.getSymbols().get(j).getSymbolId()+") Symbol Descriptions: "+bCard.getSymbols().get(j).getDescription()+"\n";
-				}
-				info3=info3+"\n";
-			}else//The card is of type GreenCard, convert to green card.
-			{
-				gCard=(GreenCard) card;
-				info3=info3+ "Green-"+gCard.getName()+"(ID:"+gCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
-				info3=info3+"Card Description:"+gCard.getAbility()+"\n";
-				info3=info3+"Symbols On Card:\n";
-				//Add information for each symbol in the current card.
-				for(int j=0;j<gCard.getSymbols().size();j++)
-				{
-					info3=info3+"ID:("+gCard.getSymbols().get(j).getSymbolId()+") Symbol Descriptions: "+gCard.getSymbols().get(j).getDescription()+"\n";
-				}
-				info3=info3+"\n";
-			}
-				
-		}
-		info3=info3+"\n";
-		
-		//player City Cards.
-		for(int i=0 ; i<playerCityCard.size();i++)
-		{
-			CityCard card = playerCityCard.get(i);
-			info4=info4+ " "+card.getName()+" ";
-		}
-		info4=info4+"\n";
-		
-		return info+info2+info3+info4;
-		
-	}
+	
 	
 	/**
 	 * Returns a city card if the player has it otherwise it returns null. It searches using the cardcode(int).
@@ -405,7 +394,6 @@ public class Player {
 		
 		return null;
 	}
-	
 	
 	/**
 	 * Getter money
@@ -489,6 +477,63 @@ public class Player {
 	public void setMinionsOnHand(int newNum)
 	{
 		this.minionsOnHand=newNum;
+	}
+	
+	/**
+	 * ToString Method for class Player.
+	 */
+	@Override
+	public String toString()
+	{
+		String info="Money: "+this.money+ " Playing as: "+ this.personality.getName()+ " Using Color:"+this.color +"." +"\n";
+		String info2= "Currently Holding "+ this.minionsOnHand+" minions and "+this.buildingOnHand+ " Buildings on hand."+"\n";
+		String info3="Playing Cards:"+"\n";
+		String info4="City Playing Cards:"+"\n";
+		//player Cards
+		for(int i = 0 ; i<playerCards.size();i++){
+			Card card = playerCards.get(i);
+			
+			//get class of current card.
+			String cardType=card.getClass().toString();
+			
+			if(cardType.contains("BrownCard")){//The card is of type BrownCard, convert to brown card.
+				BrownCard bCard= (BrownCard) card;
+				info3=info3+ "Brown-"+bCard.getName()+"(ID:"+bCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+"Card Description:"+bCard.getAbility()+"\n";
+				info3=info3+"Symbols On Card:\n";
+				//Add information for each symbol in the current card.
+				for(int j=0;j<bCard.getSymbols().size();j++)
+				{
+					info3=info3+"ID:("+bCard.getSymbols().get(j).getSymbolId()+") Symbol Descriptions: "+bCard.getSymbols().get(j).getDescription()+"\n";
+				}
+				info3=info3+"\n";
+			}else if(cardType.contains("GreenCard"))//The card is of type GreenCard, convert to green card.
+			{
+				GreenCard gCard=(GreenCard) card;
+				info3=info3+ "Green-"+gCard.getName()+"(ID:"+gCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+"Card Description:"+gCard.getAbility()+"\n";
+				info3=info3+"Symbols On Card:\n";
+				//Add information for each symbol in the current card.
+				for(int j=0;j<gCard.getSymbols().size();j++)
+				{
+					info3=info3+"ID:("+gCard.getSymbols().get(j).getSymbolId()+") Symbol Descriptions: "+gCard.getSymbols().get(j).getDescription()+"\n";
+				}
+				info3=info3+"\n";
+			}
+				
+		}
+		info3=info3+"\n";
+		
+		//player City Cards.
+		for(int i=0 ; i<playerCityCard.size();i++)
+		{
+			CityCard card = playerCityCard.get(i);
+			info4=info4+ " "+card.getName()+" ";
+		}
+		info4=info4+"\n";
+		
+		return info+info2+info3+info4;
+		
 	}
 	
 }
