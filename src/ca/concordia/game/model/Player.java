@@ -348,15 +348,15 @@ public class Player {
 		for(int i=0 ; i<playerCards.size();i++)
 		{
 			Card card = playerCards.get(i);
-			BrownCard bCard ;
+			BrownCard bCard = null ;
 			GreenCard gCard;
-			if(card.getClass().equals("BrownCard")){//The card is of type BrownCard, convert to brown card.
+			if(card.getClass().equals(bCard.getClass())){//The card is of type BrownCard, convert to brown card.
 				bCard = (BrownCard) card;
-				info3=info3+ "Brown-"+bCard.getNumber()+" ";
-			}else//The card is of type GreenCard, convert to green card.
+				info3=info3+ "Brown-"+bCard.getAbility()+" ";
+			}else if(card.getClass().equals("GreenCard"))//The card is of type GreenCard, convert to green card.
 			{
 				gCard=(GreenCard) card;
-				info3=info3+ "Green-"+gCard.getNumber()+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+ "Green-"+gCard.getAbility()+" "+"Position in Player Hand:"+"("+i+")"+"\n";
 			}
 				
 		}
