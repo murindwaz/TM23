@@ -117,7 +117,6 @@ public class Action {
 				 * 34 has TroubleMarker
 				 * 28 has Building
 				 * 31,29 inUE
-				 * 46,71 removed ??
 				 */
 			case 17:
 			case 32:
@@ -134,10 +133,6 @@ public class Action {
 				break;
 			case 29:
 				placeMinion(true, false, false, 2);
-				break;
-			case 46:
-			case 71:
-				placeMinion(false, false, false, 1);
 				break;
 				/** Group6: TakeLoan* 55,57
 				 */
@@ -168,6 +163,30 @@ public class Action {
 			case 78:
 				rollDieWinorLose(4, false);
 				break;
+
+				/** Group10: 22, 37, 46, 70, 71, 98
+				 * Interrupt
+				 */
+			case 22:
+			case 37:
+			case 70:
+			case 98:				
+				// Interrupt( ); ???
+				break;	
+			case 46:
+			case 71:
+				// Interrupt( ); ???
+				placeMinion(false, false, false, 1);			
+				break;
+
+
+				/** Group11: 73, 97
+				 * Get $5 or place this card as not playable
+				 */
+			case 73:
+			case 97:				
+				give5orLoseCard(cardId);
+				break;	
 
 				// 67: Look at all but one of the unused Personality cards.
 			case 67:
@@ -274,7 +293,10 @@ public class Action {
 
 		while(true){
 			for (int i = 0; i < playerCards.size(); i++) {
-				System.out.println(i + "." + playerCards.get(i).getName());
+				if (playerCards.get(i).isPlayable)
+					System.out.println(i + "." + playerCards.get(i).getName());
+				else
+					playerCards.remove(i);
 			}
 			choosenCard = keyIn.nextInt();
 
@@ -630,17 +652,13 @@ public class Action {
 	private void takeCard() {
 		int choosenPlayer = 0;
 		int choosenCard;
-		ArrayList<Card> playerCards;
+
 		System.out.println("Select a player to get 2 Cards:");
-		playerCards = players[choosePlayer()].getPlayerCards();
+		choosenPlayer = choosePlayer();
 		System.out.println("Choosen Player(NOT YOU) must choose 2 Cards to give you:");
 
-		for (int i = 0; i < playerCards.size(); i++) {
-			System.out.println(i + "." + playerCards.get(i).getName());
-		}
 		for (int i = 0; i < 2; i++) {
-			System.out.println("Card" + i + ":");
-			choosenCard = keyIn.nextInt();
+			choosenCard = chooseCard(players[choosenPlayer]);
 			players[choosenPlayer].transferCard(choosenCard, player);
 		}
 	}
@@ -650,22 +668,21 @@ public class Action {
 	 */
 	private void get1fromOthers() {
 		int choosenCard;
-		ArrayList<Card> playerCards;
+		int option;
 
-		System.out.println(" Each player must give you either $1 or one of their cards.");
 		for (int i = 0; i < game.getNumberOfPlayers(); i++) {
 			System.out.println("Player: " + players[i].getColor().toString() + ". Choose 1 for Money or 2 for Card:");
-			if (keyIn.nextInt() == 1) {
-				players[i].transferMoneyto(1, player);
-			} else {
-				playerCards = players[i].getPlayerCards();
-				System.out.println("Choose the card:");
-				for (int count = 0; count < playerCards.size(); count++) {
-					System.out.println(i + "." + playerCards.get(i).getName());
+			while(true){
+				option = keyIn.nextInt();
+				if (option == 1) {
+					players[i].transferMoneyto(1, player);
+					break;
+				} else if(option == 2) {
+					players[i].transferCard(chooseCard(players[i]), player);
+					break;
+				} else {
+					System.out.println("Invalid option");
 				}
-				System.out.println("Card" + i + ":");
-				choosenCard = keyIn.nextInt();
-				players[i].transferCard(choosenCard, player);
 			}
 		}
 	}
@@ -740,6 +757,24 @@ public class Action {
 		ArrayList<Card> personalityCards = game.getDecks().get("personalities").getArrayDeck();
 		for (int i=1; i<personalityCards.size(); i++)
 			System.out.println(i+personalityCards.get(i).toString());
+	}
+
+
+	/**
+	 * Select another player. If they do not give you $5 then place this card in front of them. 
+	 * This card now counts towards their hand size of five cards when they come to refill their hand. 
+	 * They cannot get rid of this card.
+	 */
+	private void give5orLoseCard( int cardId ) {
+		int choosenPlayer = choosePlayer();
+
+		System.out.println("Player: " + players[choosenPlayer].getColor().toString() + ". Choose 1 for Money or 2 for Card:");
+		if (keyIn.nextInt() == 1) {
+			players[choosenPlayer].transferMoneyto(5, player);
+		} else {
+			player.transferCard(cardId, players[choosenPlayer]);
+			players[choosenPlayer].getPlayerCards().get(cardId).isPlayable = false;
+		}
 	}
 
 }
