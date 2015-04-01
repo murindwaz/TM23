@@ -106,6 +106,18 @@ public class Symbol {
 		return playAnotherCard;
 	}
 
+	/**
+	 * Return the symbol's ID.
+	 * @return int
+	 */
+	public int getSymbolId()
+	{
+		return this.symbolId;
+	}
+	/**
+	 * Returns the symbol's description.
+	 * @return String
+	 */
 	public String getDescription() {
 		return this.description;
 	}
@@ -510,5 +522,8 @@ public class Symbol {
 	{
 		return this.isMandatory;
 	}
+	
+	
+	
 
 }

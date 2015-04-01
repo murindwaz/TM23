@@ -351,11 +351,27 @@ public class Player {
 			GreenCard gCard= new GreenCard(54);
 			if(card.getClass().equals(bCard.getClass())){//The card is of type BrownCard, convert to brown card.
 				bCard = (BrownCard) card;
-				info3=info3+ "Brown-"+bCard.getName()+"("+bCard.getAbility()+")"+" ";
+				info3=info3+ "Brown-"+bCard.getName()+"(ID:"+bCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+"Card Description:"+bCard.getAbility()+"\n";
+				info3=info3+"Symbols On Card:\n";
+				//Add information for each symbol in the current card.
+				for(int j=0;j<bCard.getSymbols().size();j++)
+				{
+					info3=info3+"ID:("+bCard.getSymbols().get(j).getSymbolId()+") Symbol Descriptions: "+bCard.getSymbols().get(j).getDescription()+"\n";
+				}
+				info3=info3+"\n";
 			}else//The card is of type GreenCard, convert to green card.
 			{
 				gCard=(GreenCard) card;
-				info3=info3+ "Green-"+gCard.getName()+"("+gCard.getAbility()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+ "Green-"+gCard.getName()+"(ID:"+gCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+"Card Description:"+gCard.getAbility()+"\n";
+				info3=info3+"Symbols On Card:\n";
+				//Add information for each symbol in the current card.
+				for(int j=0;j<gCard.getSymbols().size();j++)
+				{
+					info3=info3+"ID:("+gCard.getSymbols().get(j).getSymbolId()+") Symbol Descriptions: "+gCard.getSymbols().get(j).getDescription()+"\n";
+				}
+				info3=info3+"\n";
 			}
 				
 		}
