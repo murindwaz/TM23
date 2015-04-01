@@ -27,12 +27,14 @@ public class StatePlay implements StateLike {
 		// Play one of the cards, ask user for input.
 		
 		while(playAnotherCard){
+			
+			playAnotherCard=false;
+			
 			while (true) {
 				System.out.println("Please enter the card number you wish to play(Select the number for 'Position in Player Hand'):");
 				cardNumberInPlayerHand = game.keyIn.nextInt();
 				if (cardNumberInPlayerHand > player.getPlayerCards().size() - 1) {
-					System.out.println("Incorrect input please select a number between 0 and "
-							+ (player.getPlayerCards().size() - 1));
+					System.out.println("Incorrect input please select a number between 0 and "+ (player.getPlayerCards().size() - 1));
 				} else {
 					break;
 				}

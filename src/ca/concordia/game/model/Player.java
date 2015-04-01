@@ -345,17 +345,17 @@ public class Player {
 		String info3="Playing Cards:"+"\n";
 		String info4="City Playing Cards:"+"\n";
 		//player Cards
-		for(int i = 1 ; i<=playerCards.size();i++){
+		for(int i = 0 ; i<playerCards.size();i++){
 			Card card = playerCards.get(i);
-			BrownCard bCard = new BrownCard(0);
-			GreenCard gCard= new GreenCard(0);
+			BrownCard bCard = new BrownCard(1);
+			GreenCard gCard= new GreenCard(54);
 			if(card.getClass().equals(bCard.getClass())){//The card is of type BrownCard, convert to brown card.
 				bCard = (BrownCard) card;
-				info3=info3+ "Brown-"+bCard.getNumber()+" ";
+				info3=info3+ "Brown-"+bCard.getName()+"("+bCard.getAbility()+")"+" ";
 			}else//The card is of type GreenCard, convert to green card.
 			{
 				gCard=(GreenCard) card;
-				info3=info3+ "Green-"+gCard.getNumber()+" "+"Position in Player Hand:"+"("+i+")"+"\n";
+				info3=info3+ "Green-"+gCard.getName()+"("+gCard.getAbility()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
 			}
 				
 		}
