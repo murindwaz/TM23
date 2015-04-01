@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.model.BrownCard;
 import ca.concordia.game.model.GreenCard;
 
@@ -35,8 +36,7 @@ public class CardLoader {
 	}
 	
 	/**
-	 * Constructor, initializes Cards.
-	 * CardLoader is a singleton, and is made un-accessible unless to Children. 
+	 * This constructor loads Green and Blue cards into re-usable data structures
 	 */
 	protected CardLoader() {
 		String data = "";
@@ -50,14 +50,17 @@ public class CardLoader {
 			data = property.getValue().toString();
 			String[] extracted = data.split("\\|");
 			index = Integer.parseInt( extracted[0] );
-			/**
-			 * @todo parse and add brownCards
-			 * @todo parse and add greenCards
-			 */
+			int number = index; 
+			String name = extracted[2]; 
+			Colors color = extracted[1] == "B" ? Colors.BROWN : Colors.GREEN; 
+			String ability = extracted[5];
+			if( color == Colors.BROWN ){
+				brownCards.put(new Integer(index), new BrownCard(index, name, color));
+			}else{
+				greenCards.put(new Integer(index), new GreenCard(index, name, color));
+			}
 			mcards.put( new Integer(index) , data );
-			//System.out.println("Index: "+index+" Data:"+data);
 		}
-		
 	}
 	
 	public String nameForCard(int i, String type) {
@@ -65,7 +68,7 @@ public class CardLoader {
 		switch(type) {
 			case "B":
 				if(i > 0) {
-					tmp = mcards.get( i );
+					tmp = mcards.get( i - 1 );
 				}
 				break;
 			case "G":
@@ -97,7 +100,7 @@ public class CardLoader {
 		switch(type) {
 			case "B":
 				if (i > 0) {
-					tmp = mcards.get(i-1);
+					tmp = mcards.get( i - 1 );
 				}
 				break;
 			case "G":

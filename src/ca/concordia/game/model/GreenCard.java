@@ -92,7 +92,10 @@ public class GreenCard extends Card {
 		this.name = name;
 		this.color = color;
 	}
-	
+	public GreenCard( int number, String name, Colors color, String ability ){
+			this( number, name, color ); 
+			this.especialAbility = ability;
+	}
 	
 	/**
 	 * Getter: Returns the array of symbols which represent the different actions the card can perform sequentially.
@@ -125,4 +128,42 @@ public class GreenCard extends Card {
 	public String getAbility(){
 		return this.especialAbility.toString();
 	}
+
+	public Colors getColor() {
+		return color;
+	}
+
+	public void setColor(Colors color) {
+		this.color = color;
+	}
+
+	public ArrayList<Symbol> getSymbols() {
+		return symbols;
+	}
+
+	public void setSymbols(ArrayList<Symbol> symbols) {
+		this.symbols = symbols;
+	}
+
+	public String getEspecialAbility() {
+		return especialAbility;
+	}
+
+	public void setEspecialAbility(String especialAbility) {
+		this.especialAbility = especialAbility;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
+	
+	
+	
 }

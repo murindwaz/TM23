@@ -41,6 +41,7 @@ public class Game {
 	public int currentPlayer;
 	public int numberOfPlayers;
 	private Player[] players;
+
 	/**
 	 * This function initialiazes a new Game - Since the current player is not
 	 * yet detemined, it sets currentPlayer to -1 - Creates a new Instance of
@@ -65,7 +66,6 @@ public class Game {
 			 */
 		}
 
-		
 		// Close Scanner object
 		// keyIn.close();//Don't close until done using in whole proyect.
 		this.decks = new HashMap<String, Deck>();
@@ -106,9 +106,8 @@ public class Game {
 	}
 
 	// Start playing game instance.
-	public void play() { 
-		Map<Integer, Colors> playerDieRollMap = new HashMap<Integer, Colors>();// Will store the value rolled depending on the player's color.
-																			
+	public void play() {
+		Map<Integer, Colors> playerDieRollMap = new HashMap<Integer, Colors>();
 		ArrayList<Integer> playerDieRoll = new ArrayList<Integer>();
 		int rollValue = -1;
 		// roll dice for each player to pick first player.
@@ -116,7 +115,7 @@ public class Game {
 			rollValue = die.roll();// roll dice for player.
 			System.out.println("Player with color: " + this.players[i].getColor() + " rolled:" + rollValue);
 			playerDieRoll.add(rollValue);// store value gotten by player.
-			/** 
+			/**
 			 * Store Player color,roll value pair.
 			 */
 			playerDieRollMap.put(rollValue, this.players[i].getColor());
@@ -133,9 +132,8 @@ public class Game {
 				break;
 			}
 		}
-
-		while (true)// Keep going until a player wins the game.
-		{
+		// Keep going until a player wins the game.
+		while (true){
 			System.out.println("Game has begun!!!!!!");
 			// Start Playing select the player who's turn it is.
 			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
@@ -160,28 +158,21 @@ public class Game {
 
 	/**
 	 * Return the highest value in an Arraylist of integers.
-	 * 
-	 * @param arrayList
-	 *            (ArrayList<Integer>)
+	 * @param arrayList (ArrayList<Integer>)
 	 * @return int
 	 */
 	public int highestValue(ArrayList<Integer> arrayList) {
 		Collections.sort(arrayList); // Sort the arraylist
-		int highest = arrayList.get(arrayList.size() - 1); // gets the last
-															// item, largest for
-															// an ascending sort
-
+		int highest = arrayList.get(arrayList.size() - 1); 
 		return highest;
 	}
 
 	/**
-	 * Implements Game as a singleton, as there will always be a single game per
-	 * run.
-	 * 
+	 * Implements Game as a singleton, as there will always be a single game per run.
 	 * @return Game
 	 */
 	public static Game getInstance() {
-		if (instance == null) {
+		if( instance == null ){
 			instance = new Game();
 		}
 		return instance;
@@ -190,19 +181,14 @@ public class Game {
 	/**
 	 * Constructor, initializes a new game.
 	 */
-	public Game() {
-		// init();
-	}
+	protected Game() { }
 
 	/**
-	 * 
+	 * @deprecated - this object comparator has not been used, and should retire 
 	 * @param gameState
 	 * @return
 	 */
 	public boolean equals(Game gameState) {
-		// @todo check the number of players
-		// @todo check occupied areas
-		// @todo check the bank
 		return false;
 	}
 
@@ -253,7 +239,7 @@ public class Game {
 			temp = temp + this.players[i].getBuildingOnHand() + ",";
 			temp = temp + this.players[i].getMoney() + ",";
 			temp = temp + this.players[i].getPlayerCards().size() + ",";
-			
+
 			for (int j = 0; j < this.players[i].getPlayerCards().size(); j++) {
 				BrownCard bCard = new BrownCard(0);
 				GreenCard gCard = new GreenCard(0);
@@ -444,7 +430,7 @@ public class Game {
 			}// PLayers
 
 			/** Parse BankMoney Get money bank has. **/
-			for (int i = 14 + numberPlayers; i < (13 + numberPlayers) + 1; i++){
+			for (int i = 14 + numberPlayers; i < (13 + numberPlayers) + 1; i++) {
 				int bankMoney = Integer.parseInt(content.get(i));
 				AtomicInteger aInt = new AtomicInteger(bankMoney);
 				this.bank.setBankMoney(aInt);// Set new bank balance.
@@ -454,10 +440,11 @@ public class Game {
 		return "Load Was Successfull";
 	}
 
-
 	/**
 	 * Get a Player using a color.
-	 * @param color (Color)
+	 * 
+	 * @param color
+	 *            (Color)
 	 * @return Player
 	 */
 	public Player getPlayerByColor(Colors color) {
@@ -488,41 +475,45 @@ public class Game {
 		System.out.println("Game Board State:");
 		System.out.println(this.gameboard.toString());
 	}
-	
-	//Getters
+
+	// Getters
 	/**
 	 * Getter: array with players.
+	 * 
 	 * @return Player[]
 	 */
 	public Player[] getPlayers() {
 		return this.players;
 	}
+
 	/**
 	 * Getter: the decks from the game.
+	 * 
 	 * @return Map<String, Deck>
 	 */
 	public Map<String, Deck> getDecks() {
 		return this.decks;
 	}
-	
+
 	/**
 	 * Getter: the requested deck.
+	 * 
 	 * @param whichDeck
-	 * @return  Deck 
+	 * @return Deck
 	 */
-	public Deck getEspecificDeck(String whichDeck)
-	{
+	public Deck getEspecificDeck(String whichDeck) {
 		return this.decks.get(whichDeck);
 	}
-	
+
 	/**
 	 * Getter: Game Die.
+	 * 
 	 * @return Die
 	 */
-	public Die getDie()
-	{
+	public Die getDie() {
 		return this.die;
 	}
+
 	/**
 	 * Getter: Returns number of players
 	 * 
@@ -554,13 +545,13 @@ public class Game {
 	public Gameboard getGameBoard() {
 		return this.gameboard;
 	}
-	
+
 	/**
 	 * Getter: Get index of current player.
+	 * 
 	 * @return int
 	 */
-	public int getCurrentPlayer()
-	{
+	public int getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 
