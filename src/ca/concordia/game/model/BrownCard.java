@@ -64,6 +64,7 @@ public class BrownCard extends Card {
 				}
 			}
 		}else{
+			//TODO:Remove this in the future.
 			System.out.println("Error the symbol Card is empty!!!!");
 		}
 	}

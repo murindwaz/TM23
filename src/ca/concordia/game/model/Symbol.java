@@ -133,15 +133,20 @@ public class Symbol {
 	 * @param game (Game)
 	 */
 	private boolean takeMoneyFromBank(Player currentPlayer, Game game) {
-		// Amost all
-		int amountToTake = 2;
+		
+		
 		Bank bank = Bank.getInstance();
 		// Check if bank has enough money.
-		boolean check = bank.hasEnoughFunds(amountToTake);
+		boolean check = bank.hasEnoughFunds(this.moneyToTake);
 		if (check)
-			bank.transferFunds(currentPlayer, amountToTake);
+			bank.transferFunds(currentPlayer, this.moneyToTake);
 		else
+		{//If there's not enough funds, give the player the avialable funds.
 			System.out.println("Bank Doesn't have enough funds...Sorry; Bank funds:" + bank.getTotal());
+			System.out.println("You'll get the money available to the bank.");
+			bank.transferFunds(currentPlayer, bank.getTotal());
+			
+		}
 		return true;
 	}
 
