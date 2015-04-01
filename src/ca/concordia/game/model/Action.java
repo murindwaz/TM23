@@ -199,6 +199,34 @@ public class Action {
 			case 13:
 				exchangeCards();
 				break;
+
+				// No Action Cards
+			case 4 :
+			case 7 :
+			case 16 :
+			case 21 :
+			case 24 :
+			case 25 :
+			case 30 :
+			case 38 :
+			case 49 :
+			case 50 :
+			case 51 :
+			case 59 :
+			case 60 :
+			case 65 :
+			case 66 :
+			case 68 :
+			case 69 :
+			case 75 :
+			case 80 :
+			case 81 :
+			case 82 :
+			case 86 :
+			case 93 :
+			case 95 :
+				System.out.println("No Action.");
+				break;
 			default:
 				System.out.println("Action Id doesn't exist.");
 				break;
