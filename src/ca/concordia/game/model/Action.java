@@ -198,7 +198,6 @@ public class Action {
 				discardnTake(1);
 				break;	
 
-
 				// 74: Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
 			case 74:
 				give5orLoseBuilding( );
