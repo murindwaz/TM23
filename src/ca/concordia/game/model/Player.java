@@ -370,15 +370,13 @@ public class Player {
 	 * @param cardCode(int)
 	 * @return CityCard
 	 */
-	public CityCard getCCByCardNumber(int cardCode)
-	{
+	public CityCard getCCByCardNumber(int cardCode){
 		//Get requested city card
-		for(int i=0;i<this.playerCityCard.size();i++)
-		{
-			if(cardCode == this.playerCityCard.get(i).getCardNumber())
+		for(int i=0;i<this.playerCityCard.size();i++){
+			if( cardCode == this.playerCityCard.get(i).getCardNumber()){
 				return this.playerCityCard.get(i);
+			}
 		}
-		
 		return null;
 	}
 	
