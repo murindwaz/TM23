@@ -370,7 +370,7 @@ public class Game {
 				this.gameboard.addCityCard(cityCard);
 				// Add the minions that where in the current area.
 				for (int j = 0; j < minions.size(); j++)
-					area.addMinion(new Piece(minions.get(j)));
+					area.addMinion(new Piece(minions.get(j)),true);
 			}
 
 			// savedGame="Test.txt";

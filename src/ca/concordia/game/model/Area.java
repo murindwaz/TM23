@@ -68,6 +68,8 @@ public class Area {
 			
 
 		this.demon=demon;
+		if(this.demon>0)
+			this.getCityCard().setIsActive(false);//Make city card not active
 		this.troll=troll;
 		
 		
@@ -217,10 +219,12 @@ public class Area {
 	 * Add a minion to area; if the area already contains one or more minions add a trouble marker.
 	 * @param minion
 	 */
-	public void addMinion(Piece minion)
+	public void addMinion(Piece minion,boolean loading)
 	{
-		if(this.getMinions().size()>=1 || this.getDemon()>=1 || this.getTroll()>=1)//There is already at least one minion in the area or at least one demon or at least one troll.
-			this.troubleMarker=true;//add a trouble marker.
+		//Only add trouble markers if the game was not loaded.
+		if(loading == false)
+			if(this.getMinions().size()>=1 || this.getDemon()>=1 || this.getTroll()>=1)//There is already at least one minion in the area or at least one demon or at least one troll.
+				this.troubleMarker=true;//add a trouble marker.
 		
 		this.minions.add(minion);
 		

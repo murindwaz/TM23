@@ -50,11 +50,11 @@ public class Gameboard {
 		for(int i=0;i<players.length;i++)
 		{
 			//add to Dolly Sisters one minion per player.
-			this.areas.get(0).addMinion(new Piece(players[i].getColor()));
+			this.areas.get(0).addMinion(new Piece(players[i].getColor()),false);
 			//add to The Scours one minion per player.
-			this.areas.get(4).addMinion(new Piece(players[i].getColor()));
+			this.areas.get(4).addMinion(new Piece(players[i].getColor()),false);
 			//add to The Shades one minion per player.
-			this.areas.get(6).addMinion(new Piece(players[i].getColor()));
+			this.areas.get(6).addMinion(new Piece(players[i].getColor()),false);
 		}
 
 	}

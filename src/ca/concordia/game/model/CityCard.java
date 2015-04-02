@@ -474,7 +474,7 @@ public class CityCard extends Card {
 			player.putNewMinionOnBoard(selectedCardNumber,false);//update player's minions.
 			
 			//update Gameboard
-			game.getGameBoard().getAreas().get(selectedCardNumber-1).addMinion(new Piece(player.getColor()));
+			game.getGameBoard().getAreas().get(selectedCardNumber-1).addMinion(new Piece(player.getColor()),false);
 			System.out.println("Added minion");
 			return true;
 		}else

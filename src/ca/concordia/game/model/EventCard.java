@@ -590,7 +590,7 @@ public class EventCard extends Card {
 					
 					//remove minion from flooded area and move it to new area.
 					removedMinion=area.removeMinion(color);//Remove
-					moveToArea.addMinion(removedMinion);//Add
+					moveToArea.addMinion(removedMinion,false);//Add
 					
 					//Update Players hand.
 					player.moveMinionToNewArea(area.getCityCard().getCardNumber(), areaMoveInt);

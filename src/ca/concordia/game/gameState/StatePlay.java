@@ -24,6 +24,9 @@ public class StatePlay implements StateLike {
 		boolean playAnotherCard	=	true;
 
 		
+		//check winning condition at the beggining of each turn.
+		player.checkWinningCondition(gameBoard);
+		
 		Deck discardDeck=null;
 		// Display Gameboard Status.
 		System.out.println(gameBoard.toString());

@@ -139,7 +139,10 @@ public class Symbol {
 		// Check if bank has enough money.
 		boolean check = bank.hasEnoughFunds(this.moneyToTake);
 		if (check)
+		{
 			bank.transferFunds(currentPlayer, this.moneyToTake);
+			System.out.println("Player: "+currentPlayer.getColor()+" got: "+this.moneyToTake+" from the bank.");
+		}
 		else
 		{//If there's not enough funds, give the player the avialable funds.
 			System.out.println("Bank Doesn't have enough funds...Sorry; Bank funds:" + bank.getTotal());
@@ -251,7 +254,7 @@ public class Symbol {
 		}
 		else if(type==2)//remove a troll
 		{
-			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
+			boolean check=gameBoard.getAreas().get(selectedCardNumber-1).addRemoveDemon(2);//2 for removing
 			if(!check)
 				System.out.println("An error has occured(While removing a troll from the Board): Can't Remove it(Check Logic).");
 
@@ -259,7 +262,7 @@ public class Symbol {
 		}
 		else if(type==3)//remove a demon
 		{
-			boolean check=gameBoard.getAreas().get(selectedCardNumber).addRemoveDemon(2);//2 for removing
+			boolean check=gameBoard.getAreas().get(selectedCardNumber-1).addRemoveDemon(2);//2 for removing
 			if(!check)
 				System.out.println("An error has occured(While removing a demon from the Board): Can't Remove it(Check Logic).");
 
@@ -307,62 +310,71 @@ public class Symbol {
 								
 		}
 		
-		//Display possible areas where player can place a building on and the corresponding price to place a building on that area.
-		String display="";
-		for(int i=0;i<possibleAreas.size();i++)
-		{
-			int cardNumber=possibleAreas.get(i);
-			display=display+areas.get(cardNumber-1).getCityCard().getName()+"("+cardNumber+")"+" Price to place Building: "+areas.get(cardNumber-1).getCityCard().getBuldingCost()+"$" +", ";
-		}
-		//Remove last coma for displaying purposes.
-		display=removeLastChar(display);
-		System.out.println(display);
 		
-		//Ask player where he wishes to put a building on and check if the player has the money to do it.
+		if(possibleAreas.size()>0)
+		{
+			//Display possible areas where player can place a building on and the corresponding price to place a building on that area.
+			String display="";
+			for(int i=0;i<possibleAreas.size();i++)
+			{
+				int cardNumber=possibleAreas.get(i);
+				display=display+areas.get(cardNumber-1).getCityCard().getName()+"("+cardNumber+")"+" Price to place Building: "+areas.get(cardNumber-1).getCityCard().getBuldingCost()+"$" +", ";
+			}
+			//Remove last coma for displaying purposes.
+			display=removeLastChar(display);
+			System.out.println(display);
 
-		int selectedCardNumber;
-		while(true)
-		{
-			//Ask player for input.
-			System.out.println("Please select the cardNumber(Integer) where you wish to put your Building, otherwise enter -1 not place one:");
-			selectedCardNumber = game.keyIn.nextInt();
-			//Check if the area the player chooses is valid to put a building and if he has enough money to do it and if he has enough buildings on hand.
-			if(possibleAreas.contains(selectedCardNumber) && currentPlayer.getMoney()>=areas.get(selectedCardNumber-1).getCityCard().getBuldingCost() && currentPlayer.getBuildingOnHand()>=1  )
-				break;
-			else if(selectedCardNumber<0)
-				break;
+			//Ask player where he wishes to put a building on and check if the player has the money to do it.
+
+			int selectedCardNumber;
+			while(true)
+			{
+				//Ask player for input.
+				System.out.println("Please select the cardNumber(Integer) where you wish to put your Building, otherwise enter -1 not place one:");
+				selectedCardNumber = game.keyIn.nextInt();
+				//Check if the area the player chooses is valid to put a building and if he has enough money to do it and if he has enough buildings on hand.
+				if(possibleAreas.contains(selectedCardNumber) && currentPlayer.getMoney()>=areas.get(selectedCardNumber-1).getCityCard().getBuldingCost() && currentPlayer.getBuildingOnHand()>=1  )
+					break;
+				else if(selectedCardNumber<0)
+					break;
+
+				else
+					System.out.println("You can't put a Building there or you don't have enough money or you are out of buildings.");
+			}
+
+			if(selectedCardNumber>0)
+			{
+				//update Player,Bank,City Card Deck and Gameboard status.
+				//Player has to be given the corresponding city card,a building has to be taken from his/her hand, money has to be updated.
+				currentPlayer.getPlayerCityCard().add(gameBoard.deleteCardFromDeck(areas.get(selectedCardNumber-1).getCityCard()));//Add city card to player and delete it from the gameBoard
+
+				int buildingOnHand=currentPlayer.getBuildingOnHand();
+				buildingOnHand--;
+				currentPlayer.setBuildingOnHand(buildingOnHand);
+				//Update player's money.
+				boolean check=currentPlayer.payMoney(areas.get(selectedCardNumber-1).getCityCard().getBuldingCost());
+
+				if(check!= true)
+					System.out.println("An error has occured(While Placing a Building on the Board): Player doesn't have enough money.");
+
+				//Deposit into Bank the cost of the Building.
+				Bank bank=Bank.getInstance();
+				bank.deposit(areas.get(selectedCardNumber-1).getCityCard().getBuldingCost());
+
+				//Update Area On GameBoard. now it has a Building and it needs to know the color to see which player it belongs to.
+				check=areas.get(selectedCardNumber-1).addBuilding(currentPlayer);
+				if(check!= true)
+					System.out.println("An error has occured(While Placing a Building on the Board): The Area already has a Building.");
+			}else
+				System.out.println("You did not place any buildings on the board.");
 			
-			else
-				System.out.println("You can't put a Building there or you don't have enough money or you are out of buildings.");
+			return true;
+		}else
+		{
+			System.out.println("Player: "+currentPlayer.getColor()+" you can not place any buildings anywhere.");
+			return false;
 		}
 		
-		if(selectedCardNumber>0)
-		{
-			//update Player,Bank,City Card Deck and Gameboard status.
-			//Player has to be given the corresponding city card,a building has to be taken from his/her hand, money has to be updated.
-			currentPlayer.getPlayerCityCard().add(gameBoard.deleteCardFromDeck(areas.get(selectedCardNumber-1).getCityCard()));//Add city card to player and delete it from the gameBoard
-		
-			int buildingOnHand=currentPlayer.getBuildingOnHand();
-			buildingOnHand--;
-			currentPlayer.setBuildingOnHand(buildingOnHand);
-			//Update player's money.
-			boolean check=currentPlayer.payMoney(areas.get(selectedCardNumber-1).getCityCard().getBuldingCost());
-		
-			if(check!= true)
-				System.out.println("An error has occured(While Placing a Building on the Board): Player doesn't have enough money.");
-		
-			//Deposit into Bank the cost of the Building.
-			Bank bank=Bank.getInstance();
-			bank.deposit(areas.get(selectedCardNumber-1).getCityCard().getBuldingCost());
-		
-			//Update Area On GameBoard. now it has a Building and it needs to know the color to see which player it belongs to.
-			check=areas.get(selectedCardNumber-1).addBuilding(currentPlayer);
-			if(check!= true)
-				System.out.println("An error has occured(While Placing a Building on the Board): The Area already has a Building.");
-		}else
-			System.out.println("You did not place any buildings on the board.");
-		
-		return true;
 	}
 	
 	/*
@@ -434,7 +446,7 @@ public class Symbol {
 		if(!success)
 			System.out.println("Sorry you do not have any more minions on your hand.");
 		//update Gameboard
-		areas.get(selectedCardNumber-1).addMinion(new Piece(currentPlayer.getColor()));
+		areas.get(selectedCardNumber-1).addMinion(new Piece(currentPlayer.getColor()),false);
 		
 		return true;
 	}
