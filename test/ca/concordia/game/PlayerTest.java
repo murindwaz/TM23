@@ -124,15 +124,15 @@ public class PlayerTest {
 		 * The winning condition : 	
 		 * 	- For Lord Vetinari, he has to have 11 minions in a 2 players game. 
 		 */
-		dpizar.putNewMinionOnBoard(2);
-		dpizar.putNewMinionOnBoard(3);
-		dpizar.putNewMinionOnBoard(4);
-		dpizar.putNewMinionOnBoard(6);
-		dpizar.putNewMinionOnBoard(8);
-		dpizar.putNewMinionOnBoard(9);
-		dpizar.putNewMinionOnBoard(10);
-		dpizar.putNewMinionOnBoard(11);
-		dpizar.putNewMinionOnBoard(12);
+		dpizar.putNewMinionOnBoard(2,false);
+		dpizar.putNewMinionOnBoard(3,false);
+		dpizar.putNewMinionOnBoard(4,false);
+		dpizar.putNewMinionOnBoard(6,false);
+		dpizar.putNewMinionOnBoard(8,false);
+		dpizar.putNewMinionOnBoard(9,false);
+		dpizar.putNewMinionOnBoard(10,false);
+		dpizar.putNewMinionOnBoard(11,false);
+		dpizar.putNewMinionOnBoard(12,false);
 		assertTrue(" Lord Vetinari - played by dpizar - wins the game with 11 minions ", dpizar.checkWinningCondition(gameboard) );
 	}
 	
