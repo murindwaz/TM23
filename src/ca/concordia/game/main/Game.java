@@ -37,7 +37,7 @@ public class Game {
 	private Bank bank;
 	private Die die;
 	private ArrayList<Symbol> symbols;
-	public static Scanner keyIn;
+	public  Scanner keyIn= new Scanner(System.in);;
 	public int currentPlayer;
 	public int numberOfPlayers;
 	private Player[] players;
@@ -186,9 +186,7 @@ public class Game {
 	 */
 	public static Game getInstance() {
 		if( instance == null ){
-			instance = new Game();
-			// Select number of players
-			keyIn = new Scanner(System.in);
+			instance = new Game();	
 		}
 		return instance;
 	}
@@ -501,6 +499,20 @@ public class Game {
 			 * their turn comes up.
 			 */
 			playerStatus.get(i).performAction(players[i], this);
+		}
+		
+		//Update all the player's hand(minions on play). Put all the minions a player has on the board.
+		ArrayList<Area> areas=this.gameboard.getAreas();
+		ArrayList<Piece>pieces;
+		Player selectPlayer;
+		for(int i=0;i<areas.size();i++ )
+		{
+			pieces = areas.get(i).getMinions();
+			for(int j=0;j<pieces.size();j++)
+			{
+				selectPlayer= this.getPlayerByColor(pieces.get(j).getColor());
+				selectPlayer.putNewMinionOnBoard(areas.get(i).getCityCard().getCardNumber(),true);
+			}
 		}
 		
 		return "Load Was Successfull";

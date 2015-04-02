@@ -26,6 +26,7 @@ public class CityCard extends Card {
 	private boolean doesFlood = false;
 	private int moneyTotake;
 	private int moneyToPay;
+	private boolean isActive;
 
 	/**
 	 * Constructor: Depending on the integer sent it sets the name and ability
@@ -37,6 +38,7 @@ public class CityCard extends Card {
 		// City Cards are always Visible!
 		super(true, false);
 		
+		this.isActive=true;//Card will always start as active(Can be used by player).
 		this.moneyTotake=-1;
 		this.moneyToPay=-1;
 		this.adjacentAreas = new ArrayList<Integer>();
@@ -172,7 +174,7 @@ public class CityCard extends Card {
 	public void useCityCard(Player player,Game game)
 	{
 		boolean check;
-		switch(this.cardNumber) {
+		switch(this.cardNumber-1) {
 		case 0:
 			//Pay 3 dollars to place a minion.
 			check=this.paymoneyToBank(player, game);
@@ -229,6 +231,12 @@ public class CityCard extends Card {
 	}
 	
 	
+	/**
+	 * Place a trouble marker in an area or adjacent areas to that area, only if there aren't any trouble markers on them.
+	 * @param player
+	 * @param game
+	 * @return
+	 */
 	private boolean placetroubleMarkerInArea(Player player,Game game)
 	{
 		ArrayList<Integer> possibleAreas=new ArrayList<Integer>();//Will contain the possible areas a player can put a minion on.
@@ -251,23 +259,31 @@ public class CityCard extends Card {
 				possibleAreas.remove(i);
 		}
 		System.out.println(display);
-		
-		int selectedCardNumber;
-		while(true)
+		//Check if the there's at least one area where the player can set a trouble marker.
+		if(possibleAreas.size()>0)
 		{
-			//Ask player for input.
-			System.out.println("Please select the cardNumber(Integer) where you wish to put the trouble marker:");
-			selectedCardNumber = game.keyIn.nextInt();
-			if(possibleAreas.contains(selectedCardNumber))
-				break;
-			else
-				System.out.println("You can't put a trouble marker there.");
+			int selectedCardNumber;
+			while(true)
+			{
+				//Ask player for input.
+				System.out.println("Please select the cardNumber(Integer) where you wish to put the trouble marker:");
+				selectedCardNumber = game.keyIn.nextInt();
+				if(possibleAreas.contains(selectedCardNumber))
+					break;
+				else
+					System.out.println("You can't put a trouble marker there.");
+			}
+
+			//Add trouble marker to selected area.
+			game.getGameBoard().getAreas().get(selectedCardNumber-1).addTroubleMarker();
+			return true;
+		}else
+		{
+			System.out.println("You can't put any trouble marker in the current area or adjacent areas to it:");
+			return false;
 		}
 		
-		//Add trouble marker to selected area.
-		game.getGameBoard().getAreas().get(selectedCardNumber-1).addTroubleMarker();
 		
-		return true;
 	}
 	
 	
@@ -399,7 +415,10 @@ public class CityCard extends Card {
 		// Check if bank has enough money.
 		boolean check = bank.hasEnoughFunds(this.moneyTotake);
 		if (check)
+		{
 			bank.transferFunds(currentPlayer, this.moneyTotake);
+			System.out.println("You just got: "+this.moneyTotake+ "From the bank.");
+		}
 		else
 		{//If there's not enough funds, give the player the avialable funds.
 			System.out.println("Bank Doesn't have enough funds...Sorry; Bank funds:" + bank.getTotal());
@@ -452,7 +471,7 @@ public class CityCard extends Card {
 			
 			//Update GameState.(Player and Boardgame)
 			//update player.
-			player.putNewMinionOnBoard(selectedCardNumber);//update player's minions.
+			player.putNewMinionOnBoard(selectedCardNumber,false);//update player's minions.
 			
 			//update Gameboard
 			game.getGameBoard().getAreas().get(selectedCardNumber-1).addMinion(new Piece(player.getColor()));
@@ -482,6 +501,7 @@ public class CityCard extends Card {
 			Bank bank=Bank.getInstance();
 			bank.deposit(this.moneyToPay);
 			player.payMoney(this.moneyToPay);
+			System.out.println("Player: "+player.getColor()+" paid the bank: "+this.moneyToPay);
 		}else
 		{
 			System.out.println("You don't have enough funds!!!");
@@ -549,6 +569,23 @@ public class CityCard extends Card {
 		return this.adjacentAreas;
 	}
 	
+	/**
+	 * Getter: Will return whether a city card is active(can be used).
+	 * @return boolean
+	 */
+	public boolean getIsActive()
+	{
+		return this.isActive;
+	}
+	
+	/**
+	 * Setter: Set's weather a city card can be played.
+	 * @param active(boolean)
+	 */
+	public void setIsActive(boolean active)
+	{
+		this.isActive=active;
+	}
 	
 
 }

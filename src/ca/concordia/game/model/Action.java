@@ -654,7 +654,7 @@ public class Action {
 			else
 				toArea = this.chooseArea(null,false, hasownBuilding, hasTroubleMarker, null);
 
-			if (!player.putNewMinionOnBoard(toArea))
+			if (!player.putNewMinionOnBoard(toArea,false))
 				System.out.println("Not possible to place Minion");
 		}
 	}

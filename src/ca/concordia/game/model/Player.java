@@ -75,6 +75,8 @@ public class Player {
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
 		
+		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
+		
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
@@ -108,14 +110,12 @@ public class Player {
 				return false;
 			}
 		}
-		System.out
-				.println("Fatal Error: Card's type is not GreenCard or BrownCard.(Class Player-Fucntion removePlayerCard)");
+		System.out.println("Fatal Error: Card's type is not GreenCard or BrownCard.(Class Player-Fucntion removePlayerCard)");
 		return false;
 	}
 	
 	/**
-	 * Calculates and returns the player's networth. 
-	 * By adding the money he/she has, the money invested in buildings and substracting any loans the player may have.
+	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the player may have.
 	 * @return int
 	 */
 	public int calculateNetWorth() {
@@ -216,11 +216,9 @@ public class Player {
 	}
 
 	/**
-	 * Remove card from player's city Cards(Player removed or moved a building
-	 * to another area.)
+	 * Remove card from player's city Cards(Player removed or moved a building to another area.)
 	 * 
-	 * @param card
-	 *            (CityCard)
+	 * @param card (CityCard)
 	 * @return CityCard
 	 */
 	public CityCard returnCityCard(CityCard card) {
@@ -238,7 +236,6 @@ public class Player {
 
 	/**
 	 * Receive all Player Cards
-	 * 
 	 * @param allCards
 	 */
 	public void receiveAllCards(ArrayList<Card> allCards) {
@@ -246,16 +243,19 @@ public class Player {
 	}
 
 	/**
-	 * Add a minion that was on hand to an area. Reduces by one the number of
-	 * minion on hand and adds one minion to the respective area.
-	 * 
+	 * Add a minion that was on hand to an area. Reduces by one the number ofminion on hand and adds one minion to the respective area.
+	 * Add a minion that was on hand to an area. Reduces by one the number of minion on hand and adds one minion to the respective area.
+	 * If loading is true(Only when a game is loaded) then we just update the array from the player.
 	 * @param areaCode
 	 * @return boolean
 	 */
-	public boolean putNewMinionOnBoard(int areaCode) {
-		if (this.minionsOnHand >= 1) {
-			this.minionsOnHand--;
-			this.minionsOnAreas[areaCode - 1] = this.minionsOnAreas[areaCode - 1] + 1;
+	public boolean putNewMinionOnBoard(int areaCode,boolean loading)
+	{
+		if(this.minionsOnHand>=1)
+		{
+			if(loading == false)
+				this.minionsOnHand--;
+			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]+1;
 			return true;
 		} else
 			return false;
@@ -263,7 +263,6 @@ public class Player {
 
 	/**
 	 * Remove a minion from an area and add it to player's hand.
-	 * 
 	 * @param areaCode
 	 * @return boolean
 	 */
@@ -278,17 +277,16 @@ public class Player {
 
 	/**
 	 * Move a minion from one area to another.
-	 * 
-	 * @param oldAreaCode
-	 *            (int)
-	 * @param newAreaCode
-	 *            (int)
+	 * @param oldAreaCode(int)
+	 * @param newAreaCode(int)
 	 * @return boolean
 	 */
-	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode) {
-		boolean check = removeMinionOnBoard(oldAreaCode);
-		boolean check2 = putNewMinionOnBoard(newAreaCode);
-		if (check && check2)
+
+	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode)
+	{
+		boolean check=removeMinionOnBoard(oldAreaCode);
+		boolean check2=putNewMinionOnBoard(newAreaCode,false);
+		if(check && check2)
 			return true;
 		else
 			return false;
@@ -301,12 +299,12 @@ public class Player {
 	 * @param gameBoard
 	 * @return boolean
 	 */
-	public boolean checkWinningCondition( Gameboard gameBoard ){
+	public boolean checkWinningCondition( Gameboard gameBoard )
+	{
 		//Get card ID to check which condition need to be fulfilled.
 		int cardId=this.personality.getCardId();
 		//Check if winning condition has been reached depending on the personality card.
-		if( cardId == 1 ){
-			//Lord Vetinari
+		if( cardId == 1 ){//Lord Vetinari
 			int numMinWinCond = gameBoard.numberMinionsAreas(this);
 			//If player has minions in a number of areas which contain no demons.
 			if( numMinWinCond>=this.personality.getNumMinionsOnAreas()){
@@ -314,8 +312,7 @@ public class Player {
 			}else {
 				return false;
 			}
-		} else if( cardId== 2 || cardId == 4 || cardId == 6 ){
-			//Lord Selachii, Lord Rust, Lord Worde.
+		} else if( cardId== 2 || cardId == 4 || cardId == 6 ){//Lord Selachii, Lord Rust, Lord Worde.
 			//Check if player has the amount of controlled areas to win the game.
 			ArrayList<String> controlledAreas	= new ArrayList<String>();
 			controlledAreas	=	gameBoard.controlledAreas(this); //Get a list of the areas controlled by the player.
@@ -324,8 +321,7 @@ public class Player {
 			}else{
 				return false;
 			}
-		} else if( cardId == 3 ){
-			// Dragon King of Arms.
+		} else if( cardId == 3 ){// Dragon King of Arms.
 			//Check if the board has the required number of touble markes for player to win.
 			ArrayList<String> troubleMarkersArea= new ArrayList<String>();
 			troubleMarkersArea= gameBoard.troubleMarkers();//Get a list of the areas which contain a trouble marker.
@@ -334,8 +330,7 @@ public class Player {
 				} else {
 					return false;
 				}
-		} else if( cardId == 5 ){
-			//Commander Vimes
+		} else if( cardId == 5 ){//Commander Vimes
 			//Check if the draw deck is empty by chequing the size of the brown deck since it's the one at the bottom.
 			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
 			if( game.getSizeDrawDeck() == 0 ){ 
@@ -344,8 +339,7 @@ public class Player {
 			}else{
 				return false;
 			}
-		} else if (cardId==7) {
-			//Chrysoprase
+		} else if (cardId==7) {//Chrysoprase
 			int playerNetWorth=this.calculateNetWorth();
 			if(playerNetWorth>=50)
 				return true;
