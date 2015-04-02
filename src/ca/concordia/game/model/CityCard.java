@@ -241,7 +241,9 @@ public class CityCard extends Card {
 	{
 		ArrayList<Integer> possibleAreas=new ArrayList<Integer>();//Will contain the possible areas a player can put a minion on.
 
-		possibleAreas.add(this.getCardNumber());//Add current Area.
+		
+		if(!game.getGameBoard().getAreaByCityCard(this.getCardNumber()).getTroubleMarker())
+			possibleAreas.add(this.getCardNumber());//Add current Area.
 		//Add adjacent areas.
 		possibleAreas.addAll(this.getAdjacentAreas());
 
@@ -253,7 +255,7 @@ public class CityCard extends Card {
 		{
 			int cardNumber=possibleAreas.get(i);
 			//Check if area has trouble marker
-			if(game.getGameBoard().getAreas().get(cardNumber-1).getTroubleMarker())
+			if(!game.getGameBoard().getAreas().get(cardNumber-1).getTroubleMarker())
 				display=display+game.getGameBoard().getAreas().get(cardNumber-1).getCityCard().getName()+"("+cardNumber+")"+", ";
 			else
 				possibleAreas.remove(i);

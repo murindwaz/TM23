@@ -14,7 +14,6 @@ package ca.concordia.game.model;
 
 public class PersonalityCard extends Card {
 	
-	public String winningCondition = null;
 	public String winningConditionDescription = null;
 	private int cardId;
 	private int numberOfPlayers;
@@ -58,6 +57,7 @@ public class PersonalityCard extends Card {
 				break;
 			case 1:
 				this.setName("Lord Selachii");
+				this.winningConditionDescription="If at the start of your turn you have clear control of a certain number of areas then  you win the game immediately. With two players you need to control seven areas, with three players you need to control five areas, and with four players you need to control four areas.";
 				this.cardId=2;
 				this.numPlayActive=true;
 				//Set winning condition depending on number of players.
@@ -90,12 +90,14 @@ public class PersonalityCard extends Card {
 				break;
 			case 4:
 				this.setName("Commander Vimes");
+				this.winningConditionDescription="If the game ends due to the cards running out then you win the game.";
 				this.cardId=5;
 				this.winningConditionDescription="Draw Pile Exhausted.";
 				this.drawPile=0;
 				break;
 			case 5:
 				this.setName("Lord de Worde");
+				this.winningConditionDescription="Control If at the start of your turn you have clear control of a certain number of areas then  you win the game immediately. With two players you need to control seven areas, with three players you need to control five  areas, and with four players you need to control four areas";
 				this.cardId=6;
 				this.numPlayActive=true;
 				//Set winning condition depending on number of players.
@@ -109,6 +111,7 @@ public class PersonalityCard extends Card {
 				break;
 			case 6:
 				this.setName("Chrysoprase");
+				this.winningConditionDescription="If at the start of your turn you have a combined worth of $50 or more (money in hand plus buildings you have built), then you win the game. Each loan you have counts as $ 12 against your total.";
 				this.cardId=7;
 				this.netWorth=50;
 				break;
@@ -119,18 +122,6 @@ public class PersonalityCard extends Card {
 	}
 	
 
-	/**
-	 * Constructor when loading a game state.
-	 * @param name
-	 */
-	public PersonalityCard(String name)
-	{
-		//Personality Cards are not Playable or Visible!
-		super(false,false);
-		
-		this.setName(name);
-	}
-	
 	/**
 	 * Getter : returns the number of trouble markers in the board required to win a game.
 	 * @return int
@@ -166,6 +157,24 @@ public class PersonalityCard extends Card {
 	{
 		return this.cardId;
 	}
+	/**
+	 * ToString method.
+	 * @return String
+	 */
+	public String toString()
+	{
+		return this.getName()+":" +this.winningConditionDescription;
+	}
+	/**
+	 * Getter: winning conditions description.
+	 * @return String
+	 */
+	public String getWinningConditionDescription()
+	{
+		return this.winningConditionDescription;
+	}
+	
+	
 	
 	
 }

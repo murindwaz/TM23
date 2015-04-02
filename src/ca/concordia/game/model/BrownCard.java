@@ -64,28 +64,13 @@ public class BrownCard extends Card {
 				}
 			}
 		}else{
-			//TODO:Remove this in the future.
-			System.out.println("Error the symbol Card is empty!!!!");
+			//some cards don't have any symbols.
+			//System.out.println("Error the symbol Card is empty!!!!");
+			//Do nothing.
 		}
 	}
 	
-	/**
-	 * This constructor will be used with CardLoader to initialize the cards in a Map 
-	 * @param number
-	 * @param name
-	 * @param color
-	 */
-	public BrownCard( int number, String name, Colors color ){
-		this( number ); 
-		this.number = number; 
-		this.name = name; 
-		this.color = color; 
-	}
 	
-	public BrownCard( int number, String name, Colors color, String ability ){
-		this( number, name, color ); 
-		this.especialAbility = ability;
-	}
 	
 	
 	/**

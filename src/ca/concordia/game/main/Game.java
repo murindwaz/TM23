@@ -135,7 +135,9 @@ public class Game {
 		}
 		// Keep going until a player wins the game.
 		while (true){
-			System.out.println("Game has begun!!!!!!");
+			System.out.println();
+			System.out.println("**************************************Game has begun!!!!!!************************************");
+			System.out.println();
 			// Start Playing select the player who's turn it is.
 			this.playerStatus.get(currentPlayer).performAction(players[currentPlayer], this);
 			System.out.println("Player:" + players[currentPlayer].getColor() + " Current State:"
@@ -251,7 +253,8 @@ public class Game {
 		temp = "";
 
 		for (int i = 0; i < this.players.length; i++) {
-			temp = temp + this.players[i].getPersonality().getName() + ",";
+			int personalityId=((PersonalityCard) this.players[i].getPersonality()).getCardId() -1;
+			temp = temp + personalityId + ",";
 			temp = temp + this.players[i].getColor() + ",";
 			temp = temp + this.players[i].getMinionsOnHand() + ",";
 			temp = temp + this.players[i].getBuildingOnHand() + ",";
@@ -328,161 +331,173 @@ public class Game {
 		this.gameboard.resetAreas();// erase last state of the areas.
 		
 		// Parse Data and create new gameState.
-		while (true) {
+		
 			
-			// temporary variables.
-			String areaName = null;
-			boolean troubleMarker = false;
-			//boolean building = false;
+		// temporary variables.
+		String areaName = null;
+		boolean troubleMarker = false;
+		//boolean building = false;
 
-			Colors buildingColor = Colors.NONE;
-			int demon = 0;
-			int troll = 0;
+		Colors buildingColor = Colors.NONE;
+		int demon = 0;
+		int troll = 0;
 
-			//Load all areas.
-			for (int i = 0; i < 12; i++) {
-				// Array that will contain the color of the minions on a certain
-				// area.
-				ArrayList<Colors> minions = new ArrayList<Colors>();
-				String[] parts = content.get(i).split(",");
-				for (int j = 0; j < parts.length; j++) {
-					if (j == 0)
-						areaName = parts[j];
-					else if (j == 1)
-						troubleMarker = Boolean.valueOf(parts[j]);
-					else if (j == 2)
-						buildingColor = Colors.valueOf(parts[j]);
-					else if (j == 3)
-						demon = Integer.parseInt(parts[j]);
-					else if (j == 4)
-						troll = Integer.parseInt(parts[j]);
-					else
-						minions.add(Colors.colorForString(parts[j]));
+		//Load all areas.
+		for (int i = 0; i < 12; i++) {
+			// Array that will contain the color of the minions on a certain
+			// area.
+			ArrayList<Colors> minions = new ArrayList<Colors>();
+			String[] parts = content.get(i).split(",");
+			for (int j = 0; j < parts.length; j++) {
+				if (j == 0)
+					areaName = parts[j];
+				else if (j == 1)
+					troubleMarker = Boolean.valueOf(parts[j]);
+				else if (j == 2)
+					buildingColor = Colors.valueOf(parts[j]);
+				else if (j == 3)
+					demon = Integer.parseInt(parts[j]);
+				else if (j == 4)
+					troll = Integer.parseInt(parts[j]);
+				else
+					minions.add(Colors.colorForString(parts[j]));
 
-				}
-				// Create new city card with the name extracted.
-				CityCard cityCard = new CityCard(i);
-				// Create Area and add to gameboard.
-				Area area = new Area(cityCard, troubleMarker,buildingColor, demon, troll);
-				// (cityCard,troubleMarker,building,demon,troll) ==> Constructor
-				// parameters.
-				this.gameboard.addArea(area);
-				this.gameboard.addCityCard(cityCard);
-				// Add the minions that where in the current area.
-				for (int j = 0; j < minions.size(); j++)
-					area.addMinion(new Piece(minions.get(j)),true);
+			}
+			// Create new city card with the name extracted.
+			CityCard cityCard = new CityCard(i);
+			// Create Area and add to gameboard.
+			Area area = new Area(cityCard, troubleMarker,buildingColor, demon, troll);
+			// (cityCard,troubleMarker,building,demon,troll) ==> Constructor
+			// parameters.
+			this.gameboard.addArea(area);
+			this.gameboard.addCityCard(cityCard);
+			// Add the minions that where in the current area.
+			for (int j = 0; j < minions.size(); j++)
+				area.addMinion(new Piece(minions.get(j)),true);
+		}
+
+		// savedGame="Test.txt";
+		// Get Number of Players(Always at line 12(in array))
+		int numberPlayers = Integer.parseInt(content.get(12));
+		this.numberOfPlayers = numberPlayers;
+
+		/**
+		 * Parse PLayers information. Reset Last state of players.
+		 */
+		this.players = null;
+		// Set new number players.
+		this.players = new Player[numberPlayers];
+
+		PersonalityCard perCard = null;
+		Colors color = null;
+		int minionOnHand = 0;
+		int buildingOnHand = 0;
+		int money = 0;
+
+		int NumplayerCards = 0;
+		int NumcityCards = 0;
+
+		this.decks = new HashMap<String, Deck>();
+		this.decks.clear();//erase all previous decks.
+		//Initialize all decks for this loaded game.
+		this.decks.put("discard", new Deck("D", this.numberOfPlayers));
+		this.decks.put("personalities", new Deck("P", this.numberOfPlayers));
+		this.decks.put("events", new Deck("E", this.numberOfPlayers));
+		this.decks.put("green", new Deck("G", this.numberOfPlayers));
+		this.decks.put("brown", new Deck("B", this.numberOfPlayers));
+
+		// Start at position 13 after areas and # of players.
+		for (int i = common.beginingOfPlayersLoadGame; i < common.beginingOfPlayersLoadGame + numberPlayers; i++) 
+		{
+			String[] parts = content.get(i).split(",");
+			int playerIndex = i % common.beginingOfPlayersLoadGame;// Index for array players, it starts at 0.
+
+			for (int j = 0; j < parts.length; j++) {
+				if (j == 0)
+					perCard = new PersonalityCard(Integer.parseInt(parts[j]),this.numberOfPlayers);
+				else if (j == 1)
+					color = Colors.colorForString(parts[j]);
+				else if (j == 2)
+					minionOnHand = Integer.parseInt(parts[j]);
+				else if (j == 3)
+					buildingOnHand = Integer.parseInt(parts[j]);
+				else if (j == 4)
+					money = Integer.parseInt(parts[j]);
+				else if (j == 5) {
+					NumplayerCards = Integer.parseInt(parts[j]);
+
+				} else if (j == (5 + NumplayerCards) + 1) {
+					NumcityCards = Integer.parseInt(parts[j]);
+				} 
+
 			}
 
-			// savedGame="Test.txt";
-			// Get Number of Players(Always at line 12(in array))
-			int numberPlayers = Integer.parseInt(content.get(12));
-			this.numberOfPlayers = numberPlayers;
+			//Remove Personality card from City card deck.
+			Deck personalities=this.decks.get("personalities");
+			boolean success=personalities.deleteCard(perCard);
+			if(!success)
+				System.out.println("Personality Card couldn't be removed from the personality deck.(Class Game-Fucntion LoadGame)");
 
-			/**
-			 * Parse PLayers information. Reset Last state of players.
-			 */
-			this.players = null;
-			// Set new number players.
-			this.players = new Player[numberPlayers];
+			//System.out.println(personalities.getSizeDeck());
+			//personalities.displayCardsinDeck(personalities.getSizeDeck());
 
-			PersonalityCard perCard = null;
-			Colors color = null;
-			int minionOnHand = 0;
-			int buildingOnHand = 0;
-			int money = 0;
+			// Create and add new Player
+			this.players[playerIndex] = new Player(perCard, color, minionOnHand, buildingOnHand, money);
+			// Add player'sCards
+			for (int j = 0; j < NumplayerCards; j++) {
+				// Brown cards have int values of 1-53 and green cards have
+				// int values of 54-101.
+				int checkColor = Integer.parseInt(parts[(5 + j) + 1]);
 
-			int NumplayerCards = 0;
-			int NumcityCards = 0;
-			
-			this.decks = new HashMap<String, Deck>();
-			this.decks.clear();//erase all previous decks.
-			//Initialize all decks for this loaded game.
-			this.decks.put("discard", new Deck("D", this.numberOfPlayers));
-			this.decks.put("personalities", new Deck("P", this.numberOfPlayers));
-			this.decks.put("events", new Deck("E", this.numberOfPlayers));
-			this.decks.put("green", new Deck("G", this.numberOfPlayers));
-			this.decks.put("brown", new Deck("B", this.numberOfPlayers));
-			
-			// Start at position 13 after areas and # of players.
-			for (int i = common.beginingOfPlayersLoadGame; i < common.beginingOfPlayersLoadGame + numberPlayers; i++) 
+				Card card = new Card(false, false); // City cards are always
+				// visible.
+				if (checkColor < 54)// This is a Brown card
+					card = new BrownCard(checkColor);
+				else if (checkColor >= 54)
+					card = new GreenCard(checkColor);
+
+				this.players[playerIndex].receiveCard(card);
+			}
+			Deck deck=null;
+			//remove all the cards the player just received from the correct deck.
+			for(int j = 0;j<this.players[playerIndex].getPlayerCards().size();j++)
 			{
-				String[] parts = content.get(i).split(",");
-				int playerIndex = i % common.beginingOfPlayersLoadGame;// Index for array players, it starts at 0.
-											
-				for (int j = 0; j < parts.length; j++) {
-					if (j == 0)
-						perCard = new PersonalityCard(parts[j]);
-					else if (j == 1)
-						color = Colors.colorForString(parts[j]);
-					else if (j == 2)
-						minionOnHand = Integer.parseInt(parts[j]);
-					else if (j == 3)
-						buildingOnHand = Integer.parseInt(parts[j]);
-					else if (j == 4)
-						money = Integer.parseInt(parts[j]);
-					else if (j == 5) {
-						NumplayerCards = Integer.parseInt(parts[j]);
-
-					} else if (j == (5 + NumplayerCards) + 1) {
-						NumcityCards = Integer.parseInt(parts[j]);
-					} 
-
-				}
-				// Create and add new Player
-				this.players[playerIndex] = new Player(perCard, color, minionOnHand, buildingOnHand, money);
-				// Add player'sCards
-				for (int j = 0; j < NumplayerCards; j++) {
-					// Brown cards have int values of 1-53 and green cards have
-					// int values of 54-101.
-					int checkColor = Integer.parseInt(parts[(5 + j) + 1]);
-
-					Card card = new Card(false, false); // City cards are always
-														// visible.
-					if (checkColor < 54)// This is a Brown card
-						card = new BrownCard(checkColor);
-					else if (checkColor >= 54)
-						card = new GreenCard(checkColor);
-
-					this.players[playerIndex].receiveCard(card);
-				}
-				Deck deck=null;
-				//remove all the cards the player just received from the correct deck.
-				for(int j = 0;j<this.players[playerIndex].getPlayerCards().size();j++)
+				if(this.players[playerIndex].getPlayerCards().get(j).getClass().toString().contains("GreenCard"))
 				{
-					if(this.players[playerIndex].getPlayerCards().get(j).getClass().toString().contains("GreenCard"))
-					{
-						deck=this.getEspecificDeck("green");
-						deck.deleteCard(this.players[playerIndex].getPlayerCards().get(j));//TODO:check if it returns true.
-					}else if(this.players[playerIndex].getPlayerCards().get(j).getClass().toString().contains("BrownCard"))
-					{
-						deck=this.getEspecificDeck("brown");
-						deck.deleteCard(this.players[playerIndex].getPlayerCards().get(j));//TODO:check if it returns true.
-					}
+					deck=this.getEspecificDeck("green");
+					success=deck.deleteCard(this.players[playerIndex].getPlayerCards().get(j));//TODO:check if it returns true.
+					if(!success)
+						System.out.println("Green Card couldn't be removed from the Green deck.(Class Game-Fucntion LoadGame)");
+				}else if(this.players[playerIndex].getPlayerCards().get(j).getClass().toString().contains("BrownCard"))
+				{
+					deck=this.getEspecificDeck("brown");
+					deck.deleteCard(this.players[playerIndex].getPlayerCards().get(j));//TODO:check if it returns true.
 				}
-				
+			}
 
-				// Add CityCards.
-				for (int j = 0; j < NumcityCards; j++) {
-					// Get CityCard number.
-					int cardNumber = Integer.parseInt(parts[(5 + NumplayerCards + (j + 1)) + 1]);
-					//Get corresponding cityCard
-					CityCard cityCard=this.gameboard.getAreaByCityCard(cardNumber).getCityCard();
-					//delete city card from beard and give it to the player.
-					this.gameboard.deleteCardFromDeck(cityCard);
-					this.players[playerIndex].receiveCityCard(cityCard);
-				}
 
-			}// PLayers
+			// Add CityCards.
+			for (int j = 0; j < NumcityCards; j++) {
+				// Get CityCard number.
+				int cardNumber = Integer.parseInt(parts[(5 + NumplayerCards + (j + 1)) + 1]);
+				//Get corresponding cityCard
+				CityCard cityCard=this.gameboard.getAreaByCityCard(cardNumber).getCityCard();
+				//delete city card from beard and give it to the player.
+				this.gameboard.deleteCardFromDeck(cityCard);
+				this.players[playerIndex].receiveCityCard(cityCard);
+			}
 
-			/** Parse BankMoney Get money bank has. **/
-			this.bank = Bank.getInstance();
-			int bankMoney = Integer.parseInt(content.get(13+this.numberOfPlayers));
-			AtomicInteger aInt = new AtomicInteger(bankMoney);
-			this.bank.setBankMoney(aInt);// Set new bank balance.
+		}// PLayers
+
+		/** Parse BankMoney Get money bank has. **/
+		this.bank = Bank.getInstance();
+		int bankMoney = Integer.parseInt(content.get(13+this.numberOfPlayers));
+		AtomicInteger aInt = new AtomicInteger(bankMoney);
+		this.bank.setBankMoney(aInt);// Set new bank balance.
+
+		this.currentPlayer=0;
 			
-			this.currentPlayer=0;
-			break; // Exit while loop.
-		}// While
+		
 		//Create new die.
 		this.die = new Die();
 		
@@ -547,11 +562,23 @@ public class Game {
 		System.out.println("Bank balance:" + this.bank.getTotal() + "\n");
 		System.out.println("Players:");
 		for (int i = 0; i < this.players.length; i++) {
+			System.out.println();
 			System.out.println("Player" + (i + 1) + ":");
-			System.out.println(this.players[i].toString());
-		}
+			System.out.println("Money: "+this.players[i].getMoney());
+			System.out.println("NetWorth: "+this.players[i].calculateNetWorth(this.gameboard));
+			
+			System.out.println("Player: "+this.players[i].getColor()+" has buldings in the following areas:");
+			for(int j=0;j<this.gameboard.getAreas().size();j++)
+			{
+				if(this.players[i].getColor().equals(this.gameboard.getAreas().get(j).getBuildingColor()))
+					System.out.println("Area: "+this.gameboard.getAreas().get(j).getCityCard().getName()+" ;Building Cost:"+this.gameboard.getAreas().get(j).getCityCard().getBuldingCost());
+			}
+			
+			//System.out.println(this.players[i].toString());
+		}/*
 		System.out.println("Game Board State:");
 		System.out.println(this.gameboard.toString());
+		*/
 	}
 
 	// Getters
@@ -631,6 +658,41 @@ public class Game {
 	 */
 	public int getCurrentPlayer() {
 		return this.currentPlayer;
+	}
+	
+	/**
+	 * Calculate who won the Game. Called when the the brown deck is empty or when the event card Riots is activated and there are 8 or more trouble markers on the gameboard.
+	 */
+	public void CalculateAWinner()
+	{
+		double canPay=0;
+		for(int i=0;i< this.players.length;i++)
+		{
+			if(players[i].getLoan()>0)
+			{//Player has loans
+				canPay=Math.floor(players[i].getLoan()/players[i].getMoney());
+				System.out.println("Player: "+players[i].getColor()+ " can pay for: "+canPay +" of the loans he took.");
+				players[i].payLoan((int)canPay*12);//Pay available loans
+				
+				if(players[i].getLoan()>0)//If he still has loans but can't pay substract 15 points
+				{
+					players[i].setMoney(players[i].getMoney()-15);
+					players[i].setloan(0);
+				}
+				
+				//Calculate networth
+				int netWorth=players[i].calculateNetWorth(this.gameboard);
+				
+				//Calculate minions on the board.
+				int numMinions=12-players[i].getMinionsOnHand();
+				
+				int points=netWorth+numMinions;
+				
+				System.out.println("Player: "+players[i].getColor()+" has a total of: "+points+ "points.");
+			}
+			
+			System.out.println("The player with the highest points is the winner. Congratulations.");
+		}
 	}
 
 }

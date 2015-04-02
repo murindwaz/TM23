@@ -250,7 +250,7 @@ public class EventCard extends Card {
 		if(gameBoard.troubleMarkers().size()>=8)
 		{
 			System.out.println("There are eight or more trouble markers on the gameBoard. The Game is over");
-			//TODO: call end of game function that has not been written yet.
+			game.CalculateAWinner();
 		}else
 		{
 			System.out.println("The board does not contain eight or more trouble markers.The card does not apply. Keep Playing!!!");

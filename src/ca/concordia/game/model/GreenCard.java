@@ -76,26 +76,13 @@ public class GreenCard extends Card {
 				}
 			}
 		}else{
-			System.out.println("Error the symbol Card is empty!!!!");
+			//some cards don't have any symbols.
+			//System.out.println("Error the symbol Card is empty!!!!");
+			//Do nothing.
 		}
 	}	
 	
-	/**
-	 * The GreenCard will be used to initialize cards CardLoader
-	 * @param number(int)
-	 * @param name (String)
-	 * @param color (Colors)
-	 */
-	public GreenCard( int number, String name, Colors color){
-		this( number ); 
-		this.number = number; 
-		this.name = name;
-		this.color = color;
-	}
-	public GreenCard( int number, String name, Colors color, String ability ){
-			this( number, name, color ); 
-			this.especialAbility = ability;
-	}
+	
 	
 	/**
 	 * Getter: Returns the array of symbols which represent the different actions the card can perform sequentially.

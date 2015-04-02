@@ -83,7 +83,7 @@ public class PlayerTest {
 	
 	@Test 
 	public void playerInitialState(){
-		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
+		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(gameboard),  gamest.calculateNetWorth(gameboard) );
 		gamest.addMoney(MONEY);
 		assertTrue( gamest.getMoney() == MONEY ); 
 		dpizar.addMoney(MONEY);
@@ -115,9 +115,9 @@ public class PlayerTest {
 	
 	@Test 
 	public void winningConditions(){
-		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
+		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(gameboard),  gamest.calculateNetWorth(gameboard) );
 		dpizar.transferMoneyto(1, gamest);
-		assertNotEquals( "Player dpizar can transfer money to gamest" , dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
+		assertNotEquals( "Player dpizar can transfer money to gamest" , dpizar.calculateNetWorth(gameboard),  gamest.calculateNetWorth(gameboard) );
 		assertFalse("Player 2 has not winning conditions", gamest.checkWinningCondition(gameboard) );
 		assertFalse("Player 1 has not winning conditions", dpizar.checkWinningCondition(gameboard) );
 		/**
