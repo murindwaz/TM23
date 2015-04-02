@@ -74,6 +74,7 @@ public class Player {
 		this.color = aColor;
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
+		this.loans=0;
 		
 		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
 		
@@ -118,12 +119,18 @@ public class Player {
 	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the player may have.
 	 * @return int
 	 */
-	public int calculateNetWorth() {
+	public int calculateNetWorth(Gameboard gameBoard) {
 		this.netWorth = this.money;
 		// calculate the money invested in buildings so far, and add it to the
 		// networth.
+		ArrayList<Area>areas= gameBoard.getAreas();
+		
 		for (int i = 0; i < this.playerCityCard.size(); i++) {
-			this.netWorth = this.netWorth + this.playerCityCard.get(i).getBuldingCost();
+			int cardNumber=this.playerCityCard.get(i).getCardNumber();
+			int numberOfDemons=areas.get(cardNumber-1).getDemon();
+			if(numberOfDemons==0)
+				this.netWorth = this.netWorth + this.playerCityCard.get(i).getBuldingCost();
+			
 		}
 		// If the player has any loans substract that amount to networth
 		this.netWorth = this.netWorth - loans;
@@ -136,7 +143,16 @@ public class Player {
 	 */
 	public void takeLoan(int amountLoan)
 	{
-		this.loans=this.loans-amountLoan;
+		this.loans=this.loans+(amountLoan+2);//2 for the interest.
+		this.money=this.money+amountLoan;
+	}
+	/**
+	 * Set loan.Called when game is over.
+	 * @param newBalance
+	 */
+	public void setloan(int newBalance)
+	{
+		this.loans=newBalance;
 	}
 	
 	/**
@@ -145,7 +161,20 @@ public class Player {
 	 */
 	public void payLoan(int amountPaid)
 	{
-		this.loans=this.loans+amountPaid;
+		this.loans=this.loans-amountPaid;
+		this.money=this.money-amountPaid;
+	}
+	
+	/**
+	 * Check if the player can pay one of the loans he took. Each loan is worth 12$.
+	 * @return boolean
+	 */
+	public boolean canPayLoan()
+	{
+		if(this.money>12)
+			return true;
+		
+		return false;
 	}
 
 	/**
@@ -191,6 +220,14 @@ public class Player {
 			return false;
 	}
 	
+	/**
+	 * Set money
+	 * @param money
+	 */
+	public void setMoney(int money)
+	{
+		this.money=money;
+	}
 
 	/**
 	 * Add card to player playing cards.
@@ -340,7 +377,8 @@ public class Player {
 				return false;
 			}
 		} else if (cardId==7) {//Chrysoprase
-			int playerNetWorth=this.calculateNetWorth();
+			int playerNetWorth=this.calculateNetWorth(gameBoard );
+			
 			if(playerNetWorth>=50)
 				return true;
 			else
@@ -454,12 +492,21 @@ public class Player {
 	}
 	
 	/**
+	 * Getter: get player's loan
+	 * @return
+	 */
+	public int getLoan()
+	{
+		return this.loans;
+	}
+	
+	/**
 	 * ToString Method for class Player.
 	 */
 	@Override
 	public String toString()
 	{
-		String info="Money: "+this.money+ " Playing as: "+ this.personality.getName()+ " Using Color:"+this.color +"." +"\n";
+		String info="Money: "+this.money+ " Playing as: "+ this.personality.getName()+ " Using Color:"+this.color +"."+"\n";
 		String info2= "Currently Holding "+ this.minionsOnHand+" minions and "+this.buildingOnHand+ " Buildings on hand."+"\n";
 		String info3="Playing Cards:"+"\n";
 		String info4="City Playing Cards:"+"\n";

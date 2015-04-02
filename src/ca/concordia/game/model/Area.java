@@ -61,7 +61,7 @@ public class Area {
 		this.troubleMarker=troubleMarker;
 		//Modify this.building=building;
 		this.buildingColor=buildingColor;
-		if(this.buildingColor.color().equals(Colors.NONE))
+		if(this.buildingColor.equals(Colors.NONE))
 			this.building=false;
 		else
 			this.building=true;
@@ -90,10 +90,10 @@ public class Area {
 		//Map will contain the number of minions from each player currently on this area.
 		Map<Colors,Integer> playerMinions=new HashMap<Colors,Integer>();
 		//All possible players.
-		playerMinions.put(Colors.RED, 0);
-		playerMinions.put(Colors.BLUE, 0);
-		playerMinions.put(Colors.YELLOW, 0);
-		playerMinions.put(Colors.GREEN, 0);
+		playerMinions.put(Colors.RED, new Integer(0));
+		playerMinions.put(Colors.BLUE,new Integer(0));
+		playerMinions.put(Colors.YELLOW, new Integer(0));
+		playerMinions.put(Colors.GREEN, new Integer(0));
 		
 		Colors currentColor= Colors.NONE;
 		for(int i=0;i<this.minions.size();i++)
@@ -102,8 +102,12 @@ public class Area {
 			playerMinions.put(currentColor,playerMinions.get(currentColor)+1);
 		}
 		
-		if(this.building)//if true:a building exists
-			playerMinions.put(buildingColor, playerMinions.get(buildingColor)+1);
+		if(this.building)//if true a building exists
+		{
+			int number= playerMinions.get(buildingColor);
+			number=number+1;
+			playerMinions.put(buildingColor, number);
+		}
 		
 		//Get the entry with the maximum value in the HashMap.				
 		Entry<Colors,Integer> maxEntry = null;
@@ -202,15 +206,15 @@ public class Area {
 	@Override
 	public String toString()
 	{
-		String info="Area Name: "+ this.cityCard.getName()+" ." + " Trouble Marker: "+this.troubleMarker+". Building: "+this.building+" .";
+		String info="Area Name: "+ this.cityCard.getName()+" ." + " Trouble Marker: "+this.troubleMarker+". Building: "+this.building+" ."+ " Building Color: "+this.buildingColor+" .";
 		info= info+ " Demons: "+this.demon+ ". Trolls: "+this.troll +" .\n";
-		String info2="Minions in current area: \n";
+		String info2="Minions in current area: ";
 		
 		for(int i=0;i<this.minions.size();i++)
 		{
 			info2=info2+ this.minions.get(i).toString()+", ";
 		}
-		info2=info2+"\n";
+		info2=info2+"\n\n";
 		return info+info2;
 	}
 	

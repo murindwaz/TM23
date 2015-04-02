@@ -246,6 +246,7 @@ public class Symbol {
 			Colors Ccolor=Colors.colorForString(color);
 			//Remove a minion of the color specified by the player.
 			gameBoard.getAreas().get(selectedCardNumber-1).removeMinion(Ccolor);
+			gameBoard.getAreas().get(selectedCardNumber-1).removeTroubleMarker();
 			//Update the status of the player to whom the minion belonged to.
 			Player player=game.getPlayerByColor(Ccolor);
 			player.removeMinionOnBoard(selectedCardNumber);

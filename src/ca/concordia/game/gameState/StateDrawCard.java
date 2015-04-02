@@ -47,8 +47,37 @@ public class StateDrawCard implements StateLike{
 					//If the brown deck is empty then the game is over!!!!!
 					if(drawDeck.getSizeDeck()<=0)
 					{
-						System.out.println("*****************************************The Game is Over*********************************************************");
-						//TODO: Call Function to calculate who won the game and end Game.
+						System.out.println("*****************************************The Game is Over The brown Draw deck is empty*********************************************************");
+						
+						int winner=-1;
+						Player[] players = null;
+						for(int j=0;j<game.numberOfPlayers;j++)
+						{
+							 players=game.getPlayers();
+							if(players[j].getPersonality().getName().equals("Commander Vimes"))
+								winner=j;
+						}
+						
+						if(winner>=0)
+						{
+							System.out.println("Player: "+players[winner].getColor()+" with personality card:"+players[winner].getPersonality().getName());
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+							break;
+						}
+						else
+						{
+							//Calculate who won the game.
+							game.CalculateAWinner();
+							break;//Game is over.
+						}
 					}
 
 				}
@@ -73,4 +102,5 @@ public class StateDrawCard implements StateLike{
 		 */
 		return Configuration.STATE_DRAWING;
 	}
+	
 }

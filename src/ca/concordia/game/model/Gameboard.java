@@ -242,11 +242,12 @@ public class Gameboard {
 	@Override
 	public String toString(){
 		String info = "";
+		info=info+"****************************GameBoard****************************************\n";
 		for(int i=0;i<areas.size();i++)
 		{
 			info=info+areas.get(i).toString();
 		}
-		
+		info=info+"****************************GameBoard END****************************************\n";
 		return info;
 	}
 	

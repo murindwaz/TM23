@@ -59,7 +59,7 @@ public class Deck {
 			this.arrayCards = new ArrayList<Card>();
 			PersonalityCard temp;
 			for (int i = 0; i < 7; i++) {
-				temp = new PersonalityCard(i, players);
+				temp = new PersonalityCard(i, this.players);
 				this.cards.add(temp);
 				this.arrayCards.add(temp);
 			}
@@ -174,9 +174,24 @@ public class Deck {
 	 */
 	public boolean deleteCard(Card card)
 	{
+		Iterator<Card> it = cards.iterator();
+		Card foundInstance = null;
+		while(it.hasNext()) {
+		    Card obj = it.next();
+		    if(obj.getName().equals(card.getName())) {
+		        foundInstance = obj;
+		        break;
+		    }
+		}
+		if(foundInstance != null) {
+		  return cards.remove(foundInstance); // if you wish to remove it as well
+		}
+		/*
 		boolean check=this.cards.remove(card);
-		return check;
+		return check;*/
+		return false;
 	}
+	
 	/**
 	 * Displays a number of cards in the deck, the number is specified sent as an argument.
 	 * @param howMany(int)
@@ -191,5 +206,13 @@ public class Deck {
 				break;
 	        counter++;
 	      }
+	}
+	
+	/**
+	 * Clear deck.
+	 */
+	public void clearDeck()
+	{
+		this.cards.clear();
 	}
 }

@@ -123,9 +123,9 @@ public class GameModelTest {
 		assertNotNull("Can create browncard", new BrownCard( 1 ) );
 		assertNotNull("Can Create a green card", new GreenCard( 54 ) );
 		assertNotNull("Can create a minion", new Minion( Colors.GREEN ) );
-		assertNotNull("Can create personalities", new PersonalityCard( "A" ) );
+		assertNotNull("Can create personalities", new PersonalityCard( 1,2 ) );
 		assertNotNull("Can create a piece", new Piece( Colors.RED ) );
-		assertNotNull("Can create a player", new Player( new PersonalityCard("N"), Colors.BLUE, 4, 2 ) );
+		assertNotNull("Can create a player", new Player( new PersonalityCard(1,4), Colors.BLUE, 4, 2 ) );
 	}
 
 }
