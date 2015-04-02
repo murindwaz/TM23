@@ -62,9 +62,9 @@ public class PlayerTest {
 		boolean building = false; 
 		boolean troubleMarker = true; 
 		//creating the areas
-		dollySisters = new Area(new CityCard(1), troubleMarker, building, buildingColor, demon, 0); 
-		theScours = new Area(new CityCard(5), troubleMarker, building, buildingColor, demon, 0); 
-		theShades = new Area(new CityCard(7), troubleMarker, building, buildingColor, demon, 0); 
+		dollySisters = new Area(new CityCard(1), troubleMarker,  buildingColor, demon, 0); 
+		theScours = new Area(new CityCard(5), troubleMarker, buildingColor, demon, 0); 
+		theShades = new Area(new CityCard(7), troubleMarker,  buildingColor, demon, 0); 
 		//creating cards
 		PersonalityCard lordVetinari = new PersonalityCard(0, 2);
 		PersonalityCard lordSelachii = new PersonalityCard(1, 2);

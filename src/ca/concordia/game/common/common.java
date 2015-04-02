@@ -7,6 +7,10 @@ public class common {
 	//Minimum number of cards a player can have.
 	public static final int numberOfCard=5;
 	
+	public static final int maxNumberOfDemons=4;
+	public static final int maxNumberOfTrolls=3;
+	public static final int beginingOfPlayersLoadGame=13;
+	
 	
 	public enum Colors {
 		RED("RED"), BLUE("BLUE"), YELLOW("YELLOW"), GREEN("GREEN"), BROWN("BROWN"),NONE("NONE");

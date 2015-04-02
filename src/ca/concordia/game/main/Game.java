@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import ca.concordia.game.gameState.StateContext;
 import ca.concordia.game.model.*;
 import ca.concordia.game.util.*;
-
+import ca.concordia.game.common.common;
 import ca.concordia.game.common.common.Colors;
 
 /**
@@ -37,7 +37,7 @@ public class Game {
 	private Bank bank;
 	private Die die;
 	private ArrayList<Symbol> symbols;
-	public Scanner keyIn;
+	public static Scanner keyIn;
 	public int currentPlayer;
 	public int numberOfPlayers;
 	private Player[] players;
@@ -54,17 +54,14 @@ public class Game {
 		currentPlayer = -1;
 		this.bank = Bank.getInstance();
 		bank.setBankMoney(new AtomicInteger(Configuration.DEFAULT_BALANCE));
-		// Select number of players
-		keyIn = new Scanner(System.in);
+		
 		System.out.println("Please select number of players(Maximun => 4):");
 		numberOfPlayers = keyIn.nextInt();
 		this.symbols = new ArrayList<Symbol>();
-		// Initialize all Symbol Actions.
-		for (int i = 1; i <= 9; i++) {
-			/**
-			 * @todo remove this section as it is not being used yet.
-			 */
-		}
+		
+		
+		//All symbols are initialize in the Green or Brown card classes.
+		
 
 		// Close Scanner object
 		// keyIn.close();//Don't close until done using in whole proyect.
@@ -106,30 +103,34 @@ public class Game {
 	}
 
 	// Start playing game instance.
-	public void play() {
-		Map<Integer, Colors> playerDieRollMap = new HashMap<Integer, Colors>();
-		ArrayList<Integer> playerDieRoll = new ArrayList<Integer>();
-		int rollValue = -1;
-		// roll dice for each player to pick first player.
-		for (int i = 0; i < this.numberOfPlayers; i++) {
-			rollValue = die.roll();// roll dice for player.
-			System.out.println("Player with color: " + this.players[i].getColor() + " rolled:" + rollValue);
-			playerDieRoll.add(rollValue);// store value gotten by player.
-			/**
-			 * Store Player color,roll value pair.
-			 */
-			playerDieRollMap.put(rollValue, this.players[i].getColor());
-		}
+	public void play(boolean loadedGame) {
+		
+		if(!loadedGame)//If the game was not loaded.
+		{
+			Map<Integer, Colors> playerDieRollMap = new HashMap<Integer, Colors>();
+			ArrayList<Integer> playerDieRoll = new ArrayList<Integer>();
+			int rollValue = -1;
+			// roll dice for each player to pick first player.
+			for (int i = 0; i < this.numberOfPlayers; i++) {
+				rollValue = die.roll();// roll dice for player.
+				System.out.println("Player with color: " + this.players[i].getColor() + " rolled:" + rollValue);
+				playerDieRoll.add(rollValue);// store value gotten by player.
+				/**
+				 * Store Player color,roll value pair.
+				 */
+				playerDieRollMap.put(rollValue, this.players[i].getColor());
+			}
 
-		int highestRoll = highestValue(playerDieRoll);
-		Colors startingColor = playerDieRollMap.get(highestRoll);
-		System.out.println("The player with the color:" + startingColor + " starts the game.");
-		// Set the pointer to the starting player in the array.
-		for (int i = 0; i < this.numberOfPlayers; i++) {
-			// Found a match
-			if (this.players[i].getColor().equals(startingColor)) {
-				currentPlayer = i;
-				break;
+			int highestRoll = highestValue(playerDieRoll);
+			Colors startingColor = playerDieRollMap.get(highestRoll);
+			System.out.println("The player with the color:" + startingColor + " starts the game.");
+			// Set the pointer to the starting player in the array.
+			for (int i = 0; i < this.numberOfPlayers; i++) {
+				// Found a match
+				if (this.players[i].getColor().equals(startingColor)) {
+					currentPlayer = i;
+					break;
+				}
 			}
 		}
 		// Keep going until a player wins the game.
@@ -153,7 +154,8 @@ public class Game {
 				break;
 			}
 		}
-		this.keyIn.close();
+		//don't close beacue a game might be loaded.
+		//this.keyIn.close();
 	}
 
 	/**
@@ -174,6 +176,8 @@ public class Game {
 	public static Game getInstance() {
 		if( instance == null ){
 			instance = new Game();
+			// Select number of players
+			keyIn = new Scanner(System.in);
 		}
 		return instance;
 	}
@@ -294,35 +298,32 @@ public class Game {
 	public String loadGame() {
 		ArrayList<String> content = new ArrayList<String>();
 
-		// First set the game instance to null since there could already be
-		// another game running.
-		Game.instance = null;
-
 		// Load SavedGame
 		// Create Scanner Object
-		Scanner input = new Scanner(System.in);
+		
 		String savedGame = "";
 
 		System.out.println("Please enter the name of the file you wish to load:");
-		savedGame = input.next();
+		savedGame = this.keyIn.next();
 		// input.close();
 		// Load new gameState into arraylist.
 		content = Loader.loadGameState(savedGame);
-
+		this.gameboard=new Gameboard();
+		this.gameboard.resetAreas();// erase last state of the areas.
+		
 		// Parse Data and create new gameState.
 		while (true) {
-			// Parse Areas from gameboard (Total of 12 Areas).
-			this.gameboard.resetAreas();// erase last state of the areas.
-
+			
 			// temporary variables.
 			String areaName = null;
 			boolean troubleMarker = false;
-			boolean building = false;
+			//boolean building = false;
 
 			Colors buildingColor = Colors.NONE;
 			int demon = 0;
 			int troll = 0;
 
+			//Load all areas.
 			for (int i = 0; i < 12; i++) {
 				// Array that will contain the color of the minions on a certain
 				// area.
@@ -334,24 +335,23 @@ public class Game {
 					else if (j == 1)
 						troubleMarker = Boolean.valueOf(parts[j]);
 					else if (j == 2)
-						building = Boolean.valueOf(parts[j]);
+						buildingColor = Colors.valueOf(parts[j]);
 					else if (j == 3)
-						buildingColor = Colors.colorForString(parts[j]);
-					else if (j == 4)
 						demon = Integer.parseInt(parts[j]);
-					else if (j == 5)
+					else if (j == 4)
 						troll = Integer.parseInt(parts[j]);
 					else
 						minions.add(Colors.colorForString(parts[j]));
 
 				}
 				// Create new city card with the name extracted.
-				CityCard cityCard = new CityCard(areaName);
+				CityCard cityCard = new CityCard(i+1);
 				// Create Area and add to gameboard.
-				Area area = new Area(cityCard, troubleMarker, building, buildingColor, demon, troll);
+				Area area = new Area(cityCard, troubleMarker,buildingColor, demon, troll);
 				// (cityCard,troubleMarker,building,demon,troll) ==> Constructor
 				// parameters.
 				this.gameboard.addArea(area);
+				this.gameboard.addCityCard(cityCard);
 				// Add the minions that where in the current area.
 				for (int j = 0; j < minions.size(); j++)
 					area.addMinion(new Piece(minions.get(j)));
@@ -377,11 +377,22 @@ public class Game {
 
 			int NumplayerCards = 0;
 			int NumcityCards = 0;
+			
+			this.decks = new HashMap<String, Deck>();
+			this.decks.clear();//erase all previous decks.
+			//Initialize all decks for this loaded game.
+			this.decks.put("discard", new Deck("D", this.numberOfPlayers));
+			this.decks.put("personalities", new Deck("P", this.numberOfPlayers));
+			this.decks.put("events", new Deck("E", this.numberOfPlayers));
+			this.decks.put("green", new Deck("G", this.numberOfPlayers));
+			this.decks.put("brown", new Deck("B", this.numberOfPlayers));
+			
 			// Start at position 13 after areas and # of players.
-			for (int i = 13; i < 13 + numberPlayers; i++) {
+			for (int i = common.beginingOfPlayersLoadGame; i < common.beginingOfPlayersLoadGame + numberPlayers; i++) 
+			{
 				String[] parts = content.get(i).split(",");
-				int playerIndex = i % 13;// Index for array players, it starts
-											// at 0.
+				int playerIndex = i % common.beginingOfPlayersLoadGame;// Index for array players, it starts at 0.
+											
 				for (int j = 0; j < parts.length; j++) {
 					if (j == 0)
 						perCard = new PersonalityCard(parts[j]);
@@ -398,33 +409,51 @@ public class Game {
 
 					} else if (j == (5 + NumplayerCards) + 1) {
 						NumcityCards = Integer.parseInt(parts[j]);
-					}
+					} 
 
 				}
 				// Create and add new Player
 				this.players[playerIndex] = new Player(perCard, color, minionOnHand, buildingOnHand, money);
 				// Add player'sCards
 				for (int j = 0; j < NumplayerCards; j++) {
-					// Brown cards have int values of 1-48 and green cards have
-					// int values of 49-101.
+					// Brown cards have int values of 1-53 and green cards have
+					// int values of 54-101.
 					int checkColor = Integer.parseInt(parts[(5 + j) + 1]);
 
 					Card card = new Card(false, false); // City cards are always
 														// visible.
-					if (checkColor < 49)// This is a Brown card
+					if (checkColor < 54)// This is a Brown card
 						card = new BrownCard(checkColor);
-					else if (checkColor > 48)
+					else if (checkColor >= 54)
 						card = new GreenCard(checkColor);
 
 					this.players[playerIndex].receiveCard(card);
 				}
+				Deck deck=null;
+				//remove all the cards the player just received from the correct deck.
+				for(int j = 0;j<this.players[playerIndex].getPlayerCards().size();j++)
+				{
+					if(this.players[playerIndex].getPlayerCards().get(j).getClass().toString().contains("GreenCard"))
+					{
+						deck=this.getEspecificDeck("green");
+						deck.deleteCard(this.players[playerIndex].getPlayerCards().get(j));//TODO:check if it returns true.
+					}else if(this.players[playerIndex].getPlayerCards().get(j).getClass().toString().contains("BrownCard"))
+					{
+						deck=this.getEspecificDeck("brown");
+						deck.deleteCard(this.players[playerIndex].getPlayerCards().get(j));//TODO:check if it returns true.
+					}
+				}
+				
 
 				// Add CityCards.
 				for (int j = 0; j < NumcityCards; j++) {
 					// Get CityCard number.
 					int cardNumber = Integer.parseInt(parts[(5 + NumplayerCards + (j + 1)) + 1]);
-					CityCard cC = new CityCard(cardNumber);
-					this.players[playerIndex].receiveCityCard(cC);
+					//Get corresponding cityCard
+					CityCard cityCard=this.gameboard.getAreaByCityCard(cardNumber-1).getCityCard();
+					//delete city card from beard and give it to the player.
+					this.gameboard.deleteCardFromDeck(cityCard);
+					this.players[playerIndex].receiveCityCard(cityCard);
 				}
 
 			}// PLayers
@@ -435,8 +464,27 @@ public class Game {
 				AtomicInteger aInt = new AtomicInteger(bankMoney);
 				this.bank.setBankMoney(aInt);// Set new bank balance.
 			}
+			this.currentPlayer=0;
 			break; // Exit while loop.
 		}// While
+		//Create new die.
+		this.die = new Die();
+		
+		// Depending on the number of players initialize their States(to wait).
+		playerStatus = new ArrayList<StateContext>();// put on heap.
+		this.playerStatus.clear();
+		this.playerStatus = new ArrayList<StateContext>();// put on heap.
+
+		for (int i = 0; i < numberOfPlayers; i++) {
+			playerStatus.add(new StateContext());
+			System.out.println("Player:" + players[i].getColor() + " Current State:" + playerStatus.get(i).getState());
+			/**
+			 * Set to next state(Play State.)So players are ready to play when
+			 * their turn comes up.
+			 */
+			playerStatus.get(i).performAction(players[i], this);
+		}
+		
 		return "Load Was Successfull";
 	}
 

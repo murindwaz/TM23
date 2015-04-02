@@ -59,6 +59,14 @@ public class Gameboard {
 
 	}
 	
+	/**
+	 * Default constructor. Used when loading a game.
+	 */
+	public Gameboard(){
+		this.areas=new ArrayList<Area>();
+		this.cityCards=new ArrayList<CityCard>();
+	}
+	
 	//TODO: Check if it works.Check indexes.
 	/**
 	 * Displays all the areas that are adjacent to the area sent as an argument.
@@ -146,8 +154,9 @@ public class Gameboard {
 	 */
 	public void resetAreas()
 	{
-		this.areas=null;
-		this.areas=new ArrayList<Area>();
+		this.areas.clear();;
+		//this.areas=new ArrayList<Area>();
+		this.cityCards.clear();
 	}
 	
 	/**

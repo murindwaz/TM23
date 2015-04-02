@@ -55,12 +55,17 @@ public class Area {
 	 * @param demon
 	 * @param troll
 	 */
-	public Area(CityCard cityCard,boolean troubleMarker,boolean building,Colors buildingColor,int demon,int troll)
+	public Area(CityCard cityCard,boolean troubleMarker,Colors buildingColor,int demon,int troll)
 	{
 		this.cityCard=cityCard;
 		this.troubleMarker=troubleMarker;
-		this.building=building;
+		//Modify this.building=building;
 		this.buildingColor=buildingColor;
+		if(this.buildingColor.color().equals(Colors.NONE))
+			this.building=false;
+		else
+			this.building=true;
+			
 
 		this.demon=demon;
 		this.troll=troll;

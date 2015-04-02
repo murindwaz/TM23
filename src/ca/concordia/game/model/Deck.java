@@ -168,6 +168,16 @@ public class Deck {
 	}
 	
 	/**
+	 * Remove given card from the ArrayDeque. Returns true if successful otherwise returns false.
+	 * @param card(Card)
+	 * @return boolean
+	 */
+	public boolean deleteCard(Card card)
+	{
+		boolean check=this.cards.remove(card);
+		return check;
+	}
+	/**
 	 * Displays a number of cards in the deck, the number is specified sent as an argument.
 	 * @param howMany(int)
 	 */

@@ -142,16 +142,7 @@ public class CityCard extends Card {
 		}
 	}
 
-	/**
-	 * Constructor takes String.
-	 * 
-	 * @param name
-	 */
-	public CityCard(String name) {
-		// City Cards are always Visible!
-		super(true, false);
-		this.setName(name);
-	}
+	
 	
 
 	/**
