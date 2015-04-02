@@ -120,8 +120,23 @@ public class PlayerTest {
 		assertNotEquals( "Player dpizar can transfer money to gamest" , dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
 		assertFalse("Player 2 has not winning conditions", gamest.checkWinningCondition(gameboard) );
 		assertFalse("Player 1 has not winning conditions", dpizar.checkWinningCondition(gameboard) );
+		/**
+		 * The winning condition : 	
+		 * 	- For Lord Vetinari, he has to have 11 minions in a 2 players game. 
+		 */
+		dpizar.putNewMinionOnBoard(2);
+		dpizar.putNewMinionOnBoard(3);
+		dpizar.putNewMinionOnBoard(4);
+		dpizar.putNewMinionOnBoard(6);
+		dpizar.putNewMinionOnBoard(8);
+		dpizar.putNewMinionOnBoard(9);
+		dpizar.putNewMinionOnBoard(10);
+		dpizar.putNewMinionOnBoard(11);
+		dpizar.putNewMinionOnBoard(12);
+		assertTrue(" Lord Vetinari - played by dpizar - wins the game with 11 minions ", dpizar.checkWinningCondition(gameboard) );
 	}
 	
+
 	
 	@After 
 	public void stops(){ 

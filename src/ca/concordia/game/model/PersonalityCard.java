@@ -49,13 +49,12 @@ public class PersonalityCard extends Card {
 				this.winningConditionDescription = "Has minions on different areas that don't have demons on them.2 players-11 areas,3 players-10 areas,4 players-9 areas";
 				this.numPlayActive=true;
 				//Set winning condition depending on number of players.
-				if(numberOfPlayers ==2)
-					this.numMinionsOnAreas=11;
-				else if(numberOfPlayers ==3)
+				if( numberOfPlayers == 2 )
+					this.numMinionsOnAreas = 11;
+				else if(numberOfPlayers ==3 )
 					this.numMinionsOnAreas=10;
-				else if(numberOfPlayers ==4)
-					this.numMinionsOnAreas=9;
-				
+				else if(numberOfPlayers == 4 )
+					this.numMinionsOnAreas = 9;
 				break;
 			case 1:
 				this.setName("Lord Selachii");

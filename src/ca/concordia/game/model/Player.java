@@ -85,58 +85,48 @@ public class Player {
 	 * @param card(Card)
 	 * @return boolean
 	 */
-	public boolean removePlayerCard(Card card)
-	{
-		boolean check=false;
-		
-		//Check type of card and remove it from player's hand.
-		String CardType=card.getClass().toString();
-		
-		if(CardType.contains("BrownCard"))
-		{
-			BrownCard bCard=(BrownCard)card;
-			check=this.playerCards.remove(bCard);
-			if(check)
-			{
+	public boolean removePlayerCard(Card card) {
+		boolean check = false;
+		// Check type of card and remove it from player's hand.
+		String CardType = card.getClass().toString();
+		if (CardType.contains("BrownCard")) {
+			BrownCard bCard = (BrownCard) card;
+			check = this.playerCards.remove(bCard);
+			if (check) {
 				return true;
-			}else
-			{
+			} else {
 				System.out.println("Brown Card: Could not be removed.(Class Player)");
 				return false;
 			}
-		}else if(CardType.contains("GreenCard"))
-		{
-			GreenCard gCard=(GreenCard)card;
-			check=this.playerCards.remove(gCard);
-			if(check)
-			{
+		} else if (CardType.contains("GreenCard")) {
+			GreenCard gCard = (GreenCard) card;
+			check = this.playerCards.remove(gCard);
+			if (check) {
 				return true;
-			}else
-			{
+			} else {
 				System.out.println("Green Card: Could not be removed.(Class Player)");
 				return false;
 			}
 		}
-		System.out.println("Fatal Error: Card's type is not GreenCard or BrownCard.(Class Player-Fucntion removePlayerCard)");
+		System.out
+				.println("Fatal Error: Card's type is not GreenCard or BrownCard.(Class Player-Fucntion removePlayerCard)");
 		return false;
 	}
 	
 	/**
-	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the
-	 * player may have.
+	 * Calculates and returns the player's networth. 
+	 * By adding the money he/she has, the money invested in buildings and substracting any loans the player may have.
 	 * @return int
 	 */
-	public int calculateNetWorth()
-	{
-		this.netWorth= this.money;
-		//calculate the money invested in buildings so far, and add it to the networth.
-		for(int i=0;i<this.playerCityCard.size();i++)
-		{
-			this.netWorth=this.netWorth+this.playerCityCard.get(i).getBuldingCost();
+	public int calculateNetWorth() {
+		this.netWorth = this.money;
+		// calculate the money invested in buildings so far, and add it to the
+		// networth.
+		for (int i = 0; i < this.playerCityCard.size(); i++) {
+			this.netWorth = this.netWorth + this.playerCityCard.get(i).getBuldingCost();
 		}
-		//If the player has any loans substract that amount to networth
-		this.netWorth=this.netWorth-loans;
-		
+		// If the player has any loans substract that amount to networth
+		this.netWorth = this.netWorth - loans;
 		return netWorth;
 	}
 	
@@ -224,79 +214,81 @@ public class Player {
 		else
 			return false;
 	}
-	
+
 	/**
-	 * Remove card from player's city Cards(Player removed or moved a building to another area.)
-	 * @param card(CityCard)
+	 * Remove card from player's city Cards(Player removed or moved a building
+	 * to another area.)
+	 * 
+	 * @param card
+	 *            (CityCard)
 	 * @return CityCard
 	 */
-	public CityCard returnCityCard(CityCard card)
-	{
-		int index=this.playerCityCard.indexOf(card);
+	public CityCard returnCityCard(CityCard card) {
+		int index = this.playerCityCard.indexOf(card);
 		return this.playerCityCard.remove(index);
-		
+
 	}
-	
+
 	/**
 	 * Lose all Player Cards
 	 */
-	public void loseAllCards( )
-	{
+	public void loseAllCards() {
 		this.playerCards.clear();
 	}
 
 	/**
 	 * Receive all Player Cards
+	 * 
 	 * @param allCards
 	 */
-	public void receiveAllCards( ArrayList<Card> allCards )
-	{
+	public void receiveAllCards(ArrayList<Card> allCards) {
 		this.playerCards = allCards;
 	}
 
 	/**
-	 * Add a minion that was on hand to an area. Reduces by one the number of minion on hand and adds one minion to the respective area.
+	 * Add a minion that was on hand to an area. Reduces by one the number of
+	 * minion on hand and adds one minion to the respective area.
+	 * 
 	 * @param areaCode
 	 * @return boolean
 	 */
-	public boolean putNewMinionOnBoard(int areaCode)
-	{
-		if(this.minionsOnHand>=1)
-		{
+	public boolean putNewMinionOnBoard(int areaCode) {
+		if (this.minionsOnHand >= 1) {
 			this.minionsOnHand--;
-			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]+1;
+			this.minionsOnAreas[areaCode - 1] = this.minionsOnAreas[areaCode - 1] + 1;
 			return true;
-		}else
+		} else
 			return false;
 	}
-	
+
 	/**
 	 * Remove a minion from an area and add it to player's hand.
+	 * 
 	 * @param areaCode
 	 * @return boolean
 	 */
-	public boolean removeMinionOnBoard(int areaCode)
-	{
-		if(this.minionsOnAreas[areaCode-1]>0)
-		{
+	public boolean removeMinionOnBoard(int areaCode) {
+		if (this.minionsOnAreas[areaCode - 1] > 0) {
 			this.minionsOnHand++;
-			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]-1;
+			this.minionsOnAreas[areaCode - 1] = this.minionsOnAreas[areaCode - 1] - 1;
 			return true;
-		}else
+		} else
 			return false;
 	}
-	
+
 	/**
 	 * Move a minion from one area to another.
-	 * @param oldAreaCode(int)
-	 * @param newAreaCode(int)
+	 * 
+	 * @param oldAreaCode
+	 *            (int)
+	 * @param newAreaCode
+	 *            (int)
 	 * @return boolean
 	 */
-	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode)
-	{
-		boolean check=removeMinionOnBoard(oldAreaCode);
-		boolean check2=putNewMinionOnBoard(newAreaCode);
-		if(check && check2)
+	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode) {
+		boolean check = removeMinionOnBoard(oldAreaCode);
+		boolean check2 = putNewMinionOnBoard(newAreaCode);
+		if (check && check2)
 			return true;
 		else
 			return false;
@@ -327,28 +319,31 @@ public class Player {
 			//Check if player has the amount of controlled areas to win the game.
 			ArrayList<String> controlledAreas	= new ArrayList<String>();
 			controlledAreas	=	gameBoard.controlledAreas(this); //Get a list of the areas controlled by the player.
-			if(controlledAreas.size()>= this.personality.getControlledAreas()){
+			if( controlledAreas.size() >= this.personality.getControlledAreas() ){
 				return true;
 			}else{
 				return false;
 			}
-		}else if( cardId == 3 ){
+		} else if( cardId == 3 ){
 			// Dragon King of Arms.
 			//Check if the board has the required number of touble markes for player to win.
 			ArrayList<String> troubleMarkersArea= new ArrayList<String>();
 			troubleMarkersArea= gameBoard.troubleMarkers();//Get a list of the areas which contain a trouble marker.
-			if(troubleMarkersArea.size() >= this.personality.getNumTroubleMarkers())
-				return true;
-			else
-				return false;
-		} else if(cardId==5){
+			if( troubleMarkersArea.size() >= this.personality.getNumTroubleMarkers() ){
+					return true;
+				} else {
+					return false;
+				}
+		} else if( cardId == 5 ){
 			//Commander Vimes
 			//Check if the draw deck is empty by chequing the size of the brown deck since it's the one at the bottom.
 			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
-			if(game.getSizeDrawDeck()==0)//Draw deck is empty
+			if( game.getSizeDrawDeck() == 0 ){ 
+				//Draw deck is empty
 				return true;
-			else
+			}else{
 				return false;
+			}
 		} else if (cardId==7) {
 			//Chrysoprase
 			int playerNetWorth=this.calculateNetWorth();
