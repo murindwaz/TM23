@@ -44,6 +44,8 @@ public class Action {
 			this.die = new Die();
 			rollValue = -1;
 			switch (cardId) {
+
+			//------------------------------------------------------------Grouped Actions: Cards with similar movements---------------------------------------------------	
 			/**
 			 * Group1: Get Cards from DrawDeck 1,3,36,42 - Get 2 77 - Get 3
 			 * 87,88 - Get 4
@@ -188,7 +190,7 @@ public class Action {
 				break;	
 
 
-				/** Group12: 89,79,47,85,19,53
+				/** Group12: 89,79,47,85
 				 * Discard Cards
 				 */
 			case 79:
@@ -197,7 +199,20 @@ public class Action {
 			case 89:				
 				discardnTake(1);
 				break;	
+			case 47:
+			case 85:
+				player.removePlayerCard(player.getPlayerCards().get(chooseCard(player)));
+				break;
 
+				/** Group13: 91,99
+				 * Choose one player. Give them one of your cards. They must give you $2 in return.
+				 */
+			case 91:
+			case 99:				
+				givenTake();
+				break;	
+
+				//------------------------------------------------------------Single Card Actions---------------------------------------------------						
 				// 74: Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
 			case 74:
 				give5orLoseBuilding( );
@@ -238,8 +253,8 @@ public class Action {
 			case 13:
 				exchangeCards();
 				break;
-
-				// No Action Cards
+				//------------------------------------------------------------No Action Cards---------------------------------------------------	
+				// Do nothing
 			case 4 :
 			case 7 :
 			case 16 :
@@ -273,7 +288,7 @@ public class Action {
 		}
 	}
 
-	//////////////////////////////////////////////////////////////////////////User INPUT methods
+	//------------------------------------------------------------User INPUT methods---------------------------------------------------	
 
 	/**
 	 * Choose a Player
@@ -394,8 +409,7 @@ public class Action {
 		return choosenArea;
 
 	}
-
-	//////////////////////////////////////////////////////////////////////////Action methods
+	//------------------------------------------------------------Action methods---------------------------------------------------	
 	/**
 	 * Add card to player playing cards.
 	 * 
@@ -868,7 +882,7 @@ public class Action {
 	 */
 	private void discardnTake(int amount) {
 		while(player.getPlayerCards().size()>0){
-			System.out.println("Would you like to discard PlayerCard and get $"+amount+"? (1)Yes (2)No:");
+			System.out.println("Would you like to select a PlayerCard to discard and get $"+amount+"? (1)Yes (2)No:");
 			if(keyIn.nextInt()==1){
 				int choosenCard = chooseCard(player);
 				player.removePlayerCard(player.getPlayerCards().get(choosenCard));
@@ -878,4 +892,17 @@ public class Action {
 			}
 		}
 	}
+
+	/** Group13: 91,99
+	 * Choose one player. Give them one of your cards. They must give you $2 in return.
+	 */
+	private void givenTake( ) {
+		int choosenPlayer = choosePlayer( );
+		System.out.println("Choose a card to give:");
+		int choosenCard = chooseCard(player);
+		player.transferCard(choosenCard, players[choosenPlayer]);
+		players[choosenPlayer].transferMoneyto(2, player);
+	}
+
+
 }
