@@ -128,7 +128,7 @@ public class Area {
 		}
 		//If two or more players have the same number of playing pieces then no one controls the area. Or if there is an equal or greater number of trolls 
 		//than player pieces in the current area then there's no control of the area.
-		if(maxEntry.getValue() == maxEntry2.getValue() || maxEntry.getValue()< this.demon) 
+		if(maxEntry.getValue() == maxEntry2.getValue() || maxEntry.getValue()< this.troll) 
 		{
 			return false;
 		}

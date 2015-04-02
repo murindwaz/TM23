@@ -3,6 +3,8 @@ package ca.concordia.game.model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
+
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.Game;
 
@@ -219,7 +221,7 @@ public class Action {
 				//------------------------------------------------------------Single Card Actions---------------------------------------------------	
 				// 96: You may exchange your Personality card with one drawn randomly from those not in use.
 			case 96:
-				exchangePersonality( );
+				exchangePersonality(player,game );
 				break;	
 
 				// 74: Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
@@ -587,16 +589,13 @@ public class Action {
 					continue;
 				}
 				
-			} else if (color.equals(player.color) != isYour) {
-				System.out.println("Minion should belong to you.");
-				continue;
 			}
 
 			System.out.println("Please enter the area code from where you wish to move your minion from:");
 			//fromArea = this.chooseArea(color, true, false, hasTroubleMarker,null);
 			fromArea=game.keyIn.nextInt();
 			
-			if(isAdjacent)
+			if(isAdjacent && !hasTroubleMarker)
 			{
 				System.out.println("Choose one of the following Adjacent Areas, to the one you chose:");
 				ArrayList<Integer> adj=game.getGameBoard().getAreaByCityCard(fromArea).getCityCard().getAdjacentAreas();
@@ -604,6 +603,33 @@ public class Action {
 				{
 					System.out.println("Area: "+game.getGameBoard().getAreaByCityCard(adj.get(i)).getCityCard().getName()+ "code:"+adj.get(i));
 				}
+			}else if(isAdjacent && hasTroubleMarker)
+			{
+				ArrayList<Area> troubleArea= new ArrayList<Area>();
+				//Get all areas containing trouble markers.
+				for(int i=0;i<game.getGameBoard().getAreas().size();i++)
+				{
+					Area area=game.getGameBoard().getAreas().get(i);
+					if(area.getMinions().contains(new Piece(player.getColor())) && area.getTroubleMarker())//Area contains piece belonging to player  and has a trouble marker.
+					{
+						troubleArea.add(area);
+						
+					}
+				}
+				System.out.println("The following areas contain trouble Markers and your minion, select one from where you wish to move a minion from:");
+				for(int i=0;i<troubleArea.size();i++)
+				{
+					System.out.println("Area: "+troubleArea.get(i).getCityCard().getName()+"("+i+")");
+				}
+				fromArea=game.keyIn.nextInt();
+				
+				System.out.println("Adjacent Areas to selected Area:");
+				ArrayList<Integer> adj=troubleArea.get(fromArea).getCityCard().getAdjacentAreas();
+				for(int i=0;i<adj.size();i++)
+				{
+					System.out.println("Area: "+game.getGameBoard().getAreaByCityCard(adj.get(i)).getCityCard().getName()+ "code:"+adj.get(i));
+				}
+				
 			}
 			
 			System.out.println("Please enter the area code to where you wish to move your minion:");
@@ -625,7 +651,12 @@ public class Action {
 				
 			} else {
 				if (player.moveMinionToNewArea(fromArea, toArea))
+				{
+					//Update GameBoard.
+					game.getGameBoard().getAreaByCityCard(fromArea).removeMinion(color);
+					game.getGameBoard().getAreaByCityCard(toArea).addMinion(new Piece(color), false);
 					break;
+				}
 				else {
 					System.out.println("Not possible to move to this Area");
 					continue;
@@ -836,16 +867,7 @@ public class Action {
 
 	}	
 
-	/**
-	 *  Look at all but one of the unused Personality cards.
-	 * 
-	 */
-	private void lookUnusedPersonalities( ) {
-		ArrayList<Card> personalityCards = game.getDecks().get("P").getArrayDeck();
-		for (int i=1; i<personalityCards.size(); i++)
-			System.out.println(i+"."+personalityCards.get(i).toString());
-
-	}
+	
 
 	/**
 	 * Look at all but one of the unused Personality cards.
@@ -998,14 +1020,14 @@ public class Action {
 
 	/** 96: You may exchange your Personality card with one drawn randomly from those not in use.
 	 */
-	private void exchangePersonality( ) {
+	private void exchangePersonality(Player player,Game game) {
 		int choosenCard;
 		ArrayList<Card> personalityCards = game.getDecks().get("P").getArrayDeck();
 		System.out.println("Choose a new Personality:");
 		for (int i=0; i<personalityCards.size(); i++)
 			System.out.println(i+"."+personalityCards.get(i).toString());
 		while(true){
-			choosenCard = keyIn.nextInt();
+			choosenCard = game.keyIn.nextInt();
 			try {
 				player.setPersonality(personalityCards.get(choosenCard));
 				break;
