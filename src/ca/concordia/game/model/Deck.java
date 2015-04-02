@@ -207,6 +207,7 @@ public class Deck {
 	        counter++;
 	      }
 	}
+
 	
 	/**
 	 * Clear deck.
