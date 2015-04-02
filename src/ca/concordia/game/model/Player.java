@@ -7,7 +7,7 @@ import ca.concordia.game.common.common.Colors;
 
 /**
  * Class PLayer handles and contains the different players on the current game.
-*@author Pascal Maniraho 
+ *@author Pascal Maniraho 
  *@author Gustavo Pereira
  *@author Bhavik Desai 
  *@author Jesus Esteban Garro Matamoros 
@@ -19,7 +19,7 @@ public class Player {
 	public Colors color;
 	private int netWorth;
 	private int loans;
-	
+
 	private ArrayList<Card> playerCards;
 	private ArrayList<CityCard> playerCityCard;
 	private int minionsOnHand;
@@ -42,7 +42,7 @@ public class Player {
 		this.color = aColor;
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
-		
+
 		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
 		//set one minion on the three initial areas as required by the game(Areas:Dolly Sisters(1),The Scours(5),The Shades(7))
 		this.minionsOnAreas[0]=this.minionsOnAreas[0]+1;
@@ -50,14 +50,14 @@ public class Player {
 		this.minionsOnAreas[6]=this.minionsOnAreas[6]+1;
 		//Update number of minions on hand
 		this.setMinionsOnHand(this.minionsOnHand-3);
-		
+
 		//Todo update GameBoard when adding minnions.
-		
+
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
-	
-	
+
+
 
 	/**
 	 * Constructor for loading a game State.
@@ -75,13 +75,13 @@ public class Player {
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
 		this.loans=0;
-		
+
 		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
-		
+
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
-	
+
 	/**
 	 * RemovePlayerCard removes a card from a Player's ArrayList of cards. Returns true if successful otherwise returns false.Returns false also
 	 * if the card was not of type GreenCard or BrownCard.
@@ -114,7 +114,7 @@ public class Player {
 		System.out.println("Fatal Error: Card's type is not GreenCard or BrownCard.(Class Player-Fucntion removePlayerCard)");
 		return false;
 	}
-	
+
 	/**
 	 * Calculates and returns the player's networth. By adding the money he/she has, the money invested in buildings and substracting any loans the player may have.
 	 * @return int
@@ -124,19 +124,19 @@ public class Player {
 		// calculate the money invested in buildings so far, and add it to the
 		// networth.
 		ArrayList<Area>areas= gameBoard.getAreas();
-		
+
 		for (int i = 0; i < this.playerCityCard.size(); i++) {
 			int cardNumber=this.playerCityCard.get(i).getCardNumber();
 			int numberOfDemons=areas.get(cardNumber-1).getDemon();
 			if(numberOfDemons==0)
 				this.netWorth = this.netWorth + this.playerCityCard.get(i).getBuldingCost();
-			
+
 		}
 		// If the player has any loans substract that amount to networth
 		this.netWorth = this.netWorth - loans;
 		return netWorth;
 	}
-	
+
 	/**
 	 * Add a loan if the player takes one.
 	 * @param amountLoan(int)
@@ -154,7 +154,7 @@ public class Player {
 	{
 		this.loans=newBalance;
 	}
-	
+
 	/**
 	 * If player paid a loan update the loan variable.
 	 * @param amountPaid(int)
@@ -164,7 +164,7 @@ public class Player {
 		this.loans=this.loans-amountPaid;
 		this.money=this.money-amountPaid;
 	}
-	
+
 	/**
 	 * Check if the player can pay one of the loans he took. Each loan is worth 12$.
 	 * @return boolean
@@ -173,7 +173,7 @@ public class Player {
 	{
 		if(this.money>12)
 			return true;
-		
+
 		return false;
 	}
 
@@ -184,7 +184,7 @@ public class Player {
 	public void addMoney(int amount) {
 		this.money += amount;
 	}
-	
+
 	/**
 	 * Transfer Money to another player's account.
 	 * @param amount
@@ -192,7 +192,7 @@ public class Player {
 	public void transferMoneyto(int amount, Player aPlayer) {
 		this.money -= amount;
 		aPlayer.addMoney(amount);
-		
+
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class Player {
 		aPlayer.receiveCard(this.playerCards.get(cardNb));
 		this.playerCards.remove(cardNb);
 	}
-	
+
 	/**
 	 * Subtracts an amount of money from the player. Returns true if successfull otherwise return false;
 	 * @param amount
@@ -219,7 +219,7 @@ public class Player {
 		}else
 			return false;
 	}
-	
+
 	/**
 	 * Set money
 	 * @param money
@@ -245,7 +245,7 @@ public class Player {
 		int oldSize=this.playerCityCard.size();
 		this.playerCityCard.add(card);
 		int newSize=this.playerCityCard.size();
-		
+
 		if(newSize == oldSize+1)
 			return true;
 		else
@@ -328,7 +328,7 @@ public class Player {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Checks if player has reached a winning condition. Called at the beginning of each player's turn
 	 * with the exception if the player possesses Commander Vimes; in which case it has to be checked every time a 
@@ -363,10 +363,10 @@ public class Player {
 			ArrayList<String> troubleMarkersArea= new ArrayList<String>();
 			troubleMarkersArea= gameBoard.troubleMarkers();//Get a list of the areas which contain a trouble marker.
 			if( troubleMarkersArea.size() >= this.personality.getNumTroubleMarkers() ){
-					return true;
-				} else {
-					return false;
-				}
+				return true;
+			} else {
+				return false;
+			}
 		} else if( cardId == 5 ){//Commander Vimes
 			//Check if the draw deck is empty by chequing the size of the brown deck since it's the one at the bottom.
 			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
@@ -378,7 +378,7 @@ public class Player {
 			}
 		} else if (cardId==7) {//Chrysoprase
 			int playerNetWorth=this.calculateNetWorth(gameBoard );
-			
+
 			if(playerNetWorth>=50)
 				return true;
 			else
@@ -387,11 +387,11 @@ public class Player {
 			System.out.println("The card being chequed doesn't contain a valid ID(function 'checkWinningCondition').");
 			return false;
 		}
-				
+
 	}
 
-	
-	
+
+
 	/**
 	 * Returns a city card if the player has it otherwise it returns null. It searches using the cardcode(int).
 	 * @param cardCode(int)
@@ -406,7 +406,7 @@ public class Player {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Getter money
 	 * @return
@@ -454,7 +454,7 @@ public class Player {
 	{
 		return this.playerCityCard;
 	}
-	
+
 	/**
 	 * Getter get Player's Personality Card.
 	 * @return
@@ -462,7 +462,15 @@ public class Player {
 	public Card getPersonality() {
 		return this.personality;
 	}	
-	
+
+	/**
+	 * Setter set Player's Personality Card.
+	 * @param aPersonalityCard
+	 */
+	public void setPersonality(Card aCard) {
+		this.personality = (PersonalityCard) aCard;
+	}	
+
 	/**
 	 * Getter: array of minions per area.
 	 * @return int[]
@@ -471,8 +479,8 @@ public class Player {
 	{
 		return this.minionsOnAreas;
 	}
-	
-	
+
+
 	/**
 	 * Setter for buildingsOnHand.
 	 * @param newNum(int)
@@ -481,7 +489,7 @@ public class Player {
 	{
 		this.buildingOnHand=newNum;
 	}
-	
+
 	/**
 	 * Setter for minionOnHand.
 	 * @param newNum(int)
@@ -490,7 +498,7 @@ public class Player {
 	{
 		this.minionsOnHand=newNum;
 	}
-	
+
 	/**
 	 * Getter: get player's loan
 	 * @return
@@ -499,7 +507,7 @@ public class Player {
 	{
 		return this.loans;
 	}
-	
+
 	/**
 	 * ToString Method for class Player.
 	 */
@@ -513,10 +521,10 @@ public class Player {
 		//player Cards
 		for(int i = 0 ; i<playerCards.size();i++){
 			Card card = playerCards.get(i);
-			
+
 			//get class of current card.
 			String cardType=card.getClass().toString();
-			
+
 			if(cardType.contains("BrownCard")){//The card is of type BrownCard, convert to brown card.
 				BrownCard bCard= (BrownCard) card;
 				info3=info3+ "Brown-"+bCard.getName()+"(ID:"+bCard.getNumber()+")"+" "+"Position in Player Hand:"+"("+i+")"+"\n";
@@ -541,10 +549,10 @@ public class Player {
 				}
 				info3=info3+"\n";
 			}
-				
+
 		}
 		info3=info3+"\n";
-		
+
 		//player City Cards.
 		for(int i=0 ; i<playerCityCard.size();i++)
 		{
@@ -552,9 +560,9 @@ public class Player {
 			info4=info4+ " "+card.getName()+" ";
 		}
 		info4=info4+"\n";
-		
+
 		return info+info2+info3+info4;
-		
+
 	}
-	
+
 }

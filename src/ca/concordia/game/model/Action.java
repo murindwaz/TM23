@@ -212,7 +212,12 @@ public class Action {
 				givenTake();
 				break;	
 
-				//------------------------------------------------------------Single Card Actions---------------------------------------------------						
+				//------------------------------------------------------------Single Card Actions---------------------------------------------------	
+				// 96: You may exchange your Personality card with one drawn randomly from those not in use.
+			case 96:
+				exchangePersonality( );
+				break;	
+
 				// 74: Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
 			case 74:
 				give5orLoseBuilding( );
@@ -802,9 +807,9 @@ public class Action {
 	 * 
 	 */
 	private void lookUnusedPersonalities( ) {
-		ArrayList<Card> personalityCards = game.getDecks().get("personalities").getArrayDeck();
+		ArrayList<Card> personalityCards = game.getDecks().get("P").getArrayDeck();
 		for (int i=1; i<personalityCards.size(); i++)
-			System.out.println(i+personalityCards.get(i).toString());
+			System.out.println(i+"."+personalityCards.get(i).toString());
 	}
 
 
@@ -905,5 +910,25 @@ public class Action {
 		players[choosenPlayer].transferMoneyto(2, player);
 	}
 
+	/** 96: You may exchange your Personality card with one drawn randomly from those not in use.
+	 */
+	private void exchangePersonality( ) {
+		int choosenCard;
+		ArrayList<Card> personalityCards = game.getDecks().get("P").getArrayDeck();
+		System.out.println("Choose a new Personality:");
+		for (int i=0; i<personalityCards.size(); i++)
+			System.out.println(i+"."+personalityCards.get(i).toString());
+		while(true){
+			choosenCard = keyIn.nextInt();
+			try {
+				player.setPersonality(personalityCards.get(choosenCard));
+				break;
+			} catch (IndexOutOfBoundsException  e) {
+				System.out.println("Not a valid choice");
+				continue;
+			}
+		}
+
+	}
 
 }
