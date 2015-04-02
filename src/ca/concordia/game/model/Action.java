@@ -254,6 +254,7 @@ public class Action {
 			case 86 :
 			case 93 :
 			case 95 :
+			case 100:
 				System.out.println("No Action.");
 				break;
 			default:
