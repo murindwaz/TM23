@@ -154,6 +154,17 @@ public class Game {
 				break;
 			}
 		}
+		
+		System.out.println("Do you wish to save the current game?");
+		String save=this.keyIn.next();
+		if(save.contains("y"))
+		{
+			System.out.println("Preparing to save game.");
+			this.saveGame();
+		}else
+		{
+			System.out.println("You chose not to save the game.The game state has been lost.");
+		}
 		//don't close beacue a game might be loaded.
 		//this.keyIn.close();
 	}
@@ -210,13 +221,18 @@ public class Game {
 	 * Save game State.In the correct format.
 	 */
 	public String saveGame() {
+		
+		//temporal variables.
 		String temp = "";
 		ArrayList<String> content = new ArrayList<String>();
+		BrownCard bCard;
+		GreenCard gCard;
+		
 		// Store GameBoard's Info.
 		for (int i = 0; i < 12; i++) {
 			temp = temp + this.gameboard.getAreas().get(i).getCityCard().getName() + ",";
 			temp = temp + this.gameboard.getAreas().get(i).getTroubleMarker() + ",";
-			temp = temp + this.gameboard.getAreas().get(i).getBuilding() + ",";
+			temp = temp + this.gameboard.getAreas().get(i).getBuildingColor() + ",";
 			temp = temp + this.gameboard.getAreas().get(i).getDemon() + ",";
 			temp = temp + this.gameboard.getAreas().get(i).getTroll() + ",";
 
@@ -245,16 +261,18 @@ public class Game {
 			temp = temp + this.players[i].getPlayerCards().size() + ",";
 
 			for (int j = 0; j < this.players[i].getPlayerCards().size(); j++) {
-				BrownCard bCard = new BrownCard(0);
-				GreenCard gCard = new GreenCard(0);
-				if (this.players[i].getPlayerCards().get(j).getClass().equals(bCard.getClass())) {
+				
+				if (this.players[i].getPlayerCards().get(j).getClass().toString().contains("BrownCard")) {
 					// The card is of type BrownCard, convert to brown card.
 					bCard = (BrownCard) this.players[i].getPlayerCards().get(j);
 					temp = temp + bCard.getNumber() + ",";
-				} else {
+				} else if (this.players[i].getPlayerCards().get(j).getClass().toString().contains("GreenCard")){
 					// The card is of type GreenCard, convert to green card.
 					gCard = (GreenCard) this.players[i].getPlayerCards().get(j);
 					temp = temp + gCard.getNumber() + ",";
+				}else
+				{
+					System.out.println("ERROR(Class Game,function saveGame):The card is not of either Brown or green color.");
 				}
 
 			}
@@ -345,7 +363,7 @@ public class Game {
 
 				}
 				// Create new city card with the name extracted.
-				CityCard cityCard = new CityCard(i+1);
+				CityCard cityCard = new CityCard(i);
 				// Create Area and add to gameboard.
 				Area area = new Area(cityCard, troubleMarker,buildingColor, demon, troll);
 				// (cityCard,troubleMarker,building,demon,troll) ==> Constructor
@@ -450,7 +468,7 @@ public class Game {
 					// Get CityCard number.
 					int cardNumber = Integer.parseInt(parts[(5 + NumplayerCards + (j + 1)) + 1]);
 					//Get corresponding cityCard
-					CityCard cityCard=this.gameboard.getAreaByCityCard(cardNumber-1).getCityCard();
+					CityCard cityCard=this.gameboard.getAreaByCityCard(cardNumber).getCityCard();
 					//delete city card from beard and give it to the player.
 					this.gameboard.deleteCardFromDeck(cityCard);
 					this.players[playerIndex].receiveCityCard(cityCard);
@@ -459,11 +477,11 @@ public class Game {
 			}// PLayers
 
 			/** Parse BankMoney Get money bank has. **/
-			for (int i = 14 + numberPlayers; i < (13 + numberPlayers) + 1; i++) {
-				int bankMoney = Integer.parseInt(content.get(i));
-				AtomicInteger aInt = new AtomicInteger(bankMoney);
-				this.bank.setBankMoney(aInt);// Set new bank balance.
-			}
+			this.bank = Bank.getInstance();
+			int bankMoney = Integer.parseInt(content.get(13+this.numberOfPlayers));
+			AtomicInteger aInt = new AtomicInteger(bankMoney);
+			this.bank.setBankMoney(aInt);// Set new bank balance.
+			
 			this.currentPlayer=0;
 			break; // Exit while loop.
 		}// While

@@ -19,10 +19,13 @@ public class Controller {
 		Game game;
 		game= Game.getInstance();
 		
+		
+		//Start new game.
 		//game.init();
 		//game.play(gameLoaded);
 		
 		
+		//Load a saved game.
 		gameLoaded=true;
 		game.loadGame();
 		game.play(gameLoaded);
