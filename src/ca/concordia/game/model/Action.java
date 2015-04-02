@@ -179,7 +179,6 @@ public class Action {
 				placeMinion(false, false, false, 1);			
 				break;
 
-
 				/** Group11: 73, 97
 				 * Get $5 or place this card as not playable
 				 */
@@ -187,6 +186,18 @@ public class Action {
 			case 97:				
 				give5orLoseCard(cardId);
 				break;	
+
+
+				/** Group12: 89,79,47,85,19,53
+				 * Discard Cards
+				 */
+			case 79:
+				discardnTake(2);
+				break;	
+			case 89:				
+				discardnTake(1);
+				break;	
+
 
 				// 74: Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
 			case 74:
@@ -852,4 +863,20 @@ public class Action {
 		player.receiveCard(game.getDecks().get("D").getCard());
 	}
 
+	/** Group12: 89,79
+	 * Discard as many cards as you wish and take @amount for each one discarded.
+	 * @param amount
+	 */
+	private void discardnTake(int amount) {
+		while(player.getPlayerCards().size()>0){
+			System.out.println("Would you like to discard PlayerCard and get $"+amount+"? (1)Yes (2)No:");
+			if(keyIn.nextInt()==1){
+				int choosenCard = chooseCard(player);
+				player.removePlayerCard(player.getPlayerCards().get(choosenCard));
+				bank.transferFunds(player, amount);
+			}else {
+				break;
+			}
+		}
+	}
 }
