@@ -234,16 +234,7 @@ public class Player {
 	{
 		int index=this.playerCityCard.indexOf(card);
 		return this.playerCityCard.remove(index);
-		/*
-		int oldSize=this.playerCityCard.size();
-		this.playerCityCard.remove(card);
-		int newSize=this.playerCityCard.size();
 		
-		if(oldSize == newSize-1)
-			return true;
-		else
-			return false;
-			*/
 	}
 	
 	/**
@@ -318,32 +309,31 @@ public class Player {
 	 * @param gameBoard
 	 * @return boolean
 	 */
-	public boolean checkWinningCondition(Gameboard gameBoard)
-	{
+	public boolean checkWinningCondition( Gameboard gameBoard ){
 		//Get card ID to check which condition need to be fulfilled.
 		int cardId=this.personality.getCardId();
-		
 		//Check if winning condition has been reached depending on the personality card.
-		if(cardId == 1)//Lord Vetinari
-		{
-			int numMinWinCond=gameBoard.numberMinionsAreas(this);
-			if(numMinWinCond>=this.personality.getNumMinionsOnAreas())//If player has minions in a number of areas which contain no demons.
+		if( cardId == 1 ){
+			//Lord Vetinari
+			int numMinWinCond = gameBoard.numberMinionsAreas(this);
+			//If player has minions in a number of areas which contain no demons.
+			if( numMinWinCond>=this.personality.getNumMinionsOnAreas()){
 				return true;
-			else return
-					false;
-		}
-		else if(cardId== 2 || cardId == 4 || cardId == 6)//Lord Selachii, Lord Rust, Lord Worde.
-		{
-			//Check if player has the amount of controlled areas to win the game.
-			ArrayList<String> controlledAreas= new ArrayList<String>();
-			controlledAreas=gameBoard.controlledAreas(this); //Get a list of the areas controlled by the player.
-			if(controlledAreas.size()>= this.personality.getControlledAreas())
-				return true;
-			else
+			}else {
 				return false;
-		}
-		else if(cardId==3)// Dragon King of Arms.
-		{
+			}
+		} else if( cardId== 2 || cardId == 4 || cardId == 6 ){
+			//Lord Selachii, Lord Rust, Lord Worde.
+			//Check if player has the amount of controlled areas to win the game.
+			ArrayList<String> controlledAreas	= new ArrayList<String>();
+			controlledAreas	=	gameBoard.controlledAreas(this); //Get a list of the areas controlled by the player.
+			if(controlledAreas.size()>= this.personality.getControlledAreas()){
+				return true;
+			}else{
+				return false;
+			}
+		}else if( cardId == 3 ){
+			// Dragon King of Arms.
 			//Check if the board has the required number of touble markes for player to win.
 			ArrayList<String> troubleMarkersArea= new ArrayList<String>();
 			troubleMarkersArea= gameBoard.troubleMarkers();//Get a list of the areas which contain a trouble marker.
@@ -351,25 +341,22 @@ public class Player {
 				return true;
 			else
 				return false;
-		}
-		else if(cardId==5)//Commander Vimes
-		{
+		} else if(cardId==5){
+			//Commander Vimes
 			//Check if the draw deck is empty by chequing the size of the brown deck since it's the one at the bottom.
 			Game game= Game.getInstance();//Get the current game to get the status of the draw pile.
 			if(game.getSizeDrawDeck()==0)//Draw deck is empty
 				return true;
 			else
-				return false; //else
-		}
-		else if (cardId==7)//Chrysoprase
-		{
+				return false;
+		} else if (cardId==7) {
+			//Chrysoprase
 			int playerNetWorth=this.calculateNetWorth();
 			if(playerNetWorth>=50)
 				return true;
 			else
 				return false;
-		}
-		else{
+		} else{
 			System.out.println("The card being chequed doesn't contain a valid ID(function 'checkWinningCondition').");
 			return false;
 		}

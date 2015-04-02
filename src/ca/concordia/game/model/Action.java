@@ -359,10 +359,11 @@ public class Action {
 	 */
 	private void getCards(int nbCards) {
 		for (int i = 0; i < nbCards; i++) {
-			if (game.getDecks().get("brown").getSizeDeck() > 0)
+			if (game.getDecks().get("brown").getSizeDeck() > 0){
 				player.receiveCard(game.getDecks().get("brown").getCard());
-			else
+			}else{
 				player.receiveCard(game.getDecks().get("green").getCard());
+			}
 		}
 	}
 

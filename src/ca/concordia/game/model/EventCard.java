@@ -152,8 +152,7 @@ public class EventCard extends Card {
 	 * @param currentPlayer
 	 * @param game
 	 */
-	private void fog(Player currentPlayer,Game game)
-	{
+	private void fog(Player currentPlayer,Game game){
 		Deck deck;
 		GreenCard gCard;
 		BrownCard bCard;

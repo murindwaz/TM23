@@ -8,12 +8,14 @@ import org.junit.Test;
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.model.Area;
 import ca.concordia.game.model.Bank;
+import ca.concordia.game.model.BrownCard;
 import ca.concordia.game.model.Card;
 import ca.concordia.game.model.CityCard;
 import ca.concordia.game.model.Deck;
 import ca.concordia.game.model.Demon;
 import ca.concordia.game.model.Die;
 import ca.concordia.game.model.EventCard;
+import ca.concordia.game.model.GreenCard;
 import ca.concordia.game.model.Minion;
 import ca.concordia.game.model.PersonalityCard;
 import ca.concordia.game.model.Piece;
@@ -112,15 +114,14 @@ public class GameModelTest {
 		assertNotNull("Can create a bank", new Bank());
 		assertNotNull("Can create a card", new Card(false, false) ); 
 		assertNotNull("Can Create a deck", new Deck(new String("D"), 4));
-		//assertNotNull("Can create browncard", new BrownCard( 1 ) );
 		//this assertion fails because of BrownCard.name = CardLoader.getInstance().nameForCard(1,"B")
 		//@todo test what's wrong with that line 
 		//assertNotNull("Can create city card", new CityCard( 1 ) );
 		assertNotNull("Have deamons", new Demon( Colors.YELLOW ) );
 		assertNotNull("Have a die", new Die( ) );
 		assertNotNull("Can create event card", new EventCard( 0 ) );
-		//assertNotNull("Can create a gameboard", new Gameboard(players) );
-		//assertNotNull("Can Create a green card", new GreenCard( 1 ) );
+		assertNotNull("Can create browncard", new BrownCard( 1 ) );
+		assertNotNull("Can Create a green card", new GreenCard( 54 ) );
 		assertNotNull("Can create a minion", new Minion( Colors.GREEN ) );
 		assertNotNull("Can create personalities", new PersonalityCard( "A" ) );
 		assertNotNull("Can create a piece", new Piece( Colors.RED ) );

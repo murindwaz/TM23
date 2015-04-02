@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import ca.concordia.game.common.common.Colors;
 import ca.concordia.game.main.*;
 import ca.concordia.game.model.*;
+import ca.concordia.game.util.Configuration;
 
 
 /**
@@ -107,9 +108,16 @@ public class PlayerTest {
 	
 	
 	
+	
+	@Test public void testPlayerActions(){
+		//assertNotNull( new Action(Configuration.BROWN_CARD_1_SERGEANT_CHEERY_LITTLEBOTTOM) );
+	}
+	
 	@Test 
 	public void winningConditions(){
-		//@todo make game moves till a winning condition is met 
+		assertEquals( "10 bucks in bank", dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
+		dpizar.transferMoneyto(1, gamest);
+		assertNotEquals( "Player dpizar can transfer money to gamest" , dpizar.calculateNetWorth(),  gamest.calculateNetWorth() );
 		assertFalse("Player 2 has not winning conditions", gamest.checkWinningCondition(gameboard) );
 		assertFalse("Player 1 has not winning conditions", dpizar.checkWinningCondition(gameboard) );
 	}
