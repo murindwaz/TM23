@@ -330,12 +330,17 @@ public class Area {
 			boolean check=this.addTroubleMarker();
 			if(check)
 				System.out.println("Added a trouble marker.");
+			
+			this.getCityCard().setIsActive(false);//Make city card not active
+			
 			return true;
 		}else if (addRemove==2)//remove demon if possible
 		{
 			if(this.demon >0)
 			{
 				this.demon--;
+				if(this.getDemon()==0)//If there are no more demons on the area. Set the city card to active.
+					this.getCityCard().setIsActive(true);
 				return true;
 			}else
 				return false;

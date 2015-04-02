@@ -75,6 +75,8 @@ public class Player {
 		this.minionsOnHand=minionOnHand;
 		this.buildingOnHand=buildingOnHand;
 		
+		this.minionsOnAreas= new int[12]; //12  for the twelve areas on the board.
+		
 		this.playerCards = new ArrayList<Card>();
 		this.playerCityCard = new ArrayList<CityCard>();
 	}
@@ -265,14 +267,16 @@ public class Player {
 
 	/**
 	 * Add a minion that was on hand to an area. Reduces by one the number of minion on hand and adds one minion to the respective area.
+	 * If loading is true(Only when a game is loaded) then we just update the array from the player.
 	 * @param areaCode
 	 * @return boolean
 	 */
-	public boolean putNewMinionOnBoard(int areaCode)
+	public boolean putNewMinionOnBoard(int areaCode,boolean loading)
 	{
 		if(this.minionsOnHand>=1)
 		{
-			this.minionsOnHand--;
+			if(loading == false)
+				this.minionsOnHand--;
 			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]+1;
 			return true;
 		}else
@@ -304,7 +308,7 @@ public class Player {
 	public boolean moveMinionToNewArea(int oldAreaCode, int newAreaCode)
 	{
 		boolean check=removeMinionOnBoard(oldAreaCode);
-		boolean check2=putNewMinionOnBoard(newAreaCode);
+		boolean check2=putNewMinionOnBoard(newAreaCode,false);
 		if(check && check2)
 			return true;
 		else

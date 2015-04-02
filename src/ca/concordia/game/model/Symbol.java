@@ -430,7 +430,7 @@ public class Symbol {
 		
 		//Update GameState.(Player and Boardgame)
 		//update player.
-		boolean success=currentPlayer.putNewMinionOnBoard(selectedCardNumber);//update player's minions.
+		boolean success=currentPlayer.putNewMinionOnBoard(selectedCardNumber,false);//update player's minions.
 		if(!success)
 			System.out.println("Sorry you do not have any more minions on your hand.");
 		//update Gameboard
