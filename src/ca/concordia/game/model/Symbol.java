@@ -85,7 +85,7 @@ public class Symbol {
 			takeMoneyFromBank(currentPlayer, game);
 			break;
 		case 6:
-			new Action(cardID);
+			new Action( currentPlayer,game,cardID);
 			break;
 		case 7:
 			// Random event.
@@ -503,7 +503,7 @@ public class Symbol {
 	 *            (int)
 	 */
 	private void interruptCard(Player currentPlayer, Game game, int cardID) {
-		new Action(cardID);// Perform the corresponding action from the card.
+		new Action(currentPlayer,game,cardID);// Perform the corresponding action from the card.
 	}
 
 	/**

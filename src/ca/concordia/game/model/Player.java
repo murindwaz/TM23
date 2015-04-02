@@ -290,7 +290,7 @@ public class Player {
 	{
 		if(this.minionsOnHand>=1)
 		{
-			if(loading == false)
+			if(loading == false)//Don;t do this when loading.
 				this.minionsOnHand--;
 			this.minionsOnAreas[areaCode-1]=this.minionsOnAreas[areaCode-1]+1;
 			return true;
