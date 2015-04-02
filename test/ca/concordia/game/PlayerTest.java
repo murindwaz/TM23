@@ -88,12 +88,12 @@ public class PlayerTest {
 		assertTrue( gamest.getMoney() == MONEY ); 
 		dpizar.addMoney(MONEY);
 		assertTrue( dpizar.getMoney() == MONEY ); 
-		assertTrue("Player dpizar has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1) ); 
-		assertTrue("Player dpizar has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5) ); 
-		assertTrue("Player dpizar has minion in The Shades(7)",  dpizar.putNewMinionOnBoard(7) ); 
-		assertTrue("Player gamest has minion in Dolly Sisters(1)",  gamest.putNewMinionOnBoard(1) ); 
-		assertTrue("Player gamest has minion in The Scours(5)",  gamest.putNewMinionOnBoard(5) ); 
-		assertTrue("Player gamest has minion in The Shades(7)",  gamest.putNewMinionOnBoard(7) ); 
+		assertTrue("Player dpizar has minion in Dolly Sisters(1)", dpizar.putNewMinionOnBoard(1,false) ); 
+		assertTrue("Player dpizar has minion in The Scours(5)",  dpizar.putNewMinionOnBoard(5,false) ); 
+		assertTrue("Player dpizar has minion in The Shades(7)",  dpizar.putNewMinionOnBoard(7,false) ); 
+		assertTrue("Player gamest has minion in Dolly Sisters(1)",  gamest.putNewMinionOnBoard(1,false) ); 
+		assertTrue("Player gamest has minion in The Scours(5)",  gamest.putNewMinionOnBoard(5,false) ); 
+		assertTrue("Player gamest has minion in The Shades(7)",  gamest.putNewMinionOnBoard(7,false) ); 
 		//three regions have to have a trouble marker
 		assertTrue("Dolly Sisters has a trouble marker",  dollySisters.getTroubleMarker()); 
 		assertTrue("The Scours has a trouble marker",  theScours.getTroubleMarker()); 
@@ -124,15 +124,15 @@ public class PlayerTest {
 		 * The winning condition : 	
 		 * 	- For Lord Vetinari, he has to have 11 minions in a 2 players game. 
 		 */
-		dpizar.putNewMinionOnBoard(2);
-		dpizar.putNewMinionOnBoard(3);
-		dpizar.putNewMinionOnBoard(4);
-		dpizar.putNewMinionOnBoard(6);
-		dpizar.putNewMinionOnBoard(8);
-		dpizar.putNewMinionOnBoard(9);
-		dpizar.putNewMinionOnBoard(10);
-		dpizar.putNewMinionOnBoard(11);
-		dpizar.putNewMinionOnBoard(12);
+		dpizar.putNewMinionOnBoard(2,false);
+		dpizar.putNewMinionOnBoard(3,false);
+		dpizar.putNewMinionOnBoard(4,false);
+		dpizar.putNewMinionOnBoard(6,false);
+		dpizar.putNewMinionOnBoard(8,false);
+		dpizar.putNewMinionOnBoard(9,false);
+		dpizar.putNewMinionOnBoard(10,false);
+		dpizar.putNewMinionOnBoard(11,false);
+		dpizar.putNewMinionOnBoard(12,false);
 		assertTrue(" Lord Vetinari - played by dpizar - wins the game with 11 minions ", dpizar.checkWinningCondition(gameboard) );
 	}
 	

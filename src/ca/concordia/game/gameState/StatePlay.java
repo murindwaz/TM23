@@ -3,6 +3,7 @@ package ca.concordia.game.gameState;
 import java.util.ArrayList;
 
 import ca.concordia.game.main.Game;
+import ca.concordia.game.model.CityCard;
 import ca.concordia.game.model.Deck;
 import ca.concordia.game.model.Gameboard;
 import ca.concordia.game.model.GreenCard;
@@ -27,6 +28,28 @@ public class StatePlay implements StateLike {
 		// Display Gameboard Status.
 		System.out.println(gameBoard.toString());
 		System.out.println(player.toString());
+		
+		
+		//Get all cityCards and ask the player if he wishes to use them. A city card has to be active in order to be played.
+		ArrayList<CityCard> cityCards=player.getPlayerCityCard();
+		if(cityCards.size()>0)
+		{
+			for(int i=0;i<cityCards.size();i++)
+			{
+				//check that the card is active.
+				if(cityCards.get(i).getIsActive())
+				{
+					System.out.println("Player: "+player.getColor()+" do you wish to use city card: "+cityCards.get(i).getName()+" with ability:"+cityCards.get(i).getAbility()+"Card Number: "+cityCards.get(i).getCardNumber());
+					String input=game.keyIn.next();
+					if(input.contains("y"))
+					{
+						System.out.println("Executing Card...");
+						cityCards.get(i).useCityCard(player, game);//Use card if the player choose to use it.
+					}
+				}
+			}
+		}
+		
 		// Play one of the cards, ask user for input.
 		
 		while(playAnotherCard){
