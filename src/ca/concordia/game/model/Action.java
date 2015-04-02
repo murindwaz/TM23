@@ -193,6 +193,11 @@ public class Action {
 				give5orLoseBuilding( );
 				break;				
 
+				// 76: Shuffle the discard pile and draw four cards randomly. Place the remaining cards back as the discard pile.
+			case 76:
+				shuffleandGetDiscard( );
+				break;				
+
 				// 67: Look at all but one of the unused Personality cards.
 			case 67:
 				lookUnusedPersonalities();
@@ -388,11 +393,10 @@ public class Action {
 	 */
 	private void getCards(int nbCards) {
 		for (int i = 0; i < nbCards; i++) {
-			if (game.getDecks().get("brown").getSizeDeck() > 0){
-				player.receiveCard(game.getDecks().get("brown").getCard());
-			}else{
-				player.receiveCard(game.getDecks().get("green").getCard());
-			}
+			if (game.getDecks().get("B").getSizeDeck() > 0)
+				player.receiveCard(game.getDecks().get("B").getCard());
+			else
+				player.receiveCard(game.getDecks().get("G").getCard());
 		}
 	}
 
@@ -838,6 +842,14 @@ public class Action {
 			}
 		}
 		return;
+	}
+
+	/**
+	 * Shuffle the discard pile and draw four cards randomly. Place the remaining cards back as the discard pile.
+	 */
+	private void shuffleandGetDiscard( ) {
+		game.getDecks().get("D").shuffle();
+		player.receiveCard(game.getDecks().get("D").getCard());
 	}
 
 }
