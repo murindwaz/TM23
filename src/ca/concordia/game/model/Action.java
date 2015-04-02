@@ -188,6 +188,11 @@ public class Action {
 				give5orLoseCard(cardId);
 				break;	
 
+				// 74: Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
+			case 74:
+				give5orLoseBuilding( );
+				break;				
+
 				// 67: Look at all but one of the unused Personality cards.
 			case 67:
 				lookUnusedPersonalities();
@@ -313,21 +318,40 @@ public class Action {
 	/**
 	 * Choose an Area
 	 * 
+	 * @param color
 	 * @param hasMinions
+	 * @param hasBuilding
 	 * @param hasTroubleMarker
 	 * @param adjacentArea
 	 * @return choosenArea
 	 */
-	private int chooseArea(boolean hasMinions, boolean hasTroubleMarker, Area aArea) {
+	private int chooseArea(Colors color, boolean hasMinions, boolean hasBuilding, boolean hasTroubleMarker, Area aArea) {
 		int choosenArea;
-		int areas[] = new int[0];
-
+		ArrayList<Integer> areas = null;
+		boolean found;
 		while(true){
 			for (int i = 0; i < 12; i++) {
-				areas[i] = 99; //not valid
-				if (hasMinions)
+				if (hasMinions){
 					if (gameBoard.getAreas().get(i).getMinions().isEmpty())
 						continue;
+					if (color!=null){
+						found = false;	
+						for(int m=0;m<gameBoard.getAreas().get(i).getMinions().size();m++)
+							if(gameBoard.getAreas().get(i).getMinions().get(m).getColor() == color){
+								found = true;
+								break;
+							}
+						if (found==false)
+							continue;
+					}
+				}
+				if (hasBuilding){
+					if (gameBoard.getAreas().get(i).getMinions().isEmpty())
+						continue;
+					if ( (color!=null) &&
+							(gameBoard.getAreas().get(i).getBuildingColor() != color))
+						continue;
+				}				
 				if (aArea != null)
 					if (aArea.getCityCard().getAdjacentAreas().get(i) == null)
 						continue;
@@ -335,11 +359,16 @@ public class Action {
 					if (gameBoard.troubleMarkersAreas().get(i) == null)
 						continue;
 				System.out.println(i + "." + gameBoard.getAreas().get(i).toString());
-				areas[i] = i; //valid
+				areas.add(i); //valid
 			}
+			if (areas.isEmpty()){
+				System.out.println("No valid Areas found.");
+				return -1;
+			}
+
 			choosenArea = keyIn.nextInt();
 
-			if (areas[choosenArea]!=choosenArea) {
+			if (areas.indexOf(choosenArea)==-1) {
 				System.out.println("Not a valid choice. Please choose Area again:");
 				continue;
 			}
@@ -424,13 +453,16 @@ public class Action {
 					+ "must choose an area with trouble marker to remove one minion (not your choice)");
 			break;
 		case 8:
-			System.out.println("Choose an area to remove one minion:");
+			System.out.println("You can choose a minion to remove:");
 			break;
 		}
-		choosenArea = chooseArea(true, true, null);
 		System.out.println("Select the color of minion you wish to remove:");
 		String tmpColor = input.next();
 		Colors color = Colors.colorForString(tmpColor);
+
+		choosenArea = chooseArea(color, true, true, false, null);
+		if (choosenArea == -1)
+			return;
 		// Remove a minion of the color specified by the player.
 		gameBoard.getAreas().get(choosenArea).removeMinion(color);
 		// Update the status of the player to whom the minion belonged to.
@@ -458,33 +490,23 @@ public class Action {
 			Colors color = Colors.colorForString(tmpColor);
 			Player playerbycolorfrom = game.getPlayerByColor(color);
 			System.out.println("Choose an area to move one minion from:");
-			fromArea = this.chooseArea(true, false, null);
+			fromArea = this.chooseArea(color, true, false, false, null);
 
-			while (true) {
-				System.out.println("Choose an area to move one minion to:");
-				toArea = this.chooseArea(true, false, null);
-				if (gameBoard.getAreas().get(toArea).getMinions().isEmpty()) {
-					System.out.println("This Area has no Minions");
-					continue;
-				}
+			System.out.println("Select the color of minion you wish to move out:");
+			tmpColor = input.next();
+			color = Colors.colorForString(tmpColor);
 
-				while (true) {
-					System.out.println("Select the color of minion you wish to move out:");
-					tmpColor = input.next();
-					color = Colors.colorForString(tmpColor);
-					Player playerbycolorto = game.getPlayerByColor(color);
-					if (playerbycolorto.moveMinionToNewArea(toArea, fromArea)) {
-						if (playerbycolorfrom.moveMinionToNewArea(fromArea, toArea))
-							break;
-					} else {
-						System.out.println("This Area has no Minions.");
-						continue;
-					}
-				}
+			System.out.println("Choose an area to move one minion to:");
+			toArea = this.chooseArea(color,true,false, false, null);
+			if (fromArea == -1 || toArea== -1)
+				return;
 
+			Player playerbycolorto = game.getPlayerByColor(color);
+			if (playerbycolorto.moveMinionToNewArea(toArea, fromArea)) {
+				if (playerbycolorfrom.moveMinionToNewArea(fromArea, toArea))
+					break;
 			}
 		}
-
 	}
 
 	/**
@@ -532,20 +554,17 @@ public class Action {
 				continue;
 			}
 
-			while (true) {
-
-				System.out.println("Choose an area to move this minion from:");
-				fromArea = this.chooseArea(true, hasTroubleMarker, null);
-
-				if (gameBoard.getAreas().get(fromArea).getMinions().isEmpty()) {
-					System.out.println("This Area has no Minions");
-					continue;
-				} else
-					break;
-			}
+			System.out.println("Choose an area to move this minion from:");
+			fromArea = this.chooseArea(color,true,false, hasTroubleMarker, null);
 
 			System.out.println("Choose an area to move this minion to:");
-			toArea = this.chooseArea(true, false, gameBoard.getAreas().get(fromArea));
+			toArea = this.chooseArea(null, false,false, false, gameBoard.getAreas().get(fromArea));
+
+			if (fromArea == -1 || toArea== -1){ 
+				System.out.println("Choose another color");
+				continue;
+			}
+
 
 			if (!isYour) {
 				if (playerbycolor.moveMinionToNewArea(fromArea, toArea))
@@ -627,9 +646,9 @@ public class Action {
 			System.out.println("Choose an area to place this minion:");
 
 			if (UEadjacent)
-				toArea = this.chooseArea(false, true, gameBoard.getAreas().get(2));
+				toArea = this.chooseArea(null,false,false, false, gameBoard.getAreas().get(2));
 			else
-				toArea = this.chooseArea(false, true, null);
+				toArea = this.chooseArea(null,false, hasownBuilding, hasTroubleMarker, null);
 
 			if (!player.putNewMinionOnBoard(toArea))
 				System.out.println("Not possible to place Minion");
@@ -668,7 +687,6 @@ public class Action {
 	 * Each player must give you either $1 or one of their cards.
 	 */
 	private void get1fromOthers() {
-		int choosenCard;
 		int option;
 
 		for (int i = 0; i < game.getNumberOfPlayers(); i++) {
@@ -742,7 +760,7 @@ public class Action {
 				bank.deposit(2);
 			else{
 				System.out.println("Choose Area:");
-				choosenArea = chooseArea(true, false, null);
+				choosenArea = chooseArea(player.color,true, false,false, null);
 				gameBoard.getAreas().get(choosenArea).removeMinion(player.color);
 
 			}
@@ -776,6 +794,50 @@ public class Action {
 			player.transferCard(cardId, players[choosenPlayer]);
 			players[choosenPlayer].getPlayerCards().get(cardId).isPlayable = false;
 		}
+	}
+
+
+	/**
+	 * Choose a player. If he does not pay you $5 then you can remove one of his buildings from the board.
+	 */
+	private void give5orLoseBuilding( ) {
+		int choosenPlayer;
+
+		while(true){
+			choosenPlayer = choosePlayer();
+			if ((players[choosenPlayer].getBuildingOnHand()==6)&&(players[choosenPlayer].getMoney() <5)){
+				System.out.println("Broken player, choose another one");
+				continue;
+			}
+			break;
+		}
+
+		if (players[choosenPlayer].getBuildingOnHand()==6){
+			System.out.println("Player dont have available Building, $5 will be transfered.");
+			players[choosenPlayer].transferMoneyto(5, player);
+			return;
+		}
+
+		if (players[choosenPlayer].getMoney()<5){
+			System.out.println("Player dont have money, will lose Building. Choose Area:");
+			int choosenArea = chooseArea(players[choosenPlayer].color,false,true, false, null);
+			if(gameBoard.getAreas().get(choosenArea).removeBuilding());	 
+			return;
+		}
+
+		System.out.println("Player: " + players[choosenPlayer].getColor().toString() + ". Choose 1 for Money or 2 for Building:");
+		if (keyIn.nextInt() == 1) {
+			players[choosenPlayer].transferMoneyto(5, player);
+		} else {
+			while(true){
+
+				System.out.println("Choose Area:");
+				int choosenArea = chooseArea(null,false,true,false, null);
+				if(gameBoard.getAreas().get(choosenArea).removeBuilding());	 
+				return;
+			}
+		}
+		return;
 	}
 
 }

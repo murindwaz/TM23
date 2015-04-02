@@ -12,9 +12,10 @@ public class Controller {
 	public static void main(String[] args) {
 		boolean gameLoaded=false;
 		Game game;
-			game= Game.getInstance();
-			gameLoaded=true;
-			game.loadGame();
-			game.play(gameLoaded);
+		game= Game.getInstance();
+		//Load a saved game.
+		gameLoaded=true;
+		game.loadGame();
+		game.play(gameLoaded);
 	}
 }
