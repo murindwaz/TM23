@@ -123,20 +123,22 @@ public class Action {
 			 * 31,29 inUE
 			 */
 			case 17:
+				placeMinion(false, false, false, 1, true);
+				break;
 			case 32:
-				placeMinion(false, false, false, 1);
+				placeMinion(false, false, false, 1, true);
 				break;
 			case 34:
-				placeMinion(false, false, true, 1);
+				placeMinion(false, false, true, 1, true);
 				break;
 			case 28:
-				placeMinion(false, true, false, 1);
+				placeMinion(false, true, false, 1, false);
 				break;
 			case 31:
-				placeMinion(true, false, false, 1);
+				placeMinion(true, false, false, 1, false);
 				break;
 			case 29:
-				placeMinion(true, false, false, 2);
+				placeMinion(true, false, false, 2, false);
 				break;
 			/**
 			 * Group6: TakeLoan* 55,57
@@ -183,7 +185,7 @@ public class Action {
 			case 46:
 			case 71:
 				// Interrupt( ); ???
-				placeMinion(false, false, false, 1);
+				//placeMinion(false, false, false, 1);
 				break;
 
 			/**
@@ -339,61 +341,58 @@ public class Action {
 	 * @param hasMinions
 	 * @param hasBuilding
 	 * @param hasTroubleMarker
-	 * @param adjacentArea
+	 * @param adjacentAreas
 	 * @return choosenArea
 	 */
-	private int chooseArea(Colors color, boolean hasMinions,
-			boolean hasBuilding, boolean hasTroubleMarker, Area aArea) {
+	private int chooseArea(Colors color, boolean hasMinions, boolean hasBuilding, boolean hasTroubleMarker, ArrayList<Area> aAreas) {
 		int choosenArea;
 		ArrayList<Integer> areas = null;
 		boolean found;
-		while (true) {
+		while(true){
 			for (int i = 0; i < 12; i++) {
-				if (hasMinions) {
+				if (hasMinions){
 					if (gameBoard.getAreas().get(i).getMinions().isEmpty())
 						continue;
-					if (color != null) {
-						found = false;
-						for (int m = 0; m < gameBoard.getAreas().get(i)
-								.getMinions().size(); m++)
-							if (gameBoard.getAreas().get(i).getMinions().get(m)
-									.getColor() == color) {
+					if (color!=null){
+						found = false;	
+						for(int m=0;m<gameBoard.getAreas().get(i).getMinions().size();m++)
+							if(gameBoard.getAreas().get(i).getMinions().get(m).getColor() == color){
 								found = true;
 								break;
 							}
-						if (found == false)
+						if (found==false)
 							continue;
 					}
 				}
-				if (hasBuilding) {
+				if (hasBuilding){
 					if (gameBoard.getAreas().get(i).getMinions().isEmpty())
 						continue;
-					if ((color != null)
-							&& (gameBoard.getAreas().get(i).getBuildingColor() != color))
+					if ( (color!=null) &&
+							(gameBoard.getAreas().get(i).getBuildingColor() != color))
 						continue;
-				}
-				if (aArea != null)
-					if (aArea.getCityCard().getAdjacentAreas().get(i) == null)
-						continue;
+				}				
+				if (aAreas != null)
+					for (int a = 0; a<aAreas.size();a++)
+						if (aAreas.get(a).getCityCard().getAdjacentAreas().get(i) == null)
+							continue;
 				if (hasTroubleMarker)
 					if (gameBoard.troubleMarkersAreas().get(i) == null)
 						continue;
-				System.out.println(i + "."
-						+ gameBoard.getAreas().get(i).toString());
-				areas.add(i); // valid
+				System.out.println(i + "." + gameBoard.getAreas().get(i).toString());
+				areas.add(i); //valid
 			}
-			if (areas.isEmpty()) {
+			if (areas.isEmpty()){
 				System.out.println("No valid Areas found.");
 				return -1;
 			}
 
 			choosenArea = game.keyIn.nextInt();
 
-			if (areas.indexOf(choosenArea) == -1) {
-				System.out
-						.println("Not a valid choice. Please choose Area again:");
+			if (areas.indexOf(choosenArea)==-1) {
+				System.out.println("Not a valid choice. Please choose Area again:");
 				continue;
-			} else
+			}
+			else
 				break;
 		}
 
@@ -610,7 +609,20 @@ public class Action {
 				for(int i=0;i<game.getGameBoard().getAreas().size();i++)
 				{
 					Area area=game.getGameBoard().getAreas().get(i);
-					if(area.getMinions().contains(new Piece(player.getColor())) && area.getTroubleMarker())//Area contains piece belonging to player  and has a trouble marker.
+					ArrayList<Piece> minions= new ArrayList<Piece>();
+					minions=area.getMinions();
+					Piece temp=new Piece(player.getColor());
+					//System.out.println("Player Color:"+player.getColor());
+					boolean contains=false;
+					for(int j=0;j<minions.size();j++)
+					{
+						if(minions.get(j).getColor().equals(player.getColor()))
+						{
+							contains=true;
+							break;
+						}
+					}
+					if(contains && area.getTroubleMarker())//Area contains piece belonging to player  and has a trouble marker.
 					{
 						troubleArea.add(area);
 						
@@ -621,13 +633,14 @@ public class Action {
 				{
 					System.out.println("Area: "+troubleArea.get(i).getCityCard().getName()+"("+i+")");
 				}
-				fromArea=game.keyIn.nextInt();
+				int fromAreaTemp=game.keyIn.nextInt();
+				fromArea=troubleArea.get(fromAreaTemp).getCityCard().getCardNumber();
 				
 				System.out.println("Adjacent Areas to selected Area:");
-				ArrayList<Integer> adj=troubleArea.get(fromArea).getCityCard().getAdjacentAreas();
+				ArrayList<Integer> adj=troubleArea.get(fromAreaTemp).getCityCard().getAdjacentAreas();
 				for(int i=0;i<adj.size();i++)
 				{
-					System.out.println("Area: "+game.getGameBoard().getAreaByCityCard(adj.get(i)).getCityCard().getName()+ "code:"+adj.get(i));
+					System.out.println("Area: "+game.getGameBoard().getAreaByCityCard(adj.get(i)).getCityCard().getName()+ "  code:"+adj.get(i));
 				}
 				
 			}
@@ -650,17 +663,11 @@ public class Action {
 				
 				
 			} else {
-				if (player.moveMinionToNewArea(fromArea, toArea))
-				{
-					//Update GameBoard.
-					game.getGameBoard().getAreaByCityCard(fromArea).removeMinion(color);
-					game.getGameBoard().getAreaByCityCard(toArea).addMinion(new Piece(color), false);
-					break;
-				}
-				else {
-					System.out.println("Not possible to move to this Area");
-					continue;
-				}
+				//Update GameBoard.
+				game.getGameBoard().getAreaByCityCard(fromArea).removeMinion(color);
+				game.getGameBoard().getAreaByCityCard(toArea).addMinion(new Piece(color), false);
+				break;
+				
 			}
 		}
 
@@ -725,26 +732,29 @@ public class Action {
 	 * @param hasownBuilding
 	 * @param hasTroubleMarker
 	 * @param times
+	 * @param skipAdjacenAreaCheck
 	 */
-	private void placeMinion(boolean UEadjacent, boolean hasownBuilding,
-			boolean hasTroubleMarker, int times) {
+	private void placeMinion(boolean UEadjacent, boolean hasownBuilding, boolean hasTroubleMarker, int times, boolean skipAdjacenAreaCheck) {
+		ArrayList<Area> aAreas = null;
+
+		if (!skipAdjacenAreaCheck)
+			for (int a=0; a<player.getMinionsOnArea().length;a++)
+				if(aAreas.add(gameBoard.getAreas().get(player.getMinionsOnArea()[a])));
 		for (int i = 1; i <= times; i++) {
 			int toArea;
 
 			System.out.println("Choose an area to place this minion:");
 
-			if (UEadjacent)
-				toArea = this.chooseArea(null, false, false, false, gameBoard
-						.getAreas().get(2));
-			else
-				toArea = this.chooseArea(null, false, hasownBuilding,
-						hasTroubleMarker, null);
+			if (UEadjacent){
+				aAreas.add(0, gameBoard.getAreas().get(2));
+				toArea = this.chooseArea(null,false,false, false, aAreas );	
+			}
+			toArea = this.chooseArea(null,false, hasownBuilding, hasTroubleMarker, aAreas);
 
 			if (!player.putNewMinionOnBoard(toArea, false))
 				System.out.println("Not possible to place Minion");
 		}
 	}
-
 	/**
 	 * Take a loan of @amount from the bank. At the end of the game you must pay
 	 * back $12 or lose 15 points.
@@ -913,6 +923,8 @@ public class Action {
 
 		while (true) {
 			choosenPlayer = choosePlayer(player,game);
+			if (checkInterrupt(players[choosenPlayer],false))
+				return;
 			if ((players[choosenPlayer].getBuildingOnHand() == 6)
 					&& (players[choosenPlayer].getMoney() < 5)) {
 				System.out.println("Broken player, choose another one");
@@ -1011,6 +1023,8 @@ public class Action {
 	 */
 	private void givenTake(Player player, Game game) {
 		int choosenPlayer = choosePlayer(player,game);
+		if (checkInterrupt(players[choosenPlayer],false))
+			return;
 		System.out.println("Choose a card to give:");
 		int choosenCard = chooseCard(player);
 		player.transferCard(choosenCard, players[choosenPlayer]);
@@ -1037,6 +1051,46 @@ public class Action {
 			}
 		}
 
+	}
+	
+	/** Check if Player has Interrupt Card
+	 * @param aPLayer
+	 * @param removeMinion
+	 */
+	private boolean checkInterrupt(Player aPlayer, boolean removeMinion)
+	{
+		ArrayList<Card> cards = aPlayer.getPlayerCards();
+		GreenCard gCard = null;
+		Deck discardDeck=null;
+		for(int c=0;c<cards.size();c++){
+			gCard =	(GreenCard) cards.get(c);
+			if (gCard.getSymbols().contains(new Symbol(9,-1))){
+
+				if (removeMinion==false&&gCard.getNumber()==22||gCard.getNumber()==70) //Only for Minion move
+					return false;
+
+				System.out.println("Player "+aPlayer.toString()+"has an Interrupt card. Would you like to use it?(Y) or (N)");
+				String input=game.keyIn.next();
+				if(input.contains("y")){
+					//After using Interrupt card. Discard it to the discard deck.
+					//PutCard in discardDeck.
+					discardDeck=game.getEspecificDeck("discard");
+					discardDeck.putCard(gCard);
+					boolean check=player.removePlayerCard(gCard);
+					if(check)
+					{
+						System.out.println("Card Was put to discard deck and removed from player's hand.");
+						if (removeMinion==true&&(gCard.getNumber()==46||gCard.getNumber()==71)){
+							System.out.println("Interruption allow Player to place removed Minion in a different area. Choose area:");
+							placeMinion(false, false, false, 1, false);
+						}
+						return true;
+					}				
+				}
+			}
+		}
+
+		return false;
 	}
 
 
