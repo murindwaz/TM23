@@ -67,9 +67,11 @@ public class Deck {
 		case EVENT_DECK:
 			//The event deck has 12 cards:
 			this.cards = new ArrayDeque<Card>();
-			for (int i = 0; i < 12; i++) {
+			for (int i = 11; i <= 11; i++) {
 				this.cards.add(new EventCard(i));
 			}
+			
+			
 			break;
 		case GREEN_CARDS_DECK:
 			//The green-bordered player deck has 48 cards:

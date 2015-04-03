@@ -15,12 +15,33 @@ import ca.concordia.game.util.Configuration;
 public class StatePlay implements StateLike {
 
 	/**
+	 * This player holds current instance of the player. 
+	 * It will be re-initialized with performAction - function.
+	 */
+	private Player currentPlayer;
+	private Game currentGame;
+	private Gameboard gameBoard;
+	private StateContext currentContext;
+	private ArrayList<CityCard> cityCards; 
+	private boolean replayCityCards = false;
+	
+	/**
 	 * Controls actions for current state.
 	 */
 	@Override
 	public void performAction(StateContext context, Player player, Game game) {
-
-		Gameboard gameBoard = game.getGameBoard();
+		
+		/**
+		 * Re-initialization of class variables
+		 */
+		currentPlayer = player;
+		currentGame = game; 
+		currentContext = context; 
+		
+		/**
+		 * Re-initialization of function variables. 
+		 */
+		gameBoard = game.getGameBoard();
 		int cardNumberInPlayerHand;
 		boolean playAnotherCard	=	true;
 
@@ -28,53 +49,24 @@ public class StatePlay implements StateLike {
 		//check winning condition at the beggining of each turn.
 		boolean wonGame=player.checkWinningCondition(gameBoard);
 		//If true then the current player wins the game!!!
-		if(wonGame)
-		{
-			PersonalityCard pCard=(PersonalityCard) player.getPersonality();
-			System.out.println("Player: "+player.getColor()+" with personality card:"+pCard.getName()+ " and Winning Condition: "+pCard.getWinningConditionDescription());
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-			System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
-		}
-		else{
-			Deck discardDeck=null;
+		if(wonGame){
+			PersonalityCard pCard = (PersonalityCard)player.getPersonality();
+			printGameWon( player, pCard );
+		} else{
+			Deck discardDeck = null;
 			// Display Gameboard Status.
 			System.out.println(gameBoard.toString());
 			System.out.println(player.toString());
-
-
 			//Get all cityCards and ask the player if he wishes to use them. A city card has to be active in order to be played.
-			ArrayList<CityCard> cityCards=player.getPlayerCityCard();
-			if(cityCards.size()>0)
-			{
-				for(int i=0;i<cityCards.size();i++)
-				{
-					//check that the card is active.
-					if(cityCards.get(i).getIsActive())
-					{
-						System.out.println("Player: "+player.getColor()+" do you wish to use city card: "+cityCards.get(i).getName()+" with ability:"+cityCards.get(i).getAbility()+"Card Number: "+cityCards.get(i).getCardNumber());
-						String input=game.keyIn.next();
-						if(input.contains("y"))
-						{
-							System.out.println("Executing Card...");
-							cityCards.get(i).useCityCard(player, game);//Use card if the player choose to use it.
-						}
-					}
-				}
+			cityCards = player.getPlayerCityCard();
+			replayCityCards = false;
+			if(cityCards.size() > 0 ) {
+				playCityCards();
 			}
 
 			// Play one of the cards, ask user for input.
-
 			while(playAnotherCard){
-
-				playAnotherCard=false;
-
+				playAnotherCard	=	false;
 				while (true) {
 					System.out.println("Please enter the card number you wish to play(Select the number for 'Position in Player Hand'):");
 					cardNumberInPlayerHand = game.keyIn.nextInt();
@@ -116,14 +108,19 @@ public class StatePlay implements StateLike {
 				discardDeck=game.getEspecificDeck("discard");
 				discardDeck.putCard(chosenCard);
 				boolean check=player.removePlayerCard(chosenCard);
-				if(check)
-				{
+				if(check){
 					System.out.println("Card Was put to discard deck and removed from player's hand.");
 				}
+				/**
+				 * Forcing the player to play other cards.
+				 */
+				if( replayCityCards == true ){
+					playCityCards();
+				}
+				
 
 			}//while
 			
-			//discardDeck.displayCardsinDeck(1);//Print Discard Deck(For debugging purposes).
 			/** 
 			 * Display board status.
 			 * Display the players hand.
@@ -147,6 +144,44 @@ public class StatePlay implements StateLike {
 		 * this.Status = "Play State.";
 		 */
 		return Configuration.STATE_PLAY;
+	}
+	
+	
+	/**
+	 * A function to display game won 
+	 */
+	private void printGameWon( Player player, PersonalityCard pCard){
+		System.out.println("Player: "+player.getColor()+" with personality card:"+pCard.getName()+ " and Winning Condition: "+pCard.getWinningConditionDescription());
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+		System.out.println("**************************************************HAS WON THE GAME*************************************************************");;
+	}
+	
+	/**
+	 * This function will be executed
+	 * @return
+	 */
+	private void playCityCards(){
+		for(int i=0;i<cityCards.size();i++){
+			//check that the card is active.
+			if(cityCards.get(i).getIsActive()){
+				System.out.println("Player: "+currentPlayer.getColor()+" do you wish to use city card: "+cityCards.get(i).getName()+" with ability:"+cityCards.get(i).getAbility()+"Card Number: "+cityCards.get(i).getCardNumber());
+				String input =	currentGame.keyIn.next();
+				if(input.contains("y")){
+					System.out.println("Executing Card...");
+					cityCards.get(i).useCityCard(currentPlayer, currentGame);//Use card if the player choose to use it.
+					replayCityCards = false;
+				}else{
+					replayCityCards = true;		
+				}
+			}
+		}
 	}
 
 }
