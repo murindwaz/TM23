@@ -273,6 +273,11 @@ public class Action {
 			case 13:
 				exchangeCards(player,game);
 				break;
+				
+			// 20: Every other player, in player order, must remove one of their minions from the board.
+			case 20:
+				removeMinions();
+				break;		
 			// ------------------------------------------------------------No
 			// Action Cards---------------------------------------------------
 			// Do nothing
@@ -436,9 +441,11 @@ public class Action {
 					bank.transferFunds(player, amount);
 				break;
 			case 5:
-				System.out.println("Choose a player to take $" + amount
-						+ " dollars from:");
-				players[choosePlayer(player,game)].transferMoneyto(amount, player);
+				System.out.println("Choose a player to take $" + amount+ " dollars from:");
+				int chosenPlayer=choosePlayer(player,game);
+				if (checkInterrupt(players[chosenPlayer],false))
+					return;
+				players[chosenPlayer].transferMoneyto(amount, player);
 				break;
 			}
 
@@ -455,6 +462,8 @@ public class Action {
 			//Take two dollars from every player except from the one who's calling.
 			for (int p = 0; p < game.getPlayers().length; p++)
 			{
+				if (checkInterrupt(players[p],false))
+					continue;
 				if(!players[p].getColor().equals(player.getColor()))
 				{
 					players[p].transferMoneyto(amount, player);
@@ -474,9 +483,11 @@ public class Action {
 	private void paynRemoveMinion(Player player, Game game,int amount, int cardId) {
 		int choosenPlayer = 0;
 		int choosenArea = 0;
-		System.out.println("Choose a player to receive $" + amount
-				+ " dollars:");
+		
+		System.out.println("Choose a player to receive $" + amount+ " dollars:");
 		choosenPlayer = choosePlayer(player,game);
+		if (checkInterrupt(players[choosenPlayer],true))
+			return;
 		player.transferMoneyto(amount, players[choosenPlayer]);
 		switch (cardId) {
 		case 44:
@@ -503,6 +514,8 @@ public class Action {
 		gameBoard.getAreas().get(choosenArea).removeMinion(color);
 		// Update the status of the player to whom the minion belonged to.
 		Player playerbycolor = game.getPlayerByColor(color);
+		if (!checkInterrupt(playerbycolor, true))
+			playerbycolor.removeMinionOnBoard(choosenArea);
 		playerbycolor.removeMinionOnBoard(choosenArea);
 	}
 
@@ -551,8 +564,15 @@ public class Action {
 	 */
 	private void discardOthersCard(Player player, Game game) {
 		ArrayList<Card> playerCards;
+		int choosenPlayer = 0;
 		int cardNb;
 		System.out.println("Select a Player to loose a card:");
+		int chosenPlayer=choosePlayer(player, game);
+		if (checkInterrupt(players[chosenPlayer],false))
+			return;
+		chosenPlayer=choosePlayer(player, game);
+		if (checkInterrupt(players[chosenPlayer],false))
+			return;
 		playerCards = players[choosePlayer(player,game)].getPlayerCards();
 		System.out.println("Select a card to discard:");
 		for (int i = 0; i < playerCards.size(); i++) {
@@ -587,6 +607,9 @@ public class Action {
 					System.out.println("Minion should belong to another player.");
 					continue;
 				}
+				
+				if (checkInterrupt(playerbycolor,true))
+					return;
 				
 			}
 
@@ -715,11 +738,13 @@ public class Action {
 		ArrayList<Card> playerCards;
 
 		System.out.println("Select a player to exchange all your Cards:");
-		playerCards = players[choosePlayer(player, game)].getPlayerCards();
-
+		int chosenPlayer=choosePlayer(player, game);
+		
+		if (checkInterrupt(players[chosenPlayer],false))
+			return;
+		playerCards = players[chosenPlayer].getPlayerCards();
 		players[choosenPlayer].loseAllCards();
-		players[choosenPlayer].receiveAllCards(players[game.currentPlayer]
-				.getPlayerCards());
+		players[choosenPlayer].receiveAllCards(players[game.currentPlayer].getPlayerCards());
 
 		players[game.currentPlayer].loseAllCards();
 		players[game.currentPlayer].receiveAllCards(playerCards);
@@ -772,11 +797,12 @@ public class Action {
 	private void takeCard(Player player, Game game) {
 		int choosenPlayer = 0;
 		int choosenCard;
-
+			
 		System.out.println("Select a player to get 2 Cards from:");
 		choosenPlayer = choosePlayer(player,game);
 		System.out.println("Choosen Player(NOT YOU) must choose 2 Cards to give you:");
-
+		if (checkInterrupt(players[choosenPlayer],false))
+			return;
 		for (int i = 0; i < 2; i++) {
 			choosenCard = chooseCard(players[choosenPlayer]);
 			players[choosenPlayer].transferCard(choosenCard, player);
@@ -902,10 +928,9 @@ public class Action {
 	 */
 	private void give5orLoseCard(Player player, Game game,int cardId) {
 		int choosenPlayer = choosePlayer(player,game);
-
-		System.out.println("Player: "
-				+ players[choosenPlayer].getColor().toString()
-				+ ". Choose 1 for Money or 2 for Card:");
+		if (checkInterrupt(players[choosenPlayer],false))
+			return;
+		System.out.println("Player: "+ players[choosenPlayer].getColor().toString()+ ". Choose 1 for Money or 2 for Card:");
 		if (game.keyIn.nextInt() == 1) {
 			players[choosenPlayer].transferMoneyto(5, player);
 		} else {
@@ -925,8 +950,7 @@ public class Action {
 			choosenPlayer = choosePlayer(player,game);
 			if (checkInterrupt(players[choosenPlayer],false))
 				return;
-			if ((players[choosenPlayer].getBuildingOnHand() == 6)
-					&& (players[choosenPlayer].getMoney() < 5)) {
+			if ((players[choosenPlayer].getBuildingOnHand() == 6) && (players[choosenPlayer].getMoney() < 5)) {
 				System.out.println("Broken player, choose another one");
 				continue;
 			}
@@ -1057,16 +1081,15 @@ public class Action {
 	 * @param aPLayer
 	 * @param removeMinion
 	 */
-	private boolean checkInterrupt(Player aPlayer, boolean removeMinion)
-	{
+	private boolean checkInterrupt(Player aPlayer, boolean removeMinion){
 		ArrayList<Card> cards = aPlayer.getPlayerCards();
 		GreenCard gCard = null;
 		Deck discardDeck=null;
 		for(int c=0;c<cards.size();c++){
 			gCard =	(GreenCard) cards.get(c);
-			if (gCard.getSymbols().contains(new Symbol(9,-1))){
+			if (gCard.getSymbols().get(0).getSymbolId()==9){
 
-				if (removeMinion==false&&gCard.getNumber()==22||gCard.getNumber()==70) //Only for Minion move
+				if (removeMinion==false&&(gCard.getNumber()==22||gCard.getNumber()==70)) //Only for Minion move
 					return false;
 
 				System.out.println("Player "+aPlayer.toString()+"has an Interrupt card. Would you like to use it?(Y) or (N)");
@@ -1093,5 +1116,17 @@ public class Action {
 		return false;
 	}
 
+	/** Every other player must remove one of their minions from the board.
+	 */
+	private void removeMinions() {
+		for (int i=0;i<game.numberOfPlayers;i++){
+			if(players[i].color==player.color)
+				continue;
+			System.out.println("Player "+players[i].color+" select an Area to lose one Minion:");
+			int choosenArea = chooseArea(player.color, true, false, false, null);
+			//			gameBoard.getAreas().get(choosenArea).getMinions().remove(pieceChoosen);			
+		}
+
+	}
 
 }

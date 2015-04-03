@@ -32,68 +32,76 @@ public class EventCard extends Card {
 		switch(i) {
 			case Configuration.EVENT_FOG:
 				this.eventCardId=Configuration.EVENT_FOG;
-				this.setName( Configuration.EVENT_FOG_NAME );
+				this.setEventName( "FOG" );
 				this.instruction = Configuration.EVENT_FOG_DESCRIPTION;
 				break;
 			case Configuration.EVENT_MYSTERIOUS_MURDERS:
 				this.eventCardId=Configuration.EVENT_MYSTERIOUS_MURDERS;
-				this.setName( Configuration.EVENT_MYSTERIOUS_MURDERS_NAME );
+				this.setEventName("Mysterious Muerders" );
 				this.instruction = Configuration.EVENT_MYSTERIOUS_MURDERS_DESCRIPTION;
 				break;
 			case Configuration.EVENT_RIOTS:
 				this.eventCardId=Configuration.EVENT_RIOTS;
-				this.setName( Configuration.EVENT_RIOTS_NAME );
+				this.setEventName( "Riots" );
 				this.instruction = Configuration.EVENT_RIOTS_DESCRIPTION;
 				break;
 			case Configuration.EVENT_SUBSIDENCE:
 				this.eventCardId=Configuration.EVENT_SUBSIDENCE;
-				this.setName( Configuration.EVENT_SUBSIDENCE_NAME );
+				this.setEventName( "Subsidence" );
 				this.instruction = Configuration.EVENT_SUBSIDENCE_DESCRIPTION;
 				break;
 			case Configuration.EVENT_TROLLS:
 				this.eventCardId=Configuration.EVENT_TROLLS;
-				this.setName( Configuration.EVENT_TROLLS_NAME );
+				this.setEventName( "Trolls" );
 				this.instruction = Configuration.EVENT_TROLLS_DESCRIPTION;
 				break;
 			case Configuration.EVENT_BLOODY_STUPID_JOHNSON:
 				this.eventCardId=Configuration.EVENT_BLOODY_STUPID_JOHNSON;
-				this.setName( Configuration.EVENT_BLOODY_STUPID_JOHNSON_NAME );
+				this.setEventName( "Bloody Stupid Johnson");
 				this.instruction = Configuration.EVENT_BLOODY_STUPID_JOHNSON_DESCRIPTION; 
 				break;
 			case Configuration.EVENT_DEMONS_FROM_THE_DUNGEON_DIMENSIONS:
 				this.eventCardId=Configuration.EVENT_DEMONS_FROM_THE_DUNGEON_DIMENSIONS;
-				this.setName( Configuration.EVENT_DEMONS_FROM_THE_DUNGEON_DIMENSIONS_NAME );
+				this.setEventName(" Demons From dungeon dimension" );
 				this.instruction = Configuration.EVENT_BLOODY_STUPID_JOHNSON_DESCRIPTION; 
 				break;
 			case Configuration.EVENT_DRAGON:
 				this.eventCardId=Configuration.EVENT_DRAGON;
-				this.setName( Configuration.EVENT_DRAGON_NAME );
+				this.setEventName( "Dragon" );
 				this.instruction = Configuration.EVENT_DRAGON_DESCRIPTION; 
 				break;
 			case Configuration.EVENT_EARTHQUAKE:
 				this.eventCardId=Configuration.EVENT_EARTHQUAKE;
-				this.setName( Configuration.EVENT_EARTHQUAKE_NAME );
+				this.setEventName( "EarthQuake" );
 				this.instruction = Configuration.EVENT_EARTHQUAKE_DESCRIPTION;
 				break;
 			case Configuration.EVENT_EXPLOSION:
 				this.eventCardId=Configuration.EVENT_EXPLOSION;
-				this.setName( Configuration.EVENT_EXPLOSION_NAME );
+				this.setEventName( "Explosion" );
 				this.instruction = Configuration.EVENT_EXPLOSION_DESCRIPTION;
 				break;
 			case Configuration.EVENT_FLOOD:
 				this.eventCardId=Configuration.EVENT_FLOOD;
-				this.setName( Configuration.EVENT_FLOOD_NAME );
+				this.setEventName( "Event Flood" );
 				this.instruction = Configuration.EVENT_FLOOD_DESCRIPTION; 
 				break;
 			case Configuration.EVENT_FIRE:
 				this.eventCardId=Configuration.EVENT_FIRE;
-				this.setName( Configuration.EVENT_FIRE_NAME );
+				this.setEventName( "Fire" );
 				this.instruction = Configuration.EVENT_FIRE_DESCRIPTION; 
 				break;
 			default:
 				System.out.println( "Initializing City Card with the wrong index" );
 			break;
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void setEventName(String name)
+	{
+		this.eventCardName=name;
 	}
 	
 	/**
@@ -166,7 +174,7 @@ public class EventCard extends Card {
 				deck=game.getEspecificDeck("green");
 				gCard=(GreenCard) deck.getCard();
 				//Display the card that's being discarded.
-				gCard.toString();
+				System.out.println("Discarted: "+gCard.toString());
 			
 			}else if(game.getEspecificDeck("brown").getSizeDeck()>0)
 			{
@@ -174,7 +182,7 @@ public class EventCard extends Card {
 				deck=game.getEspecificDeck("brown");
 				bCard=(BrownCard) deck.getCard();
 				//Display the card that's being discarded.
-				bCard.toString();
+				System.out.println("Discarted: "+bCard.toString());
 			}
 		}
 	}
@@ -222,7 +230,7 @@ public class EventCard extends Card {
 				}
 				selectedIndex = game.keyIn.nextInt();
 				//Update Gameboard by removing the selected minion and removing a trouble marker if one is in the area.
-				rolledArea.removeMinion(players[currentPlayerIndex].getColor());
+				rolledArea.removeMinion(minions.get(selectedIndex).getColor());
 				rolledArea.removeTroubleMarker();
 				//Update current player's hand. Remove minion from player depending on the areaCode(Card Number).
 				players[currentPlayerIndex].removeMinionOnBoard(rolledArea.getCityCard().getCardNumber());
@@ -284,7 +292,7 @@ public class EventCard extends Card {
 			{
 				System.out.println("Player: "+players[currentPlayerIndex].getColor()+" you have:"+cityCards.size()+" building on the board. And have: "+players[currentPlayerIndex].getMoney()+" dollars.");
 				//Calculate how many buildings the player can pay for.
-				affordToPay= (int) Math.floor(players[currentPlayerIndex].getMoney()/cityCards.size());
+				affordToPay= (int) Math.floor(players[currentPlayerIndex].getMoney()/(cityCards.size()*2));
 				System.out.println("Player: "+players[currentPlayerIndex].getColor()+"you can afford to pay for: "+affordToPay+" buildings." );
 				//Display all the areas the player currently has buildings on and ask if he wishes to pay for that bulding.
 				//If not remove building and take city card from player.
@@ -315,7 +323,7 @@ public class EventCard extends Card {
 						game.getGameBoard().addCityCard(returnCityCard);//Add city card back to the gameBoard.  //TODO:Check if returns true.
 					}
 					//Calculate how many buildings the player can pay for.
-					affordToPay= (int) Math.floor(players[currentPlayerIndex].getMoney()/cityCards.size());
+					affordToPay= (int) Math.floor(players[currentPlayerIndex].getMoney()/(cityCards.size()*2));
 					System.out.println("Player: "+players[currentPlayerIndex].getColor()+"you can afford to pay for: "+affordToPay+" buildings." );
 				}
 				
@@ -441,12 +449,15 @@ public class EventCard extends Card {
 			rolledDie[i]=die.roll();
 			System.out.print("Rolled Value: "+rolledDie[i]+"  ");
 		}
+		System.out.println();
 		ArrayList<Area> areas=game.getGameBoard().getAreas();
+		
 
 		//Add trolls to the required areas.
 		for(int i=0;i<rolledDie.length;i++)
 		{
 			areas.get(rolledDie[i]-1).addRemoveDemon(1);//-1 since the array list starts at 0;
+			System.out.println("Area: "+areas.get(rolledDie[i]-1).getCityCard().getName()+" has a demon in it.");
 		}
 	}
 	
@@ -468,9 +479,9 @@ public class EventCard extends Card {
 		Die die=game.getDie();
 		valueRolled[0]=die.roll();
 		//Get affected Area.
-		Area area=game.getGameBoard().getAreaByCityCard(valueRolled[0]-1);//-1 it's an arraylist and index starts at 0;
+		Area area=game.getGameBoard().getAreaByCityCard(valueRolled[0]);//-1 it's an arraylist and index starts at 0;
 		
-		System.out.println("Player: "+currentPlayer.getColor()+" rolled:"+valueRolled+". Area: "+area.getCityCard().getName()+" will get attacked by a dragon...");
+		System.out.println("Player: "+currentPlayer.getColor()+" rolled:"+valueRolled[0]+". Area: "+area.getCityCard().getName()+" will get attacked by a dragon...");
 		
 		//Remove Trolls and demons from area.
 		for(int i=0;i<area.getTroll();i++)
@@ -491,7 +502,7 @@ public class EventCard extends Card {
 			area.removeMinion(color); //TODO:Check if returned value is true.
 			//Update Player
 			player=game.getPlayerByColor(color);
-			player.removeMinionOnBoard(valueRolled[i]);
+			player.removeMinionOnBoard(valueRolled[0]);
 		}
 		
 		//Remove building and make affected player return the respective city card to the board.
@@ -570,7 +581,7 @@ public class EventCard extends Card {
 		for(int i=0;i<rolledDie.length;i++)
 		{
 			//Get affected Area.
-			area=game.getGameBoard().getAreaByCityCard(rolledDie[0]-1);//-1 it's an arraylist and index starts at 0;
+			area=game.getGameBoard().getAreaByCityCard(rolledDie[i]);//-1 it's an arraylist and index starts at 0;
 			if(area.getCityCard().getDoesFlood())//check if the area can be flooded.
 			{
 				System.out.println("Area: "+area.getCityCard().getName()+"  got flooded by the river...");
@@ -632,7 +643,8 @@ public class EventCard extends Card {
 			{//is first roll
 				rolledValue=die.roll();//roll and store rolled Value.
 				System.out.println("Player: "+currentPlayer.getColor()+" Rolled Value: "+rolledValue+".");
-				affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue-1);
+				affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue);
+				//System.out.println("Affected ");
 			}else
 			{//is not first roll.
 				rolledValue=die.roll();//roll and store rolled Value.
@@ -642,14 +654,14 @@ public class EventCard extends Card {
 				if(isAdjacent)
 				{
 					System.out.print("Area: "+affectedArea.getCityCard().getName()+" is adjacent to rolled area:");
-					affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue-1);
+					affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue);
 					System.out.print(affectedArea.getCityCard().getName()+"./n");
 				}
 				else
 				{
 					keeprolling=false;
 					System.out.print("Area: "+affectedArea.getCityCard().getName()+" is NOT adjacent to rolled area:");
-					affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue-1);
+					affectedArea=game.getGameBoard().getAreaByCityCard(rolledValue);
 					System.out.print(affectedArea.getCityCard().getName()+". END OF FIRE./n");
 					break;//Exit loop.
 				}
@@ -662,7 +674,11 @@ public class EventCard extends Card {
 				System.out.println("Area:"+affectedArea.getCityCard().getName()+" is affected by fire!!!!!!!"+ "  Player:"+affectedArea.getBuildingColor()+" has lost a building!!!");
 				
 			}else//If area doesn't have a building then stop rolling and exit while loop.
+			{
 				keeprolling=false;
+				System.out.println("Area:"+affectedArea.getCityCard().getName()+"doesn't have a Building. Fire has no effect.");
+			}
+				
 			
 		}
 		
@@ -690,7 +706,7 @@ public class EventCard extends Card {
 		for(int i=0;i<rolledDie.length;i++)
 		{
 			//Get affected Area.
-			area=game.getGameBoard().getAreaByCityCard(rolledDie[i]-1);//-1 it's an arraylist and index starts at 0;
+			area=game.getGameBoard().getAreaByCityCard(rolledDie[i]);//-1 it's an arraylist and index starts at 0;
 			check=area.getBuilding();
 			if(check)
 			{//Area contains building.
@@ -757,5 +773,13 @@ public class EventCard extends Card {
 	public String getInstruction()
 	{
 		return this.instruction;
+	}
+	/**
+	 * Getter: Event card NAme
+	 * @return String
+	 */
+	public String getEventCardName()
+	{
+		return this.eventCardName;
 	}
 }

@@ -85,7 +85,7 @@ public class Symbol {
 			takeMoneyFromBank(currentPlayer, game);
 			break;
 		case 6:
-			new Action( currentPlayer,game,cardID);
+			new Action(currentPlayer, game, cardID);
 			break;
 		case 7:
 			// Random event.
@@ -469,7 +469,7 @@ public class Symbol {
 		} else {
 			// Get top event card.
 			EventCard eventCard = (EventCard) events.getCard();
-			System.out.println("Player:" + currentPlayer.getColor() + " draw event card: " + eventCard.getName() + ".");
+			System.out.println("Player:" + currentPlayer.getColor() + " draw event card: " + eventCard.getEventCardName() + ".");
 			System.out.println("Description: " + eventCard.getInstruction());
 			// Execute event card function depending on the card drawn.
 			eventCard.useEventCard(currentPlayer, game);
@@ -503,7 +503,7 @@ public class Symbol {
 	 *            (int)
 	 */
 	private void interruptCard(Player currentPlayer, Game game, int cardID) {
-		new Action(currentPlayer,game,cardID);// Perform the corresponding action from the card.
+		//new Action(currentPlayer,game,cardID);// Perform the corresponding action from the card.
 	}
 
 	/**

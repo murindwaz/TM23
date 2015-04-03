@@ -79,13 +79,14 @@ public class PersonalityCard extends Card {
 				this.setName("Lord Rust");
 				this.cardId=4;
 				this.numPlayActive=true;
+				this.winningConditionDescription ="If at the start of your turn you have clear control of a certain number of areas then you win the game immediately.  With two players you need to control seven areas, with three players you need to control five areas, and with four players you need to control four areas";
 				//Set winning condition depending on number of players.
 				if(numberOfPlayers ==2)
-					this.numMinionsOnAreas=11;
+					this.controlAreas=7;
 				else if(numberOfPlayers ==3)
-					this.numMinionsOnAreas=10;
+					this.controlAreas=5;
 				else if(numberOfPlayers ==4)
-					this.numMinionsOnAreas=9;
+					this.controlAreas=4;
 				
 				break;
 			case 4:
@@ -102,11 +103,11 @@ public class PersonalityCard extends Card {
 				this.numPlayActive=true;
 				//Set winning condition depending on number of players.
 				if(numberOfPlayers ==2)
-					this.numMinionsOnAreas=11;
+					this.controlAreas=7;
 				else if(numberOfPlayers ==3)
-					this.numMinionsOnAreas=10;
+					this.controlAreas=5;
 				else if(numberOfPlayers ==4)
-					this.numMinionsOnAreas=9;
+					this.controlAreas=4;
 				
 				break;
 			case 6:
